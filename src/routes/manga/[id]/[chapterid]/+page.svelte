@@ -1,32 +1,14 @@
 <!-- chapter.svelte -->
-<script>
-  import { onMount } from 'svelte';
-  import { page } from '$app/stores';
-
-  /**
-   * @type {any}
-   */
-  let { id, titleid, chapterid } = $page.params;
-
-  console.log("id, titleId, chapterId: ", id, titleid, chapterid);
-
-  /**
-   * @type {any[]}
-   */
-  let images = [];
-
-  onMount(async () => {
-    const response = await fetch(import.meta.env.VITE_API_URL + `/api/manga/${id}/${titleid}/${chapterid}-en`);
-    const data = await response.json();
-    images = data.images;
-  });
+<script lang=ts>
+   import type { PageData } from "./$types";
+  export let data: PageData;  
 </script>
 
 <main>
   <h1>Manga Chapter</h1>
 
   <div class="chapter-container">
-    {#each images as image}
+    {#each data?.images as image}
       <div class="image-item">
         <img src={image.imageUrl} alt={`Page ${image.pageNumber}`} />
       </div>

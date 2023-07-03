@@ -1,26 +1,12 @@
 <!-- manga.svelte -->
-<script>
-  import { onMount } from 'svelte';
+<script lang=ts>
+      import type { PageData } from "./$types";
 
-  /**
-   * @type {any[]}
-   */
-  let mangas = [];
-
-  onMount(async () => {
-    const response = await fetch(import.meta.env.VITE_API_URL + '/api/browse/1');
-    const data = await response.json();
-    mangas = data.mangas;
-  });
+  export let data: PageData;
 
   // send the user to the manga chapters page
-  /**
-   * @param {any} id
-   * @param {any} titleId
-   */
-  function goToMangaChapters(id, titleId) {
-    console.log(id, titleId);
-    window.location.href = `/manga/${id}/${titleId}`;
+  function goToMangaChapters(id: any) {
+    window.location.href = `/manga/${id}`;
   }
 </script>
 
@@ -28,13 +14,13 @@
   <h1>Manga List</h1>
 
   <div class="manga-grid">
-    {#each mangas as manga}
+    {#each data.mangas as manga}
       <button
         class="manga-item"
-        on:click={() => goToMangaChapters(manga.id, manga.titleId)}
-        on:keypress={() => goToMangaChapters(manga.id, manga.titleId)}
+        on:click={() => goToMangaChapters(manga.id)}
+        on:keypress={() => goToMangaChapters(manga.id)}
       >
-        <img src={manga.img} alt={manga.title} />
+        <img src={import.meta.env.VITE_IMAGE_URL + manga.img} alt={manga.title} />
         <h2>{manga.title}</h2>
         <p>{manga.description}</p>
       </button>
@@ -98,3 +84,4 @@
     color: #888888;
   }
 </style>
+
