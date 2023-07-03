@@ -8,7 +8,7 @@
 
   // send the user to the manga chapters page
   function goToMangaChapters(id: any) {
-    window.location.href = `http://localhost:5173/manga/${id}`;
+    window.location.href = import.meta.env.VITE_HOST_URL + '/manga/' + id;
   }
 </script>
 
