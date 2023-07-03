@@ -1,12 +1,14 @@
 <!-- manga.svelte -->
 <script lang=ts>
       import type { PageData } from "./$types";
+      import { page } from '$app/stores';
 
   export let data: PageData;
+  let { pageNo } = $page.params;
 
   // send the user to the manga chapters page
   function goToMangaChapters(id: any) {
-    window.location.href = `/manga/${id}`;
+    window.location.href = `http://localhost:5173/manga/${id}`;
   }
 </script>
 

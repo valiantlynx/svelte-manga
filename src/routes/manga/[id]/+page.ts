@@ -6,7 +6,7 @@ export const load = (async ({params}) => {
 
     let chapters = [];
 
-    const response = await fetch(import.meta.env.VITE_API_URL + `/api/manganelo/${id}`);
+    const response = await fetch(import.meta.env.VITE_HOST_URL + `/manga/${id}`);
     const data = await response.json();
     chapters = data.episodes;
     
