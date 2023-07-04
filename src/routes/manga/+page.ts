@@ -6,14 +6,9 @@ export const load = (async ({params}) => {
     const page = 1
     let mangas = [];
     
-    const url = import.meta.env.VITE_HOST_URL + `/manga?page=${page}`;
+    const url = 'https://cors-anywhere.herokuapp.com/' + import.meta.env.VITE_HOST_URL + `/manga?page=${page}`;
 
-    const response = await axios.get(url, {
-        headers: {
-            'Access-Control-Allow-Origin': '*',
-            "Content-Type": "application/json",
-        },
-    });
+    const response = await axios.get(url);
 
     const data = await response.data
     mangas = data.mangas;
