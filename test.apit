@@ -1,0 +1,15 @@
+{
+  "url": "http://localhost:5173/manga",
+  "params": {
+    "page": "1"
+  },
+  "paramsArray": [
+    [
+      "bd6e5666-1478-49fc-866a-7f7601acebed",
+      "page",
+      "1",
+      true,
+      "STRING"
+    ]
+  ]
+}
