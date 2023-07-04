@@ -1,5 +1,5 @@
 import type { PageLoad } from "./$types";
-import axios, { Axios } from "axios";
+import axios from "axios";
 
 export const load = (async ({params}) => {
 
@@ -11,6 +11,7 @@ export const load = (async ({params}) => {
     const response = await axios.get(url, {
         headers: {
             'Access-Control-Allow-Origin': '*',
+            "Content-Type": "application/json",
         },
     });
 

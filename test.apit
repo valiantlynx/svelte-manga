@@ -1,13 +1,13 @@
 {
-  "url": "http://localhost:5173/manga",
+  "url": "https://svelte-manga.vercel.app/manga",
   "params": {
-    "page": "1"
+    "page": "3"
   },
   "paramsArray": [
     [
-      "bd6e5666-1478-49fc-866a-7f7601acebed",
+      "5da23786-6d92-4440-8e31-268ac97dccad",
       "page",
-      "1",
+      "3",
       true,
       "STRING"
     ]
