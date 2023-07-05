@@ -1,19 +1,194 @@
-<!-- chapter.svelte -->
-<script lang=ts>
-   import type { PageData } from "./$types";
-  export let data: PageData;  
+<script lang="ts">
+  import type { PageData } from "./$types";
+  import { onMount } from "svelte";
+  import { writable } from "svelte/store";
+  import { page } from "$app/stores";
+  
+  export let data: PageData;
+  let scrollPosition = 0;
+  let showScrollToTop = false;
+
+  let readingMode = "longstrip"; // Default reading mode
+  let currentPage = writable(0);
+  let chaptersToShow: any = []
+
+  onMount(() => {
+    window.addEventListener("scroll", handleScroll);
+    chaptersToShow = JSON.parse(window.localStorage.getItem("chaptersToShow") || "[]");
+  });
+
+  function handleScroll() {
+    scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+    showScrollToTop = scrollPosition > 100;
+  }
+
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+
+  function setReadingMode(mode: string) {
+    readingMode = mode;
+    currentPage.set(0); // Reset current page when switching reading modes
+  }
+
+  function goToPage(pageNumber: number) {
+    currentPage.set(pageNumber - 1);
+  }
+
+  console.log($page);
+
+  function goToPreviousChapter() {
+    const currentChapterIndex = chaptersToShow.findIndex(
+      (chapter: any) => chapter.chapterId === $page.params.chapterid
+    );
+
+    console.log("currentChapterIndex: " + currentChapterIndex);
+
+    if (currentChapterIndex < chaptersToShow.length - 1) {
+      const url = import.meta.env.VITE_HOST_URL + '/manga/' + $page.params.id + '/' + chaptersToShow[currentChapterIndex + 1].chapterId;
+      window.location.href = url
+    }
+  }
+
+  function goToNextChapter() {
+    const currentChapterIndex = chaptersToShow.findIndex(
+      (chapter: any) => chapter.chapterId === $page.params.chapterid
+    );
+
+    
+    if (currentChapterIndex < chaptersToShow.length - 1) {
+      const url = import.meta.env.VITE_HOST_URL + '/manga/' + $page.params.id + '/' + chaptersToShow[currentChapterIndex - 1].chapterId;
+      window.location.href = url
+    }
+  }
+
 </script>
-
 <main>
-  <h1>Manga Chapter</h1>
+  <h1 class="text-3xl font-bold mb-6 text-center">{$page.params.chapterid}</h1>
 
-  <div class="chapter-container">
-    {#each data?.images as image}
-      <div class="image-item">
-        <img src={image.imageUrl} alt={`Page ${image.pageNumber}`} />
-      </div>
-    {/each}
+  <!-- Reading Mode Selection -->
+  <div class="mb-4 flex justify-center space-x-4">
+    <button
+      class="px-4 py-2 rounded-lg bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white transition-colors duration-300"
+      class:selected={readingMode === "longstrip"
+        ? "bg-blue-500 text-white"
+        : ""}
+      on:click={() => setReadingMode("longstrip")}
+    >
+      Long Strip
+    </button>
+
+    <button
+      class="px-4 py-2 rounded-lg bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white transition-colors duration-300"
+      class:selected={readingMode === "grid" ? "bg-blue-500 text-white" : ""}
+      on:click={() => setReadingMode("grid")}
+    >
+      Grid
+    </button>
+    <button
+      class="px-4 py-2 rounded-lg bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white transition-colors duration-300"
+      class:selected={readingMode === "paginated"
+        ? "bg-blue-500 text-white"
+        : ""}
+      on:click={() => setReadingMode("paginated")}
+    >
+      Paginated
+    </button>
   </div>
+
+  <!-- Images Display -->
+  {#if readingMode === "longstrip"}
+    <div class="flex flex-wrap justify-center max-w-full mx-auto">
+      {#each data?.images as image}
+        <div class="w-full md:w-4/5 lg:w-4/5 xl:w-3/5">
+          <img
+            src={image.imageUrl}
+            alt={`Page ${image.pageNumber}`}
+            class="w-full rounded-lg shadow-md mb-4"
+          />
+        </div>
+      {/each}
+    </div>
+  {/if}
+
+  {#if readingMode === "grid"}
+    <div class="flex flex-wrap justify-center gap-4 max-w-full mx-auto">
+      {#each data?.images as image}
+        <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
+          <img
+            src={image.imageUrl}
+            alt={`Page ${image.pageNumber}`}
+            class="w-full rounded-lg shadow-md"
+          />
+        </div>
+      {/each}
+    </div>
+  {/if}
+
+  {#if readingMode === "paginated"}
+    <div class="flex items-center justify-center mb-4">
+      <button
+        class="px-4 py-2 rounded-lg bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white transition-colors duration-300"
+        class:disabled={$currentPage === 0}
+        on:click={() => ($currentPage -= 1)}
+      >
+        Prev
+      </button>
+      <h2 class="mx-4 text-lg font-bold">
+        {$currentPage + 1} / {data?.images.length}
+      </h2>
+      <button
+        class="px-4 py-2 rounded-lg bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white transition-colors duration-300"
+        class:disabled={$currentPage === data?.images.length - 1}
+        on:click={() => ($currentPage += 1)}
+      >
+        Next
+      </button>
+    </div>
+
+    <div class="flex justify-center">
+      {#each data?.images as image, index}
+        {#if $currentPage === index}
+          <div class="w-full max-w-4xl">
+            <img
+              src={image.imageUrl}
+              alt={`Page ${image.pageNumber}`}
+              class="w-full rounded-lg shadow-md"
+            />
+          </div>
+        {/if}
+      {/each}
+    </div>
+  {/if}
+
+     <!-- Previous and Next Chapter Buttons -->
+  <div class="flex justify-center space-x-4">
+    <button
+      class="px-4 py-2 rounded-lg bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white transition-colors duration-300"
+      on:click={goToPreviousChapter}
+    >
+      Previous Chapter
+    </button>
+    <button
+      class="px-4 py-2 rounded-lg bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white transition-colors duration-300"
+      on:click={goToNextChapter}
+    >
+      Next Chapter
+    </button>
+  </div>
+
+
+  {#if showScrollToTop}
+    <button
+      class="fixed bottom-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-lg"
+      on:click={scrollToTop}
+    >
+      Scroll to Top
+    </button>
+  {/if}
 </main>
 
 <style>
@@ -28,34 +203,8 @@
     text-align: center;
   }
 
-  .chapter-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem;
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .image-item {
-    max-width: 80%;
-    width: 100%;
-    margin-bottom: 2rem;
-    display: flex;
-    justify-content: center;
-  }
-
   img {
     max-width: 100%;
     height: auto;
-    border-radius: 5px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  }
-
-  @media (max-width: 768px) {
-    .image-item {
-      max-width: 100%;
-    }
   }
 </style>

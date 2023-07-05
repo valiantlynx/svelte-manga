@@ -1,7 +1,6 @@
-<!-- manga.svelte -->
 <script lang=ts>
-      import type { PageData } from "./$types";
-      import { page } from '$app/stores';
+  import type { PageData } from "./$types";
+  import { page } from '$app/stores';
 
   export let data: PageData;
   let { pageNo } = $page.params;
@@ -12,78 +11,64 @@
   }
 </script>
 
-<main>
-  <h1>Manga List</h1>
+<main class="p-4 bg-gray-100">
+  <h1 class="text-2xl font-bold text-center mb-6">Manga List</h1>
 
-  <div class="manga-grid">
+  <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
     {#each data.mangas as manga}
-      <button
-        class="manga-item"
+      <div class="relative group">
+        <button
+          class="bg-white rounded shadow-md p-4 text-center transition-transform hover:-translate-y-1"
+          on:click={() => goToMangaChapters(manga.id)}
+          on:keypress={() => goToMangaChapters(manga.id)}
+        >
+          <div class="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg bg-gray-200">
+            <img
+              class="h-full w-full object-cover object-center group-hover:opacity-75"
+              src={import.meta.env.VITE_IMAGE_URL + manga.img}
+              alt={manga.title}
+            />
+          </div>
+          <h2 class="text-lg font-bold mb-2">{manga.title}</h2>
+          <p class="text-gray-500 text-sm line-clamp-3">{manga.description}</p>
+        </button>
+        <button 
+        class="hidden group-hover:block absolute inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center"
         on:click={() => goToMangaChapters(manga.id)}
         on:keypress={() => goToMangaChapters(manga.id)}
-      >
-        <img src={import.meta.env.VITE_IMAGE_URL + manga.img} alt={manga.title} />
-        <h2>{manga.title}</h2>
-        <p>{manga.description}</p>
-      </button>
+        aria-label="View Manga"
+        
+        >
+          <div class="max-w-lg p-4 rounded-lg bg-white shadow-lg">
+            <h2 class="text-xl font-bold mb-2">{manga.title}</h2>
+            <p class="text-gray-500 mb-4">{manga.description}</p>
+            <button
+              class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg"
+             
+            >
+              Read More
+            </button>
+          </div>
+        </button>
+      </div>
     {/each}
   </div>
 </main>
 
 <style>
-  main {
-    padding: 2rem;
-    background-color: #f7f7f7;
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
   }
 
-  h1 {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    text-align: center;
+  .aspect-h-2 {
+    padding-bottom: 2%;
   }
 
-  .manga-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-  }
-
-  .manga-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-    border-radius: 5px;
-    background-color: #ffffff;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    border: none;
-    outline: none;
-  }
-
-  .manga-item:hover {
-    transform: translateY(-5px);
-  }
-
-  .manga-item img {
+  .aspect-w-3 {
     width: 100%;
-    max-height: 200px;
-    object-fit: cover;
-    border-radius: 5px;
-    margin-bottom: 1rem;
-  }
-
-  h2 {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-  }
-
-  p {
-    font-size: 1rem;
-    color: #888888;
   }
 </style>
-
