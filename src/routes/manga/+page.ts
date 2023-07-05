@@ -8,7 +8,13 @@ export const load = (async ({params}) => {
     
     const url = import.meta.env.VITE_HOST_URL + `/manga?page=${page}`;
 
-    const response = await axios.get(url);
+    const response = await axios.get(url,{
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+        }
+        
+    });
 
     const data = await response.data
     mangas = data.mangas;

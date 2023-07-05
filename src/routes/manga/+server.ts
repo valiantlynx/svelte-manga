@@ -6,6 +6,7 @@ export const GET: RequestHandler = async ({ url }) => {
   const page = url.searchParams.get("page");
 
   console.log("Fetching from -", url);
+  
   // Your logic for handling the page parameter and generating the response
   const headers = {
     "Access-Control-Allow-Origin": "*",

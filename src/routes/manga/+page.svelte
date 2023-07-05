@@ -4,11 +4,12 @@
 
   export let data: PageData;
   let { pageNo } = $page.params;
-
+  
   // send the user to the manga chapters page
   function goToMangaChapters(id: any) {
-    window.location.href = import.meta.env.VITE_HOST_URL + '/manga/' + id;
+    window.location.href = $page.url.origin + '/manga/' + id;
   }
+
 </script>
 
 <main class="p-4 bg-gray-100">

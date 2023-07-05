@@ -51,7 +51,7 @@
     console.log("currentChapterIndex: " + currentChapterIndex);
 
     if (currentChapterIndex < chaptersToShow.length - 1) {
-      const url = import.meta.env.VITE_HOST_URL + '/manga/' + $page.params.id + '/' + chaptersToShow[currentChapterIndex + 1].chapterId;
+      const url = $page.url.origin + '/manga/' + $page.params.id + '/' + chaptersToShow[currentChapterIndex + 1].chapterId;
       window.location.href = url
     }
   }
@@ -63,7 +63,7 @@
 
     
     if (currentChapterIndex < chaptersToShow.length - 1) {
-      const url = import.meta.env.VITE_HOST_URL + '/manga/' + $page.params.id + '/' + chaptersToShow[currentChapterIndex - 1].chapterId;
+      const url = $page.url.origin + '/manga/' + $page.params.id + '/' + chaptersToShow[currentChapterIndex - 1].chapterId;
       window.location.href = url
     }
   }
