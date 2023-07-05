@@ -1,4 +1,6 @@
 <script>
+    import Search from "../components/Search.svelte";
+
    
 </script>
 
@@ -9,6 +11,8 @@
     <a href={'/about'} class="px-4 py-2 bg-orange-500 text-white font-bold rounded transition-colors hover:bg-orange-600" aria-label="Go to about page">Go to About Page</a>
     <a href={'/manga'} class="px-4 py-2 bg-orange-500 text-white font-bold rounded transition-colors hover:bg-orange-600" aria-label="Go to manga page">Go to Manga Page</a>
   </nav>
+
+  <Search />
 </main>
 
 <footer class="text-center py-4 bg-gray-800 text-white">
