@@ -1,8 +1,8 @@
 <script>
     import Search from "../components/Search.svelte";
-
-   
 </script>
+
+
 
 <main class="flex flex-col items-center justify-center h-screen text-center bg-gray-100">
   <h1 class="text-4xl font-bold mb-8">Welcome to Animevariant</h1>
