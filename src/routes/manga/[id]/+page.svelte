@@ -1,20 +1,17 @@
 <script lang="ts">
   import { onMount } from "svelte";
-
-  import type { PageData } from "./$types";
   import { page } from "$app/stores";
   import { writable } from "svelte/store";
+
+  import type { PageData } from "./$types";
 
   export let data: PageData;
 
   let { id } = $page.params;
   let currentPage = 1;
   let chaptersPerPage = 12; // Adjust the number of chapters per page as needed
-  // Inside the module where `chaptersCount` is defined
-const chaptersCount = writable(data.chapters.length);
+  const chaptersCount = writable(data.chapters.length);
   let chaptersToShow: any[] = [];
-
-
 
   onMount(() => {
     updateChaptersToShow();
@@ -36,7 +33,7 @@ const chaptersCount = writable(data.chapters.length);
 <main class="p-8">
   <h1 class="text-3xl font-bold mb-6 text-center">Manga Chapters</h1>
 
-  <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+  <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
     {#each chaptersToShow as chapter}
       <div class="p-4 border rounded-lg shadow-md transition-transform hover:-translate-y-1">
         <h2 class="text-xl font-bold mb-2">{chapter.chapterTitle}</h2>
@@ -45,14 +42,15 @@ const chaptersCount = writable(data.chapters.length);
     {/each}
   </div>
 
+  <!-- pagination -->
   <div class="mt-8 flex justify-center">
     {#if $chaptersCount > chaptersPerPage}
       <nav>
-        <ul class="flex space-x-4">
+        <ul class="flex flex-wrap space-x-2">
           {#each Array.from({ length: Math.ceil($chaptersCount / chaptersPerPage) }) as _, index}
             <li>
               <button
-                class="px-4 py-2 rounded-lg bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white transition-colors duration-300"
+                class="px-3 py-1 rounded-lg bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white transition-colors duration-300"
                 class:selected={currentPage === index + 1 ? 'bg-blue-500 text-white' : ''}
                 on:click={() => goToPage(index + 1)}
               >

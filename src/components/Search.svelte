@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { afterUpdate } from "svelte";
   import axios from "axios";
 
   let searchResults: any = [];
@@ -48,7 +47,7 @@
   }
 </script>
 
-<main class="p-6">
+<main class="p-2">
   <form>
     <div class="relative">
       <label for="searchTerm" class="sr-only">Search:</label>
@@ -70,7 +69,7 @@
 
   <div class="search-results">
     {#if searchResults.length > 0}
-      <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+      <ul class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
         {#each searchResults as result}
           <li class="bg-white shadow-md rounded-lg p-4">
             <a href={result.src} aria-label={"Go to " + result.title + " manga page"}>
@@ -94,7 +93,7 @@
   }
 
   .search-results {
-    max-height: 400px;
+    max-height: 800px;
     overflow-y: auto;
   }
 </style>
