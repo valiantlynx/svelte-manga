@@ -21,7 +21,7 @@
     const startIndex = (currentPage - 1) * chaptersPerPage;
     const endIndex = startIndex + chaptersPerPage;
     chaptersToShow = data.chapters.slice(startIndex, endIndex);
-    window.localStorage.setItem("chaptersToShow", JSON.stringify(chaptersToShow));
+    window.localStorage.setItem("chaptersToShow", JSON.stringify(data.chapters));
   }
 
   function goToPage(pageNumber: number) {
