@@ -9,8 +9,10 @@
   let showScrollToTop = false;
 
   let readingMode = "longstrip"; // Default reading mode
+  let imageWidth = "full" // Default image width mode
   let currentPage = writable(0);
   let chaptersToShow: any = []
+
 
   onMount(() => {
     window.addEventListener("scroll", handleScroll);
@@ -34,8 +36,9 @@
     currentPage.set(0); // Reset current page when switching reading modes
   }
 
-  function goToPage(pageNumber: number) {
-    currentPage.set(pageNumber - 1);
+  function setImageWidth(mode: string) {
+    imageWidth = mode;
+    currentPage.set(0); // Reset current page when switching reading modes
   }
 
   console.log($page);
@@ -66,7 +69,7 @@
   }
 
 </script>
-<main>
+<main >
   <h1 class="text-3xl font-bold mb-6 text-center">{$page.params.chapterid}</h1>
 
   <!-- Reading Mode Selection -->
@@ -99,11 +102,30 @@
     </button>
   </div>
 
+  <!-- Images width selection between full or medium -->
+  <div class="mb-4 flex justify-center space-x-4">
+    <button
+      class="px-4 py-2 rounded-lg bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white transition-colors duration-300"
+      class:selected={imageWidth === "full" ? "bg-blue-500 text-white" : ""}
+      on:click={() => setImageWidth("full")}
+    >
+      Full
+    </button>
+
+    <button
+      class="px-4 py-2 rounded-lg bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white transition-colors duration-300"
+      class:selected={imageWidth === "medium" ? "bg-blue-500 text-white" : ""}
+      on:click={() => setImageWidth("medium")}
+    >
+      Medium
+    </button>
+  </div>
+ 
   <!-- Images Display -->
   {#if readingMode === "longstrip"}
     <div class="flex flex-wrap justify-center max-w-full mx-auto">
       {#each data?.images as image}
-        <div class="w-full md:w-4/5 lg:w-4/5 xl:w-3/5">
+        <div class={imageWidth == "full" ? "w-full" : "w-3/5"} >
           <img
             src={image.imageUrl}
             alt={`Page ${image.pageNumber}`}
@@ -193,7 +215,6 @@
 
 <style>
   main {
-    padding: 2rem;
     background-color: #f7f7f7;
   }
 
