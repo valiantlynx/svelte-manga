@@ -11,7 +11,7 @@ export const load = (async ({params}) => {
     chapters = data.episodes;
     
     return {
-        title: "manga page- Animevariant",
+        title: "manga page - Animevariant",
         chapters
     }
     }
