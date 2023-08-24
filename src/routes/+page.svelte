@@ -1,8 +1,7 @@
 <script lang="ts">
-	import type { PageData } from './$types';
 	import { page } from '$app/stores';
 
-	export let data: PageData;
+	export let data: any;
 	let { pageNo } = $page.params;
 
 	// send the user to the manga chapters page

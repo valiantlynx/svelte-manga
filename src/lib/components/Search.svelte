@@ -86,7 +86,7 @@
 			</select>
 			<div class="indicator">
 				<span class="indicator-item badge badge-secondary">new</span>
-				<a href="/search"  class="btn join-item">Search</a>
+				<a href="/manga/search"  class="btn join-item">Search</a>
 			</div>
 		</div>
 
