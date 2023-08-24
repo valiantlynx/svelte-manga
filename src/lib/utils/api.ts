@@ -3,11 +3,9 @@ import { authData } from '$lib/utils/stores';
 import { goto } from '$app/navigation';
 
 export const pb = new PocketBase(`${import.meta.env.VITE_PB_URL}`);
-export const pb2 = new PocketBase(`${import.meta.env.VITE_PB_API_2}`);
 
 export const authPocketbase = async (user: string, password: string) => {
 	const res = await pb.collection('users').authWithPassword(user, password);
-	await pb2.collection('users').authWithPassword(user, password);
 	authData.set(pb.authStore.model);
 
 	goto('/');
@@ -20,7 +18,6 @@ export const authPocketbase = async (user: string, password: string) => {
 
 export const logoutPocketbase = async () => {
 	pb.authStore.clear();
-	pb2.authStore.clear();
 	authData.set({});
 
 	goto('/');
@@ -35,20 +32,8 @@ export const createPocketbaseUser = async (data: any) => {
 	const res = await pb.collection('users').create(data);
 	authData.set(res);
 
-	// (optional) send an email verification request and chat using the new pb2 api
-	const data2 = {
-		id: res.id,
-		username: data.username,
-		email: data.email,
-		emailVisibility: data.emailVisibility,
-		password: data.password,
-		passwordConfirm: data.passwordConfirm
-	};
-
-	await pb2.collection('users').create(data2);
-
 	// (optional) send an email verification request
-	await pb2.collection('users').requestVerification(data.email);
+	await pb.collection('users').requestVerification(data.email);
 
 	// login the user
 	await authPocketbase(data.username, data.password);
@@ -62,7 +47,6 @@ export const createPocketbaseUser = async (data: any) => {
 
 export const authPocketbaseAdmin = async (user: string, password: string) => {
 	const res = await pb.admins.authWithPassword(user, password);
-	await pb2.admins.authWithPassword(user, password);
 	authData.set(res);
 
 	if (!pb.authStore.isValid) {
@@ -107,18 +91,6 @@ export async function placeOrder(orderData: any) {
 	};
 }
 
-// export const getPocketbase = async (endpoint: string) => {
-// 	const response = await fetch(`${import.meta.env.VITE_PB_URL}/api/collections/` + endpoint);
-// 	const isJson = response.headers.get('content-type')?.includes('application/json');
-// 	const res = isJson ? await response.json() : await response.text();
-
-// 	if (response?.status > 399) {
-// 		throw { status: response.status, message: response.statusText };
-// 	} else {
-// 		return res;
-// 	}
-// };
-
 export const getPocketbase = async (collection: string, data: any) => {
 	const resultList = await pb.collection(collection).getList(1, 8, data);
 	return resultList;
@@ -131,7 +103,6 @@ export const postPocketbase = async (collection: string, data: any) => {
 
 export const patchPocketbase = async (collection: string, id: string, data: any) => {
 	const response = await pb.collection(collection).update(id, data);
-	await pb2.collection(collection).update(id, data);
 	return response;
 };
 

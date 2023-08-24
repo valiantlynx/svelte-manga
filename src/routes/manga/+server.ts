@@ -14,7 +14,7 @@ export const GET: RequestHandler = async ({ url }) => {
 	};
 
 	try {
-		const apiUrl = `${import.meta.env.VITE_IMAGE_URL}/genre?page=${page}`;
+		const apiUrl = `${import.meta.env.VITE_IMAGE_URL}/genre?type=topview&page=${page}`;
 		console.log('fetching from - ', apiUrl);
 		const response: any = await axios
 			.get(apiUrl, {

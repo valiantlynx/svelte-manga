@@ -14,14 +14,23 @@ dependencies:
   dotenv:
     specifier: ^16.3.1
     version: 16.3.1
+  fff-flavored-frontmatter:
+    specifier: 1.1.0-alpha.0
+    version: 1.1.0-alpha.0
   lodash:
     specifier: ^4.17.21
     version: 4.17.21
+  pocketbase:
+    specifier: ^0.16.0
+    version: 0.16.0
   svelte-routing:
     specifier: ^1.11.0
     version: 1.11.0
 
 devDependencies:
+  '@iconify/svelte':
+    specifier: ^3.1.4
+    version: 3.1.4(svelte@4.2.0)
   '@sveltejs/adapter-auto':
     specifier: ^2.0.0
     version: 2.1.0(@sveltejs/kit@1.23.0)
@@ -350,6 +359,19 @@ packages:
 
   /@humanwhocodes/object-schema@1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
+    dev: true
+
+  /@iconify/svelte@3.1.4(svelte@4.2.0):
+    resolution: {integrity: sha512-YDwQlN46ka8KPRayDb7TivmkAPizfTXi6BSRNqa1IV0+byA907n8JcgQafA7FD//pW5XCuuAhVx6uRbKTo+CfA==}
+    peerDependencies:
+      svelte: '*'
+    dependencies:
+      '@iconify/types': 2.0.0
+      svelte: 4.2.0
+    dev: true
+
+  /@iconify/types@2.0.0:
+    resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
     dev: true
 
   /@jridgewell/gen-mapping@0.3.3:
@@ -1277,6 +1299,10 @@ packages:
       reusify: 1.0.4
     dev: true
 
+  /fff-flavored-frontmatter@1.1.0-alpha.0:
+    resolution: {integrity: sha512-SR7nJ5UZoVtFVXHA5tYzSAswwwGGU1cuXeQ12HDl5VsexHSmD1LFB3yV2XolLdM/kCwAj1Hz7msGgNf3WQW0hA==}
+    dev: false
+
   /file-entry-cache@6.0.1:
     resolution: {integrity: sha512-7Gps/XWymbLk2QLYK4NzpMOrYjMhdIxXuIvy2QBsLE6ljuodKvdkWs/cpyJJ3CVIVpH0Oi1Hvg1ovbMzLdFBBg==}
     engines: {node: ^10.12.0 || >=12.0.0}
@@ -1823,6 +1849,10 @@ packages:
     resolution: {integrity: sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==}
     engines: {node: '>= 6'}
     dev: true
+
+  /pocketbase@0.16.0:
+    resolution: {integrity: sha512-sndPu4Mbu1Y2VefvO2gIa/No5aIdP6E5br9HUGomvDYSfkmGfBxJNkivJSSKlr9KwWnaF8otf14304UUeFGOrA==}
+    dev: false
 
   /postcss-import@15.1.0(postcss@8.4.28):
     resolution: {integrity: sha512-hpr+J05B2FVYUAXHeK1YyI267J/dDDhMU6B6civm8hSY1jYJnBXxzKDKDswzJmtLHryrjhnDjqqp/49t8FALew==}

@@ -1,24 +1,22 @@
 <script>
-	import Search from "./Search.svelte";
-    import { page } from "$app/stores";
+	import Search from './Search.svelte';
+	import ProfileModal from './ProfileModal.svelte';
+	import { page } from '$app/stores';
 
+    console.log($page);
 </script>
 
-<nav class="flex flex-wrap justify-between items-center p-4 bg-gray-200">
-	<a href="/" class:selected={$page.params.slug === '/'} class="mr-4 mb-2 text-gray-700 hover:underline"
-		>Home</a
-	>
-	<a
-		href="/manga"
-		class:selected={$page.params.slug === '/manga'}
-		class="mr-4 mb-2 text-gray-700 hover:underline">Manga</a
-	>
-	<a
-		href="/about"
-		class:selected={$page.params.slug === '/about'}
-		class="mr-4 mb-2 text-gray-700 hover:underline">About</a
-	>
-	<div class="flex items-center">
-		<Search />
+<div class="navbar bg-base-100">
+	<div class="flex-1">
+		<a class="btn btn-ghost normal-case text-xl" href="/">AnimeVariant</a>
 	</div>
-</nav>
+	<div class="flex-none gap-2">
+        
+		<!-- dont show the small search bar on the search page -->
+		{#if $page.url.pathname !== '/search'}
+			<Search type="small" />
+		{/if}
+
+		<ProfileModal />
+	</div>
+</div>

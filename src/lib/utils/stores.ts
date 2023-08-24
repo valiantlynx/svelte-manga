@@ -40,3 +40,6 @@ export const pocketbaseResponse = writable({
 	totalPages: 0,
 	items: []
 });
+
+// search query
+export const searchQuery = writable('');

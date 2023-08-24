@@ -9,8 +9,16 @@ export type SiteConfig = {
   title: string
   /** site subtitle. */
   subtitle?: string
+  /** site logo. `<link rel="icon" href={site.logo} />` */
+  logo?: string
   /** site lang. `<html lang={site.lang}>` */
   lang?: string
+  /** site pocketbase. `<meta name="pocketbase" content={site.pocketbase}>` */
+  pocketbase?: string
+  /** site company. `<meta name="company" content={site.company}>` */
+  company?: string
+  /** site email. `<meta name="email" content={site.email}>` */
+  email?: string
   /** site description. `<meta name="description" content={site.description}>` */
   description?: string
   /** site keywords. `<meta name="keywords" content={site.keywords}>` */
