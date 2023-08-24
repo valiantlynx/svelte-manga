@@ -1,18 +1,16 @@
-import type { PageLoad } from "./$types";
+import type { PageLoad } from './$types';
 
+export const load = (async ({ params }) => {
+	const { id } = params;
 
-export const load = (async ({params}) => {
-    const { id } = params;
+	let chapters = [];
 
-    let chapters = [];
+	const response = await fetch(import.meta.env.VITE_HOST_URL + `/manga/${id}`);
+	const data = await response.json();
+	chapters = data.episodes;
 
-    const response = await fetch(import.meta.env.VITE_HOST_URL + `/manga/${id}`);
-    const data = await response.json();
-    chapters = data.episodes;
-    
-    return {
-        title: "manga page - Animevariant",
-        chapters
-    }
-    }
-) satisfies PageLoad
+	return {
+		title: 'manga page - Animevariant',
+		chapters
+	};
+}) satisfies PageLoad;

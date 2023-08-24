@@ -1,27 +1,24 @@
-import type { PageLoad } from "./$types";
-import axios from "axios";
+import type { PageLoad } from './$types';
+import axios from 'axios';
 
-export const load = (async ({params}) => {
+export const load = (async ({ params }) => {
+	const page = 1;
+	let mangas = [];
 
-    const page = 1
-    let mangas = [];
-    
-    const url = import.meta.env.VITE_HOST_URL + `/manga?page=${page}`;
+	const url = import.meta.env.VITE_HOST_URL + `/manga?page=${page}`;
 
-    const response = await axios.get(url,{
-        headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-        }
-        
-    });
+	const response = await axios.get(url, {
+		headers: {
+			'Access-Control-Allow-Origin': '*',
+			'Content-Type': 'application/json'
+		}
+	});
 
-    const data = await response.data
-    mangas = data.mangas;
-    
-    return {
-        title: "List - Animevariant",
-        mangas
-    }
-    }
-) satisfies PageLoad
+	const data = await response.data;
+	mangas = data.mangas;
+
+	return {
+		title: 'List - Animevariant',
+		mangas
+	};
+}) satisfies PageLoad;
