@@ -14,8 +14,10 @@ export const GET: RequestHandler = async ({ url }) => {
 
 		const response = await axios.get(urlLink);
 		const $ = cheerio.load(response.data);
+		const titleElement = $('.panel-chapter-info-top h1');
 
 		const elements = $('.container-chapter-reader img');
+		
 
 		const data = elements
 			.map((index, element) => {
@@ -36,6 +38,7 @@ export const GET: RequestHandler = async ({ url }) => {
 			.get();
 		return new Response(
 			JSON.stringify({
+				title: titleElement.text(),
 				images: data
 			})
 		);

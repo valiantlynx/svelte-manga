@@ -3,14 +3,11 @@ import type { PageLoad } from './$types';
 export const load = (async ({ params }) => {
 	const { id } = params;
 
-	let chapters = [];
+	
 
 	const response = await fetch(import.meta.env.VITE_HOST_URL + `/manga/${id}`);
 	const data = await response.json();
-	chapters = data.episodes;
+	console.log('data one manga: ', data);
 
-	return {
-		title: 'manga page - Animevariant',
-		chapters
-	};
+	return data;
 }) satisfies PageLoad;

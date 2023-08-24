@@ -1,75 +1,54 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
-	import { writable } from 'svelte/store';
+	import { currentPage } from '$lib/utils/stores';
+	import Pagination from '$lib/components/Pagination.svelte';
+	import Chapters from '$lib/components/Chapters.svelte';
+	import MangaDetails from '$lib/components/MangaDetails.svelte';
 
-	import type { PageData } from './$types';
+	export let data: any;
 
-	export let data: PageData;
+	console.log('data: ', data);
 
 	let { id } = $page.params;
-	let currentPage = 1;
-	let chaptersPerPage = 12; // Adjust the number of chapters per page as needed
-	const chaptersCount = writable(data.chapters.length);
+	let chaptersPerPage = 12;
+	let pageNumbers: any[] = [];
 	let chaptersToShow: any[] = [];
 
 	onMount(() => {
 		updateChaptersToShow();
+		generatePageNumbers();
 	});
 
 	function updateChaptersToShow() {
-		const startIndex = (currentPage - 1) * chaptersPerPage;
+		const startIndex = ($currentPage - 1) * chaptersPerPage;
 		const endIndex = startIndex + chaptersPerPage;
-		chaptersToShow = data.chapters.slice(startIndex, endIndex);
-		window.localStorage.setItem('chaptersToShow', JSON.stringify(data.chapters));
+		console.log('data.episodes: ', data);
+		chaptersToShow = data.episodes.slice(startIndex, endIndex);
 	}
 
-	function goToPage(pageNumber: number) {
-		currentPage = pageNumber;
+	function goToPage(event?: any) {
+		console.log('pageNumber: ', event.target.value, 'currentPage: ', $currentPage);
+
+		currentPage.set(event.target.value);
+		console.log('currentPage: ', $currentPage);
 		updateChaptersToShow();
+	}
+
+	// Generate an array of page numbers for pagination buttons
+	function generatePageNumbers() {
+		const totalChapters = data.episodes.length;
+		const totalPages = Math.ceil(totalChapters / chaptersPerPage);
+		pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
+		return Array.from({ length: totalPages }, (_, index) => index + 1);
 	}
 </script>
 
 <main class="p-8">
 	<h1 class="text-3xl font-bold mb-6 text-center">Manga Chapters</h1>
-
-	<div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-		{#each chaptersToShow as chapter}
-			<div class="p-4 border rounded-lg shadow-md transition-transform hover:-translate-y-1">
-				<h2 class="text-xl font-bold mb-2">{chapter.chapterTitle}</h2>
-				<a
-					href={`/manga/${id}/${chapter.chapterId}`}
-					class="inline-block px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors duration-300"
-					>Read Chapter</a
-				>
-			</div>
-		{/each}
-	</div>
-
-	<!-- pagination -->
-	<div class="mt-8 flex justify-center">
-		{#if $chaptersCount > chaptersPerPage}
-			<nav>
-				<ul class="flex flex-wrap space-x-2">
-					{#each Array.from({ length: Math.ceil($chaptersCount / chaptersPerPage) }) as _, index}
-						<li>
-							<button
-								class="px-3 py-1 rounded-lg bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white transition-colors duration-300"
-								class:selected={currentPage === index + 1 ? 'bg-blue-500 text-white' : ''}
-								on:click={() => goToPage(index + 1)}
-							>
-								{index + 1}
-							</button>
-						</li>
-					{/each}
-				</ul>
-			</nav>
-		{/if}
+	<div class="grid grid-cols-1 gap-4 m-2 p-3 w-full h-full justify-center">
+		<MangaDetails {data} />
+		<Chapters {chaptersToShow} {id} />
+		<Pagination {goToPage} {pageNumbers} />
 	</div>
 </main>
-
-<style>
-	main {
-		background-color: #f7f7f7;
-	}
-</style>

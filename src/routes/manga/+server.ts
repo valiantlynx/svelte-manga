@@ -37,6 +37,7 @@ export const GET: RequestHandler = async ({ url }) => {
 			const srcElement = $(element).find('a');
 			const descriptionElement = $(element).find('.genres-item-description');
 			const authorElement = $(element).find('.genres-item-author');
+			const ratingElement = $(element).find('.genres-item-rate');
 
 			// Extract the ID and title ID from the src URL
 			const src = srcElement.attr('href');
@@ -47,6 +48,7 @@ export const GET: RequestHandler = async ({ url }) => {
 				title: titleElement.text(),
 				img: imgElement.attr('src'),
 				latestChapter: chaptersElement.text(),
+				rating: ratingElement.text(),
 				src,
 				id,
 				titleId,

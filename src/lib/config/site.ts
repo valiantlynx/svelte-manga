@@ -6,6 +6,7 @@ export const site: SiteConfig = {
   logo: import.meta.env.VITE_SITE_LOGO ?? '/logo.png',
   company: import.meta.env.VITE_SITE_COMPANY ?? 'Valiantlynx',
   email: import.meta.env.VITE_SITE_EMAIL ?? 'valiantlynxz@gmail.com',
+  noImage: import.meta.env.VITE_SITE_NO_IMAGE ?? '/assets/no-image.png',
   title: 'Valiantlynx',
   subtitle: 'Where Imagination Meets Innovation',
   pocketbase: import.meta.env.VITE_PB_API ?? 'https://nameless-cloud-5581.fly.dev',

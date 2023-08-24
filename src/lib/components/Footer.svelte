@@ -7,7 +7,7 @@
     <div class="grid grid-flow-col gap-4">
       <a href="/about" class="link link-hover">About us</a> 
       <a href="/contact" class="link link-hover">Contact</a> 
-        <a href="/privacy" class="link link-hover">Privacy</a>
+        <a href="/privacy-policy" class="link link-hover">Privacy</a>
 
     </div> 
     <div>

@@ -30,7 +30,7 @@ export { sidebarOpen, toggleSidebar, closeSidebar };
 export const currentSection = writable('');
 
 // Current page
-export const page = writable(1);
+export const currentPage = writable(1);
 
 // pocketbase response
 export const pocketbaseResponse = writable({
@@ -43,3 +43,4 @@ export const pocketbaseResponse = writable({
 
 // search query
 export const searchQuery = writable('');
+

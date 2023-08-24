@@ -19,6 +19,8 @@ export type SiteConfig = {
   company?: string
   /** site email. `<meta name="email" content={site.email}>` */
   email?: string
+  /** site no-image. `<meta name="no-image" content={site.noImage}>` */
+  noImage?: string
   /** site description. `<meta name="description" content={site.description}>` */
   description?: string
   /** site keywords. `<meta name="keywords" content={site.keywords}>` */

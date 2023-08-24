@@ -3,13 +3,12 @@
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { page } from '$app/stores';
-
 	export let data: PageData;
 	let scrollPosition = 0;
 	let showScrollToTop = false;
 
 	let readingMode = 'longstrip'; // Default reading mode
-	let imageWidth = 'full'; // Default image width mode
+	let imageWidth = 'medium'; // Default image width mode
 	let currentPage = writable(0);
 	let chaptersToShow: any = [];
 
@@ -39,9 +38,6 @@
 		imageWidth = mode;
 		currentPage.set(0); // Reset current page when switching reading modes
 	}
-
-	console.log($page);
-
 	function goToPreviousChapter() {
 		const currentChapterIndex = chaptersToShow.findIndex(
 			(chapter: any) => chapter.chapterId === $page.params.chapterid
@@ -77,13 +73,13 @@
 	}
 </script>
 
-<main>
-	<h1 class="text-3xl font-bold mb-6 text-center">{$page.params.chapterid}</h1>
+<main class="bg-base-100">
+	<h1 class="text-3xl font-bold mb-6 text-center">{data.title} {$page.params.chapterid}</h1>
 
 	<!-- Reading Mode Selection -->
 	<div class="mb-4 flex justify-center space-x-4">
 		<button
-			class="px-4 py-2 rounded-lg bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white transition-colors duration-300"
+			class="px-4 py-2 rounded-lg btn btn-primary"
 			class:selected={readingMode === 'longstrip' ? 'bg-blue-500 text-white' : ''}
 			on:click={() => setReadingMode('longstrip')}
 		>
@@ -91,14 +87,14 @@
 		</button>
 
 		<button
-			class="px-4 py-2 rounded-lg bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white transition-colors duration-300"
+			class="px-4 py-2 rounded-lg btn btn-primary"
 			class:selected={readingMode === 'grid' ? 'bg-blue-500 text-white' : ''}
 			on:click={() => setReadingMode('grid')}
 		>
 			Grid
 		</button>
 		<button
-			class="px-4 py-2 rounded-lg bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white transition-colors duration-300"
+			class="px-4 py-2 rounded-lg btn btn-primary"
 			class:selected={readingMode === 'paginated' ? 'bg-blue-500 text-white' : ''}
 			on:click={() => setReadingMode('paginated')}
 		>
@@ -109,7 +105,7 @@
 	<!-- Images width selection between full or medium -->
 	<div class="mb-4 flex justify-center space-x-4">
 		<button
-			class="px-4 py-2 rounded-lg bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white transition-colors duration-300"
+			class="px-4 py-2 rounded-lg btn btn-primary"
 			class:selected={imageWidth === 'full' ? 'bg-blue-500 text-white' : ''}
 			on:click={() => setImageWidth('full')}
 		>
@@ -117,7 +113,7 @@
 		</button>
 
 		<button
-			class="px-4 py-2 rounded-lg bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white transition-colors duration-300"
+			class="px-4 py-2 rounded-lg btn btn-primary"
 			class:selected={imageWidth === 'medium' ? 'bg-blue-500 text-white' : ''}
 			on:click={() => setImageWidth('medium')}
 		>
@@ -132,7 +128,7 @@
 				<div class={imageWidth == 'full' ? 'w-full' : 'w-3/5'}>
 					<img
 						src={image.imageUrl}
-						alt={`Page ${image.pageNumber}`}
+						alt={`${data.title} ${$page.params.chapterid} Page ${image.pageNumber}`}
 						class="w-full rounded-lg shadow-md mb-4"
 					/>
 				</div>
@@ -146,7 +142,7 @@
 				<div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
 					<img
 						src={image.imageUrl}
-						alt={`Page ${image.pageNumber}`}
+						alt={`${data.title} ${$page.params.chapterid} Page ${image.pageNumber}`}
 						class="w-full rounded-lg shadow-md"
 					/>
 				</div>
@@ -157,7 +153,7 @@
 	{#if readingMode === 'paginated'}
 		<div class="flex items-center justify-center mb-4">
 			<button
-				class="px-4 py-2 rounded-lg bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white transition-colors duration-300"
+				class="px-4 py-2 rounded-lg btn btn-primary"
 				class:disabled={$currentPage === 0}
 				on:click={() => ($currentPage -= 1)}
 			>
@@ -167,7 +163,7 @@
 				{$currentPage + 1} / {data?.images.length}
 			</h2>
 			<button
-				class="px-4 py-2 rounded-lg bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white transition-colors duration-300"
+				class="px-4 py-2 rounded-lg btn btn-primary"
 				class:disabled={$currentPage === data?.images.length - 1}
 				on:click={() => ($currentPage += 1)}
 			>
@@ -181,7 +177,7 @@
 					<div class="w-full max-w-4xl">
 						<img
 							src={image.imageUrl}
-							alt={`Page ${image.pageNumber}`}
+							alt={`${data.title} ${$page.params.chapterid} Page ${image.pageNumber}`}
 							class="w-full rounded-lg shadow-md"
 						/>
 					</div>
@@ -193,13 +189,13 @@
 	<!-- Previous and Next Chapter Buttons -->
 	<div class="flex justify-center space-x-4">
 		<button
-			class="px-4 py-2 rounded-lg bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white transition-colors duration-300"
+			class="px-4 py-2 rounded-lg btn btn-primary"
 			on:click={goToPreviousChapter}
 		>
 			Previous Chapter
 		</button>
 		<button
-			class="px-4 py-2 rounded-lg bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white transition-colors duration-300"
+			class="px-4 py-2 rounded-lg btn btn-primary"
 			on:click={goToNextChapter}
 		>
 			Next Chapter
@@ -208,7 +204,7 @@
 
 	{#if showScrollToTop}
 		<button
-			class="fixed bottom-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-lg"
+			class="fixed bottom-4 right-4 btn btn-outline btn-accent px-4 py-2 rounded-lg"
 			on:click={scrollToTop}
 		>
 			Scroll to Top
@@ -217,10 +213,6 @@
 </main>
 
 <style>
-	main {
-		background-color: #f7f7f7;
-	}
-
 	h1 {
 		font-size: 2rem;
 		margin-bottom: 1.5rem;

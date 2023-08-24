@@ -11,6 +11,10 @@ export const API_BASE_URL = 'https://api.texbab.com';
 
 export const theme: ThemeConfig = [
 	{
+		name: 'business',
+		text: '🏢 Business'
+	},
+	{
 		name: 'winter',
 		text: '🌨️ Winter'
 	},
@@ -106,10 +110,7 @@ export const theme: ThemeConfig = [
 		name: 'autumn',
 		text: '🍂 Autumn'
 	},
-	{
-		name: 'business',
-		text: '🏢 Business'
-	},
+	
 	{
 		name: 'acid',
 		text: '💊 Acid'
