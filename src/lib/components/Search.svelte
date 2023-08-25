@@ -5,7 +5,6 @@
 	import BigSearchResults from './BigSearchResults.svelte';
 	import SmallSearchResults from './SmallSearchResults.svelte';
 	import { searchQuery } from '$lib/utils/stores';
-	import { placeOrder } from '$lib/utils/api';
 
 	export let type: 'small' | 'big' = 'small';
 

@@ -71,7 +71,7 @@ const menuItems = [
 	// Add more menu items as needed
 ];
 
-export async function fetchMenuItems(menu: string) {
+export async function fetchMenuItems() {
 	// Simulate API request delay with a timeout
 	await new Promise((resolve) => setTimeout(resolve, 500));
 
