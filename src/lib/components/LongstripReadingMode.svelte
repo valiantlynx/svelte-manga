@@ -11,7 +11,7 @@
 			<img
 				src={image.imageUrl}
 				alt={`${data.title} ${$page.params.chapterid} Page ${image.pageNumber}`}
-				class="w-full rounded-lg shadow-md mb-4"
+				class="w-full rounded-lg shadow-md "
 			/>
 		</div>
 	{/each}

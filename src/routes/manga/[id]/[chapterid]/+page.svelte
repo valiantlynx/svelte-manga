@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { page } from '$app/stores';
 	import ScrollToTop from '$lib/components/ScrollToTop.svelte';
@@ -8,16 +7,23 @@
 	import GridReadingMode from '$lib/components/GridReadingMode.svelte';
 	import PaginatedReadingMode from '$lib/components/PaginatedReadingMode.svelte';
 	import Chat from '$lib/components/Chat.svelte';
+	import { goto } from '$app/navigation';
+
 	export let data: PageData;
 
 	let readingMode = 'longstrip'; // Default reading mode
 	let imageWidth = 'medium'; // Default image width mode
 	let currentPage = writable(0);
-	let chaptersToShow: any = [];
 
-	onMount(() => {
-		chaptersToShow = JSON.parse(window.localStorage.getItem('chaptersToShow') || '[]');
-	});
+	// filter  all hte data.chapters.value that starts with '\n
+	data.chapters = data.chapters.filter((chapter: any) => chapter.value.startsWith('/'));
+	console.log('data.chapters: ', data);
+
+	const currentChapterIndex = data.chapters.findIndex(
+		(chapter: any) => chapter.value === $page.url.pathname?.replace('/manga', '')
+	);
+
+	console.log('page: ', $page);
 
 	function setReadingMode(mode: string) {
 		readingMode = mode;
@@ -29,44 +35,23 @@
 		currentPage.set(0); // Reset current page when switching reading modes
 	}
 	function goToPreviousChapter() {
-		const currentChapterIndex = chaptersToShow.findIndex(
-			(chapter: any) => chapter.chapterId === $page.params.chapterid
-		);
-
-		console.log('currentChapterIndex: ' + currentChapterIndex);
-
-		if (currentChapterIndex < chaptersToShow.length - 1) {
-			const url =
-				$page.url.origin +
-				'/manga/' +
-				$page.params.id +
-				'/' +
-				chaptersToShow[currentChapterIndex + 1].chapterId;
+		if (currentChapterIndex > 0) {
+			// Use > 0 instead of < data.chapters.length - 1
+			const url = $page.url.origin + '/manga' + data.chapters[currentChapterIndex + 1].value; // Use - 1
 			window.location.href = url;
 		}
 	}
 
 	function goToNextChapter() {
-
-		const currentChapterIndex = chaptersToShow.findIndex(
-			(chapter: any) => chapter.chapterId === $page.params.chapterid
-		);
-
-		
-
-		if (currentChapterIndex < chaptersToShow.length - 1) {
-			const url =
-				$page.url.origin +
-				'/manga/' +
-				$page.params.id +
-				'/' +
-				chaptersToShow[currentChapterIndex - 1].chapterId;
+		if (currentChapterIndex < data.chapters.length - 1) {
+			const url = $page.url.origin + '/manga' + data.chapters[currentChapterIndex - 1].value; // Use + 1
 			window.location.href = url;
 		}
 	}
 </script>
 
 <main class="bg-base-100">
+	currentChapterIndex === data.chapters.length
 	<h1 class="text-3xl font-bold mb-6 text-center">{data.title} {$page.params.chapterid}</h1>
 
 	<!-- Reading Mode Selection -->
@@ -128,13 +113,30 @@
 	{/if}
 
 	<!-- Previous and Next Chapter Buttons -->
-	<div class="flex justify-center space-x-4">
-		<button class="px-4 py-2 rounded-lg btn btn-primary" on:click={goToPreviousChapter}>
+	<div class="flex justify-center space-x-4 m-4">
+		<button
+			class="px-4 py-2 rounded-lg btn btn-primary"
+			disabled={currentChapterIndex === data.chapters.length - 1}
+			on:click={goToPreviousChapter}
+		>
 			Previous Chapter
 		</button>
-		<button class="px-4 py-2 rounded-lg btn btn-primary" on:click={goToNextChapter}>
-			Next Chapter
-		</button>
+		{#if currentChapterIndex === 0}
+			<button
+				class="px-4 py-2 rounded-lg btn btn-primary"
+				on:click={() => goto(`/manga/${$page.params.id}`)}
+			>
+				Manga Details
+			</button>
+		{:else}
+			<button
+				class="px-4 py-2 rounded-lg btn btn-primary"
+				disabled={currentChapterIndex === 0}
+				on:click={goToNextChapter}
+			>
+				Next Chapter
+			</button>
+		{/if}
 	</div>
 	<ScrollToTop />
 	<Chat />

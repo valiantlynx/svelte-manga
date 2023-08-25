@@ -26,7 +26,7 @@
 
 	async function getInitialMessages() {
 		try {
-			const resultList = await pb.collection('chat_valiantlynx').getList(1, 50, {
+			const resultList = await pb.collection('chat_animevariant').getList(1, 50, {
 				sort: 'created',
 				expand: 'sender'
 			});
@@ -61,7 +61,7 @@
 
 	onMount(async () => {
 		messages = await getInitialMessages();
-		unsubscribe = await pb.collection('chat_valiantlynx').subscribe('*', handleRealtimeMessage);
+		unsubscribe = await pb.collection('chat_animevariant').subscribe('*', handleRealtimeMessage);
 	});
 
 	onDestroy(() => {
@@ -71,10 +71,10 @@
 	async function sendMessage() {
 		const data = {
 			message: newMessage,
-			sender: $authData.id,
-			receiver: $authData.id
+			sender: pb.authStore.model?.id,
+			receiver: pb.authStore.model?.id
 		};
-		await pb.collection('chat_valiantlynx').create(data);
+		await pb.collection('chat_animevariant').create(data);
 		newMessage = '';
 		canAutoScroll = true;
 		autoScroll();
