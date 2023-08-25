@@ -111,24 +111,39 @@ export const patchPocketbase1only = async (collection: string, id: string, data:
 };
 
 export const getImage = async (url: string, width: number, height: number) => {
-	const response = await fetch(url);
+	console.log(url);
+	console.log(width);
+	console.log(height);
+	const response = await fetch(url, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'image/jpeg',
+			'Access-Control-Allow-Origin': 'https://ww6.manganelo.tv'
+		}
+	});
+
 	if (response.ok) {
+		console.log('response ok');
 		const originalImageBlob = await response.blob();
-		const compressedImageBlob = await compressImage(originalImageBlob, width, height, 1); // 1 = 100% quality (no compression) - change as needed, e.g 0 = 0% quality (full compression)
+		console.log(originalImageBlob);
+		const compressedImageBlob = await compressFileImage(originalImageBlob, width, height, 1); // 1 = 100% quality (no compression) - change as needed, e.g 0 = 0% quality (full compression)
+		console.log(compressedImageBlob);
 		return URL.createObjectURL(compressedImageBlob);
 	}
 
 	throw new Error('Failed to fetch image');
 };
 
-export const compressImage = async (
+export const compressFileImage = async (
 	file: any,
 	width: number,
 	height: number,
 	quality: number
 ): Promise<File> => {
-	return new Promise<File>((resolve) => {
+	return new Promise<File>((resolve, reject) => {
+		console.log(file);
 		const reader = new FileReader();
+		console.log(reader);
 
 		reader.onload = async (event: any) => {
 			const image = new Image();
@@ -158,6 +173,42 @@ export const compressImage = async (
 		};
 
 		reader.readAsDataURL(file);
+	});
+};
+export const compressBlobImage = async (
+	file: Blob,
+	width: number,
+	height: number,
+	quality: number
+): Promise<Blob> => {
+	return new Promise<Blob>((resolve) => {
+		const image = new Image();
+		console.log(image);
+
+		image.onload = () => {
+			console.log('Image loaded:', image);
+			const canvas = document.createElement('canvas');
+			canvas.width = width;
+			canvas.height = height;
+
+			const ctx: any = canvas.getContext('2d');
+			ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+			canvas.toBlob(
+				(blob: any) => {
+					resolve(blob);
+				},
+				'image/jpeg',
+				quality
+			);
+		};
+
+		image.src = URL.createObjectURL(file);
+
+		// Wait for the image to load before resolving the promise
+		image.addEventListener('load', () => {
+			console.log('Image loaded:', image);
+		});
 	});
 };
 

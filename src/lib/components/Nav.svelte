@@ -5,17 +5,36 @@
 	import ThemeChanger from './ThemeChanger.svelte';
 </script>
 
-<div class="navbar bg-base-200">
+<!-- Small Devices Layout -->
+<div>
+	<div class="navbar bg-base-200 max-w-full sm:hidden">
+		<div class="flex-1">
+			<a class="btn btn-ghost normal-case text-xl" href="/">AnimeVariant</a>
+			<ThemeChanger />
+		</div>
+		<ProfileModal />
+	</div>
+	<!-- Show search bar only on pages other than search -->
+	{#if $page.url.pathname !== '/manga/search'}
+		<div class="navbar bg-base-200 flex flex-col sm:hidden">
+			<div class="flex-none sm:flex sm:gap-2">
+				<Search type="small" />
+			</div>
+		</div>
+	{/if}
+</div>
+
+<!-- Large Devices Layout -->
+<div class="navbar bg-base-200 hidden sm:flex">
 	<div class="flex-1">
 		<a class="btn btn-ghost normal-case text-xl" href="/">AnimeVariant</a>
 		<ThemeChanger />
 	</div>
 	<div class="flex-none gap-2">
-		<!-- dont show the small search bar on the search page -->
+		<!-- Show search bar only on pages other than search -->
 		{#if $page.url.pathname !== '/manga/search'}
 			<Search type="small" />
 		{/if}
-
 		<ProfileModal />
 	</div>
 </div>

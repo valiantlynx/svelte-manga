@@ -5,7 +5,7 @@ export const load = (async () => {
 	const page = 1;
 	let mangas = [];
 
-	const url = import.meta.env.VITE_HOST_URL + `/manga?page=${page}`;
+	const url = import.meta.env.VITE_HOST_URL + `/api/manga?page=${page}`;
 
 	const response = await axios.get(url, {
 		headers: {

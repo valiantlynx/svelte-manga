@@ -3,13 +3,14 @@ import axios from 'axios';
 import cheerio from 'cheerio';
 
 export const GET: RequestHandler = async ({ url, setHeaders }) => {
+	const souceUrl: any = url.searchParams.get('url');
+
 	setHeaders({
 		'Access-Control-Allow-Origin': '*',
 		'Cache-Control': `public, s-maxage=${60 * 60 * 24 * 365}`
 	});
 	// Your logic for handling the page parameter and generating the response
-	const path = url.pathname;
-	const trimmedPathname = path.substring(path.indexOf('/', 1));
+	const trimmedPathname = souceUrl.substring(souceUrl.indexOf('/', 1));
 
 	try {
 		const urlLink = `${import.meta.env.VITE_IMAGE_URL}/chapter${trimmedPathname}`;

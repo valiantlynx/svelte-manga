@@ -39,21 +39,24 @@
 	onMount(() => {
 		document.addEventListener('mousemove', updateMousePosition);
 	});
+
+	const imageSrc = `${import.meta.env.VITE_HOST_URL}/api${manga.img}?width=200&height=300`;
 </script>
 
-<div class="w-72 bg-base-300 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
+<div class="w-full bg-base-300 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
 	<button
+		class=" w-full"
 		on:click={() => goToMangaChapters(manga.id)}
 		on:keypress={() => goToMangaChapters(manga.id)}
 		on:mouseenter={toggleModal}
 		on:mouseleave={toggleModal}
 	>
 		<img
-			class="h-full w-full object-cover object-center group-hover:opacity-75 overflow-hidden rounded-t-xl"
-			src={`${import.meta.env.VITE_IMAGE_URL}${manga.img}`}
+			class=" w-full group-hover:opacity-75 overflow-hidden rounded-t-xl"
+			src={imageSrc}
 			alt={manga.title}
 		/>
-		<div class="px-4 py-3 w-72">
+		<div class="px-4 py-3 w-full">
 			<span class=" mr-3 uppercase text-xs">{manga.author[0]}</span>
 			<p class="text-lg font-bold truncate block capitalize">{manga.title}</p>
 			<div class="flex items-center">
@@ -72,7 +75,7 @@
 
 	{#if modalVisible}
 		<div
-			class="absolute bg-info rounded-lg shadow-lg p-4 z-50 w-72"
+			class="absolute bg-info rounded-lg shadow-lg p-4 z-50 w-full"
 			style="top: {modalPosition.includes('top')
 				? mouseY - 160
 				: mouseY}px; left: {modalPosition.includes('left') ? mouseX - 250 : mouseX + 20}px;"

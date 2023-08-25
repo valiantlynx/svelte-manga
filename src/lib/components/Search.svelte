@@ -18,7 +18,7 @@
 		}
 
 		try {
-			const response = await axios.get(`${import.meta.env.VITE_HOST_URL}/manga/search`, {
+			const response = await axios.get(`${import.meta.env.VITE_HOST_URL}/api/manga/search`, {
 				params: { word: searchTerm, page: 1 }
 			});
 
@@ -58,35 +58,32 @@
 	}
 </script>
 
-<main class="p-2">
-	<div class="max-w-screen-md mx-auto">
-		<!-- Container added here -->
-		<div class="join">
+<div class="max-w-screen mx-auto">
+	<!-- Container added here -->
+	<div class="join">
+		<div>
 			<div>
-				<div>
-					<input
-						class="input input-bordered join-item"
-						placeholder={$searchQuery ? $searchQuery : 'Search'}
-						on:input={handleSearch}
-					/>
-				</div>
-			</div>
-			<select class="select select-bordered join-item">
-				<option disabled selected>Manga</option>
-				<option disabled class="disabled:btn-error">Anime</option>
-				<option disabled class="disabled:btn-error">Chapters</option>
-				<option disabled class="disabled:btn-error">News</option>
-			</select>
-			<div class="indicator">
-				<span class="indicator-item badge badge-secondary">new</span>
-				<a href="/manga/search" class="btn join-item">Search</a>
+				<input
+					class="input input-bordered join-item w-full"
+					value={$searchQuery && type === 'big' ? $searchQuery : ''}
+					placeholder="Search"
+					on:input={handleSearch}
+				/>
 			</div>
 		</div>
+		<select class="select select-bordered join-item w-1/3">
+			<option disabled selected>Manga</option>
+			<option disabled class="disabled:btn-error">Anime -soon</option>
+			<option disabled class="disabled:btn-error">Chapters -soon</option>
+			<option disabled class="disabled:btn-error">News -soon</option>
+		</select>
 
-		{#if type === 'small'}
-			<SmallSearchResults {searchResults} {handleClick} />
-		{:else if type === 'big'}
-			<BigSearchResults {searchResults} {handleClick} />
-		{/if}
+		<a href="/manga/search" class="btn join-item w-1/5">Search</a>
 	</div>
-</main>
+
+	{#if type === 'small'}
+		<SmallSearchResults {searchResults} {handleClick} />
+	{:else if type === 'big'}
+		<BigSearchResults {searchResults} {handleClick} />
+	{/if}
+</div>

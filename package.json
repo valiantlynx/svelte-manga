@@ -41,6 +41,7 @@
 		"fff-flavored-frontmatter": "1.1.0-alpha.0",
 		"lodash": "^4.17.21",
 		"pocketbase": "^0.16.0",
+		"sharp": "^0.32.5",
 		"svelte-routing": "^1.11.0"
 	}
 }

@@ -3,7 +3,7 @@ import axios from 'axios';
 import cheerio from 'cheerio';
 
 export const GET: RequestHandler = async ({ url, setHeaders }) => {
-	const id = url.pathname;
+	const souceUrl = url.searchParams.get('url');
 	setHeaders({
 		'Access-Control-Allow-Origin': '*',
 		'Cache-Control': `public, s-maxage=${60 * 60 * 24 * 365}`
@@ -11,9 +11,10 @@ export const GET: RequestHandler = async ({ url, setHeaders }) => {
 
 	// Your logic for handling the page parameter and generating the response
 	try {
-		const url = `${import.meta.env.VITE_IMAGE_URL}${id}`;
+		const url = `${import.meta.env.VITE_IMAGE_URL}${souceUrl}`;
 
 		const response = await axios.get(url);
+
 		const $ = cheerio.load(response.data);
 
 		const titleElement = $('.story-info-right h1');
