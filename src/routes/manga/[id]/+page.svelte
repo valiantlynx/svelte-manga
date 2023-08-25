@@ -5,10 +5,9 @@
 	import Pagination from '$lib/components/Pagination.svelte';
 	import Chapters from '$lib/components/Chapters.svelte';
 	import MangaDetails from '$lib/components/MangaDetails.svelte';
+	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 
 	export let data: any;
-
-	console.log('data: ', data);
 
 	let { id } = $page.params;
 	let chaptersPerPage = 12;
@@ -23,15 +22,13 @@
 	function updateChaptersToShow() {
 		const startIndex = ($currentPage - 1) * chaptersPerPage;
 		const endIndex = startIndex + chaptersPerPage;
-		console.log('data.episodes: ', data);
+
 		chaptersToShow = data.episodes.slice(startIndex, endIndex);
 	}
 
 	function goToPage(event?: any) {
-		console.log('pageNumber: ', event.target.value, 'currentPage: ', $currentPage);
-
 		currentPage.set(event.target.value);
-		console.log('currentPage: ', $currentPage);
+
 		updateChaptersToShow();
 	}
 
@@ -42,9 +39,25 @@
 		pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
 		return Array.from({ length: totalPages }, (_, index) => index + 1);
 	}
+
+	const crumbs = [
+		{
+			name: 'Home',
+			url: '/'
+		},
+		{
+			name: 'Manga',
+			url: '/manga'
+		},
+		{
+			name: data.title,
+			url: '/manga/' + id
+		}
+	];
 </script>
 
 <main class="p-8">
+	<Breadcrumbs {crumbs} />
 	<h1 class="text-3xl font-bold mb-6 text-center">Manga Chapters</h1>
 	<div class="grid grid-cols-1 gap-4 m-2 p-3 w-full h-full justify-center">
 		<MangaDetails {data} />

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Login from './Login.svelte';
+	import Login from '$lib/components/Login.svelte';
 	import ChatMessage from './ChatMessage.svelte';
 	import { onMount, onDestroy } from 'svelte';
 	import { authData } from '$lib/utils/stores';
@@ -45,11 +45,9 @@
 				record.expand = { sender };
 				messages = [...messages, record];
 
-				console.log('unreadMessages before:', unreadMessages);
 				if ($authData.id !== record.receiver) {
 					unreadMessages = true;
 				}
-				console.log('unreadMessages after:', unreadMessages);
 			}
 			if (action === 'delete') {
 				messages = messages.filter((m) => m.id !== record.id);

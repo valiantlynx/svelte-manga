@@ -1,6 +1,6 @@
 import type { PageLoad } from './$types';
 
-export const load = (async ({ params }) => {
+export const load = (async () => {
 	const page = 1;
 	let mangas = [];
 

@@ -13,8 +13,6 @@ export const GET: RequestHandler = async ({ url, setHeaders }) => {
 	try {
 		const url = `${import.meta.env.VITE_IMAGE_URL}${id}`;
 
-		console.log('Navigating to: ', url);
-
 		const response = await axios.get(url);
 		const $ = cheerio.load(response.data);
 

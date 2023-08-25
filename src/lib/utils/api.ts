@@ -18,7 +18,7 @@ export const authPocketbase = async (user: string, password: string) => {
 export const logoutPocketbase = async () => {
 	pb.authStore.clear();
 	authData.set({});
-
+	window.location.reload();
 	goto('/');
 	if (!pb.authStore.isValid) {
 		return { status: 200, message: 'logged out' };
@@ -30,6 +30,7 @@ export const logoutPocketbase = async () => {
 export const createPocketbaseUser = async (data: any) => {
 	const res = await pb.collection('users').create(data);
 	authData.set(res);
+
 	// (optional) send an email verification request
 	await pb.collection('users').requestVerification(data.email);
 
@@ -126,7 +127,7 @@ export const compressImage = async (
 	height: number,
 	quality: number
 ): Promise<File> => {
-	return new Promise<File>((resolve, reject) => {
+	return new Promise<File>((resolve) => {
 		const reader = new FileReader();
 
 		reader.onload = async (event: any) => {

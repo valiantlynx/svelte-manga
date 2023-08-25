@@ -8,6 +8,7 @@
 	import PaginatedReadingMode from '$lib/components/PaginatedReadingMode.svelte';
 	import Chat from '$lib/components/Chat.svelte';
 	import { goto } from '$app/navigation';
+	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 
 	export let data: PageData;
 
@@ -17,13 +18,10 @@
 
 	// filter  all hte data.chapters.value that starts with '\n
 	data.chapters = data.chapters.filter((chapter: any) => chapter.value.startsWith('/'));
-	console.log('data.chapters: ', data);
 
 	const currentChapterIndex = data.chapters.findIndex(
 		(chapter: any) => chapter.value === $page.url.pathname?.replace('/manga', '')
 	);
-
-	console.log('page: ', $page);
 
 	function setReadingMode(mode: string) {
 		readingMode = mode;
@@ -35,25 +33,42 @@
 		currentPage.set(0); // Reset current page when switching reading modes
 	}
 	function goToPreviousChapter() {
-		if (currentChapterIndex > 0) {
-			// Use > 0 instead of < data.chapters.length - 1
-			const url = $page.url.origin + '/manga' + data.chapters[currentChapterIndex + 1].value; // Use - 1
+		if (currentChapterIndex < data.chapters.length - 1) {
+			const url = $page.url.origin + '/manga' + data.chapters[currentChapterIndex + 1].value;
 			window.location.href = url;
 		}
 	}
 
 	function goToNextChapter() {
-		if (currentChapterIndex < data.chapters.length - 1) {
-			const url = $page.url.origin + '/manga' + data.chapters[currentChapterIndex - 1].value; // Use + 1
+		if (currentChapterIndex > 0) {
+			const url = $page.url.origin + '/manga' + data.chapters[currentChapterIndex - 1].value;
 			window.location.href = url;
 		}
 	}
+
+	const crumbs = [
+		{
+			name: 'Home',
+			url: '/'
+		},
+		{
+			name: 'Manga',
+			url: '/manga'
+		},
+		{
+			name: data.title,
+			url: `/manga/${$page.params.id}`
+		},
+		{
+			name: $page.params.chapterid,
+			url: `/manga/${$page.params.id}/${$page.params.chapterid}`
+		}
+	];
 </script>
 
 <main class="bg-base-100">
-	currentChapterIndex === data.chapters.length
+	<Breadcrumbs {crumbs} />
 	<h1 class="text-3xl font-bold mb-6 text-center">{data.title} {$page.params.chapterid}</h1>
-
 	<!-- Reading Mode Selection -->
 	<div class="mb-4 flex justify-center space-x-4">
 		<button

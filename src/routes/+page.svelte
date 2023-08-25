@@ -3,6 +3,7 @@
 	import MangaCard from '$lib/components/MangaCard.svelte';
 
 	export let data: any;
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	let { pageNo } = $page.params;
 
 	// send the user to the manga chapters page

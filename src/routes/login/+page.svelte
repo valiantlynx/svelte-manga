@@ -8,3 +8,6 @@
 </svelte:head>
 
 <Login />
+<center>
+	<button class="btn btn-primary" on:click={() => window.history.back()}> Go back </button>
+</center>

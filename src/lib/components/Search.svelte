@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import axios from 'axios';
-	import type { MouseEventHandler } from 'svelte/elements';
 	import BigSearchResults from './BigSearchResults.svelte';
 	import SmallSearchResults from './SmallSearchResults.svelte';
 	import { searchQuery } from '$lib/utils/stores';
@@ -9,7 +8,7 @@
 	export let type: 'small' | 'big' = 'small';
 
 	let searchResults: any = [];
-	let loading = false;
+
 	let searchTerm = '';
 
 	async function search() {
@@ -17,8 +16,6 @@
 			searchResults = [];
 			return;
 		}
-
-		loading = true;
 
 		try {
 			const response = await axios.get(`${import.meta.env.VITE_HOST_URL}/manga/search`, {
@@ -31,8 +28,6 @@
 		} catch (error) {
 			console.error(error);
 		}
-
-		loading = false;
 	}
 
 	let debouncedSearch: any;
@@ -54,10 +49,9 @@
 		searchQuery.set(searchTerm);
 	}
 
-	function handleClick(url: any): MouseEventHandler<HTMLButtonElement> {
+	function handleClick(url: any) {
 		goto(url);
 		searchTerm = '';
-		return () => {};
 	}
 	if ($searchQuery) {
 		searchTerm = $searchQuery;

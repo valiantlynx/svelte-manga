@@ -2,15 +2,17 @@ import type { RequestHandler } from './$types';
 import axios from 'axios';
 import cheerio from 'cheerio';
 
-export const GET: RequestHandler = async ({ url }) => {
+export const GET: RequestHandler = async ({ url, setHeaders }) => {
+	setHeaders({
+		'Access-Control-Allow-Origin': '*',
+		'Cache-Control': `public, s-maxage=${60 * 60 * 24 * 365}`
+	});
 	// Your logic for handling the page parameter and generating the response
 	const path = url.pathname;
 	const trimmedPathname = path.substring(path.indexOf('/', 1));
 
 	try {
 		const urlLink = `${import.meta.env.VITE_IMAGE_URL}/chapter${trimmedPathname}`;
-
-		console.log('Navigating to: ', urlLink);
 
 		const response = await axios.get(urlLink);
 		const $ = cheerio.load(response.data);
@@ -23,10 +25,6 @@ export const GET: RequestHandler = async ({ url }) => {
 				const pageNumber = index + 1;
 				const totalPages = elements.length;
 
-				console.log('Image URL:', imageUrl);
-				console.log('Page Number:', pageNumber);
-				console.log('Total Pages:', totalPages);
-
 				return {
 					imageUrl,
 					pageNumber,
@@ -37,7 +35,7 @@ export const GET: RequestHandler = async ({ url }) => {
 
 		const chapters: any[] = [];
 		// Select the first select element with class "navi-change-chapter"
-		const firstSelectElement = $('select.navi-change-chapter option')
+		$('select.navi-change-chapter option')
 			.first()
 			.each((index, element) => {
 				const chapterNumberMatch = $(element)
@@ -54,7 +52,6 @@ export const GET: RequestHandler = async ({ url }) => {
 					});
 				}
 			});
-		console.log('First Select Element:', firstSelectElement);
 		// Select all <option> elements within the <select> with class "navi-change-chapter"
 		$('select.navi-change-chapter option').each((index, element) => {
 			const chapterNumberMatch = $(element)
@@ -72,7 +69,6 @@ export const GET: RequestHandler = async ({ url }) => {
 			}
 		});
 
-		console.log('Chapter Numbers:', chapters);
 		return new Response(
 			JSON.stringify({
 				chapters,

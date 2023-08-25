@@ -7,7 +7,6 @@ export const GET: RequestHandler = async ({ url }) => {
 	const word = url.searchParams.get('word');
 	const page: any = url.searchParams.get('page');
 
-	console.log('Fetching from -', url);
 	// Your logic for handling the page parameter and generating the response
 	const headers = {
 		'Access-Control-Allow-Origin': '*',
@@ -19,9 +18,6 @@ export const GET: RequestHandler = async ({ url }) => {
 	}
 
 	const urlApi = `${import.meta.env.VITE_IMAGE_URL}/search/${word}?page=${page}`;
-	console.log('url: ', url);
-	console.log('searching for: ', word, ' on page: ', page);
-	console.log('fetching from - ', urlApi);
 
 	try {
 		const { data: html } = await axios.get(urlApi);

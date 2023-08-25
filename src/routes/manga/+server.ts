@@ -5,8 +5,6 @@ import cheerio from 'cheerio';
 export const GET: RequestHandler = async ({ url }) => {
 	const page = url.searchParams.get('page');
 
-	console.log('Fetching from -', url);
-
 	// Your logic for handling the page parameter and generating the response
 	const headers = {
 		'Access-Control-Allow-Origin': '*',
@@ -15,7 +13,7 @@ export const GET: RequestHandler = async ({ url }) => {
 
 	try {
 		const apiUrl = `${import.meta.env.VITE_IMAGE_URL}/genre?type=topview&page=${page}`;
-		console.log('fetching from - ', apiUrl);
+
 		const response: any = await axios
 			.get(apiUrl, {
 				headers: {
@@ -24,7 +22,14 @@ export const GET: RequestHandler = async ({ url }) => {
 				}
 			})
 			.catch((err: any) => {
-				console.log('error: ', err.message, err.response, err.response.data, err.data, err.status);
+				console.error(
+					'error: ',
+					err.message,
+					err.response,
+					err.response.data,
+					err.data,
+					err.status
+				);
 			});
 		const $ = cheerio.load(response.data);
 

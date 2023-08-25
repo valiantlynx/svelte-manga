@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { authPocketbase } from '$lib/utils/api';
+	import { authPocketbase, pb } from '$lib/utils/api';
 
 	let username: string;
 	let password: string;
@@ -16,51 +16,61 @@
 
 		try {
 			await authPocketbase(username, password);
+			window.location.reload();
 		} catch (err: any) {
 			alert(err.message);
 		}
 	}
 </script>
 
-<div class="p-4 space-y-4">
-	<div class="form-control">
-		<label class="input-group input-group-vertical">
-			<span class="bg-primary">Username</span>
-			<input name="username" bind:value={username} minlength="3" class="input input-bordered" />
-		</label>
+{#if pb.authStore.isValid}
+	<div class="relative flex flex-col items-center justify-center h-screen overflow-hidden">
+		<div class="w-full p-6 bg-base-200 border-t-4 rounded-md shadow-md border-top lg:max-w-lg">
+			<h1 class="text-3xl font-semibold text-center">You are already logged in</h1>
+			<form class="space-y-4">
+				<button on:click={() => window.history.back()} class="btn btn-block btn-neutral"
+					>Go back</button
+				>
+			</form>
+		</div>
 	</div>
+{:else}
+	<div class="relative flex flex-col items-center justify-center h-screen overflow-hidden">
+		<div class="w-full p-6 bg-base-200 border-t-4 rounded-md shadow-md border-top lg:max-w-lg">
+			<h1 class="text-3xl font-semibold text-center">AnimeVariant</h1>
+			<form class="space-y-4">
+				<div>
+					<label class="label" for="username">
+						<span class="text-base label-text">Username</span>
+					</label>
+					<input
+						type="text"
+						placeholder="Username"
+						bind:value={username}
+						minlength="3"
+						class="w-full input input-bordered"
+					/>
+				</div>
+				<div>
+					<label class="label" for="password">
+						<span class="text-base label-text">Password</span>
+					</label>
 
-	<div class="form-control">
-		<label class="input-group input-group-vertical">
-			<span class="bg-primary">Password</span>
-			{#if !passwordError}
-				<input
-					name="password"
-					bind:value={password}
-					minlength="8"
-					type="password"
-					class="input input-bordered"
-					class:input-error={passwordError}
-					on:input={checkPassword}
-				/>
-			{:else}
-				<input
-					name="password"
-					bind:value={password}
-					minlength="8"
-					type="password"
-					class="input input-bordered input-error w-full"
-					class:input-bordered={passwordError}
-					on:input={checkPassword}
-				/>
-				<label class="label" for="password">
-					<span class="label-text-alt text-error">Password must be at least 8 characters long.</span
-					>
-				</label>
-			{/if}
-		</label>
+					<input
+						name="password"
+						bind:value={password}
+						placeholder="Enter Password"
+						minlength="8"
+						type="password"
+						class="w-full input input-bordered"
+						on:submit={checkPassword}
+					/>
+				</div>
+				<a href="/signup" class=" link link-hover">Not registered? Signup</a>
+				<div>
+					<button on:click={login} class="btn btn-block">Login</button>
+				</div>
+			</form>
+		</div>
 	</div>
-
-	<a href="/signup" class="text-blue-600 hover:underline block">Not registered? Signup</a>
-	<button on:click={login} class="btn btn-primary w-full">login</button>
-</div>
+{/if}

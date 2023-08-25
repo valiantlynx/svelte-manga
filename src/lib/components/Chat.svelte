@@ -45,11 +45,9 @@
 				record.expand = { sender };
 				messages = [...messages, record];
 
-				console.log('unreadMessages before:', unreadMessages);
 				if ($authData.id !== record.receiver) {
 					unreadMessages = true;
 				}
-				console.log('unreadMessages after:', unreadMessages);
 			}
 			if (action === 'delete') {
 				messages = messages.filter((m) => m.id !== record.id);

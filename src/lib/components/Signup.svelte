@@ -5,81 +5,88 @@
 	let username = '';
 	let password = '';
 	let email = '';
-	let passwordConfirm = '';
 
 	const data = {
 		username,
 		email,
 		emailVisibility: true,
 		password,
-		passwordConfirm
+		passwordConfirm: password
 	};
 
 	async function signup() {
 		try {
 			// create pocketbase user
 			await createPocketbaseUser(data);
-			goto('/');
+			await goto('/');
+			window.location.reload();
 		} catch (err: any) {
 			alert(err.message);
 		}
 	}
 </script>
 
-<div class="p-4 space-y-4">
-	<div class="form-control">
-		<label class="input-group input-group-vertical">
-			<span class="bg-primary">Username</span>
+<div class="relative flex flex-col items-center justify-center h-screen overflow-hidden">
+	<div class="w-full p-6 bg-base-200 border-t-4 rounded-md shadow-md border-top lg:max-w-lg">
+		<h1 class="text-3xl font-semibold text-center">AnimeVariant</h1>
+		<form class="space-y-4">
+			<div>
+				<label class="label" for="username">
+					<span class="text-base label-text">Username</span>
+				</label>
+				<input
+					type="text"
+					name="username"
+					placeholder="Username"
+					bind:value={data.username}
+					minlength="3"
+					maxlength="16"
+					class="input input-bordered w-full"
+				/>
+			</div>
+			<div>
+				<label class="label" for="password">
+					<span class="text-base label-text">Password</span>
+				</label>
 
-			<input
-				name="username"
-				bind:value={data.username}
-				minlength="3"
-				maxlength="16"
-				class="input input-bordered"
-			/>
-		</label>
+				<input
+					type="password"
+					name="password"
+					placeholder="Enter Password"
+					bind:value={data.password}
+					minlength="8"
+					class="input input-bordered w-full"
+				/>
+			</div>
+			<div>
+				<label class="label" for="password">
+					<span class="text-base label-text">Confirm Password</span>
+				</label>
+
+				<input
+					type="password"
+					name="passwordConfirm"
+					placeholder="Enter Password Again"
+					bind:value={data.passwordConfirm}
+					minlength="8"
+					class="input input-bordered w-full"
+				/>
+			</div>
+			<div>
+				<label class="label" for="email">
+					<span class="text-base label-text">Email</span>
+				</label>
+				<input
+					bind:value={data.email}
+					type="email"
+					placeholder="info@site.com"
+					class="input input-bordered w-full"
+				/>
+			</div>
+			<a href="/login" class=" link link-hover">Already registered? Login</a>
+			<div>
+				<button on:click={signup} class="btn btn-block">Sign Up</button>
+			</div>
+		</form>
 	</div>
-
-	<div class="form-control">
-		<label class="input-group input-group-vertical">
-			<span class="bg-primary">Password</span>
-
-			<input
-				name="password"
-				bind:value={data.password}
-				minlength="8"
-				type="password"
-				class="input input-bordered"
-			/>
-		</label>
-	</div>
-
-	<div class="form-control">
-		<label class="input-group input-group-vertical">
-			<span class="bg-primary">Confirm Password</span>
-			<input
-				name="passwordConfirm"
-				bind:value={data.passwordConfirm}
-				minlength="8"
-				type="password"
-				class="input input-bordered"
-			/>
-		</label>
-	</div>
-
-	<div class="form-control">
-		<label class="input-group input-group-vertical">
-			<span class="bg-primary">Your Email</span>
-			<input
-				bind:value={data.email}
-				type="email"
-				placeholder="info@site.com"
-				class="input input-bordered"
-			/>
-		</label>
-	</div>
-
-	<a href="/login" class="text-blue-600 hover:underline block">Already registered? Login</a>
-	<button on:click={signup} class="btn btn-primary w-full">Sign Up</button>
 </div>
