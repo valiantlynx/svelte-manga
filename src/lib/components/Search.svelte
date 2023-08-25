@@ -73,7 +73,7 @@
 				<div>
 					<input
 						class="input input-bordered join-item"
-						placeholder= {$searchQuery ? $searchQuery : 'Search'}
+						placeholder={$searchQuery ? $searchQuery : 'Search'}
 						on:input={handleSearch}
 					/>
 				</div>
@@ -86,11 +86,9 @@
 			</select>
 			<div class="indicator">
 				<span class="indicator-item badge badge-secondary">new</span>
-				<a href="/manga/search"  class="btn join-item">Search</a>
+				<a href="/manga/search" class="btn join-item">Search</a>
 			</div>
 		</div>
-
-		
 
 		{#if type === 'small'}
 			<SmallSearchResults {searchResults} {handleClick} />

@@ -3,7 +3,6 @@
 	import ProfileModal from './ProfileModal.svelte';
 	import { page } from '$app/stores';
 	import ThemeChanger from './ThemeChanger.svelte';
-
 </script>
 
 <div class="navbar bg-base-200">
@@ -12,7 +11,6 @@
 		<ThemeChanger />
 	</div>
 	<div class="flex-none gap-2">
-
 		<!-- dont show the small search bar on the search page -->
 		{#if $page.url.pathname !== '/manga/search'}
 			<Search type="small" />

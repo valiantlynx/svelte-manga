@@ -36,24 +36,30 @@ export const GET: RequestHandler = async ({ url }) => {
 			.get();
 
 		const chapters: any[] = [];
-		// Select the first select element with class "navi-change-chapter" 
-		const firstSelectElement = $('select.navi-change-chapter option').first().each((index, element) => {
-			const chapterNumberMatch = $(element).text().match(/Chapter (\d+)/);
+		// Select the first select element with class "navi-change-chapter"
+		const firstSelectElement = $('select.navi-change-chapter option')
+			.first()
+			.each((index, element) => {
+				const chapterNumberMatch = $(element)
+					.text()
+					.match(/Chapter (\d+)/);
 
-			// remove the /chapter part of the url
-			const value = $(element).attr('value')?.replace('/chapter', '');
-			if (chapterNumberMatch && value) {
-				const chapterNumber = parseInt(chapterNumberMatch[1]);
-				chapters.push({
-					number: chapterNumber,
-					value
-				});
-			}
-		});
+				// remove the /chapter part of the url
+				const value = $(element).attr('value')?.replace('/chapter', '');
+				if (chapterNumberMatch && value) {
+					const chapterNumber = parseInt(chapterNumberMatch[1]);
+					chapters.push({
+						number: chapterNumber,
+						value
+					});
+				}
+			});
 		console.log('First Select Element:', firstSelectElement);
 		// Select all <option> elements within the <select> with class "navi-change-chapter"
 		$('select.navi-change-chapter option').each((index, element) => {
-			const chapterNumberMatch = $(element).text().match(/Chapter (\d+)/);
+			const chapterNumberMatch = $(element)
+				.text()
+				.match(/Chapter (\d+)/);
 
 			// remove the /chapter part of the url
 			const value = $(element).attr('value')?.replace('/chapter', '');

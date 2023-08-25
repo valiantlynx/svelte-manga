@@ -1,8 +1,7 @@
 <script lang="ts">
-    import { searchQuery } from '$lib/utils/stores';
+	import { searchQuery } from '$lib/utils/stores';
 	export let searchResults: any = [];
 	export let handleClick: any;
-	
 </script>
 
 <div class="absolute z-10 bg-base-200 rounded-box shadow-lg top-16" hidden={$searchQuery === ''}>

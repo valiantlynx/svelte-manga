@@ -16,7 +16,6 @@
 
 		try {
 			await authPocketbase(username, password);
-			
 		} catch (err: any) {
 			alert(err.message);
 		}

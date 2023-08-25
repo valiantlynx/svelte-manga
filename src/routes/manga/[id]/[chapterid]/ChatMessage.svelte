@@ -7,9 +7,7 @@
 
 	const messageClass = message.expand?.sender.username === sender ? 'chat-end' : 'chat-start';
 	const avatar = message.expand?.sender.avatar
-		? `${site.pocketbase}/api/files/_pb_users_auth_/${message.expand?.sender.id}/${
-				message.expand?.sender.avatar
-		  }`
+		? `${site.pocketbase}/api/files/_pb_users_auth_/${message.expand?.sender.id}/${message.expand?.sender.avatar}`
 		: `https://avatars.dicebear.com/api/adventurer-neutral/${message.expand?.sender.username}.svg`;
 
 	const ts = new Date(message.created);

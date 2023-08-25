@@ -1,5 +1,5 @@
 export type Icon = {
-  src: string
-  sizes?: string
-  type?: string
-}
+	src: string;
+	sizes?: string;
+	type?: string;
+};

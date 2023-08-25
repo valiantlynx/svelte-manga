@@ -110,7 +110,7 @@ export const theme: ThemeConfig = [
 		name: 'autumn',
 		text: '🍂 Autumn'
 	},
-	
+
 	{
 		name: 'acid',
 		text: '💊 Acid'

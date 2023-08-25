@@ -43,4 +43,3 @@ export const pocketbaseResponse = writable({
 
 // search query
 export const searchQuery = writable('');
-

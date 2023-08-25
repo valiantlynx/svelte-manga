@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { page } from "$app/stores";
+	import { page } from '$app/stores';
 	export let data: any;
 </script>
 
@@ -17,14 +17,14 @@
 	<div class="w-full md:w-1/2 p-4 border rounded-lg shadow-md">
 		<h2 class="text-xl font-bold mb-2">{data.title}</h2>
 		<p class="mb-4">{data.description}</p>
-		<a 
-        class="btn btn-primary"
-        href={`${$page.url.pathname}/${data.episodes[data.episodes.length - 1].chapterId}`}
-        >Read First</a>
-        <a 
-        class="btn btn-primary"
-        href={`${$page.url.pathname}/${data.episodes[0].chapterId}`}
-        >Read Last</a>
+		<a
+			class="btn btn-primary"
+			href={`${$page.url.pathname}/${data.episodes[data.episodes.length - 1].chapterId}`}
+			>Read First</a
+		>
+		<a class="btn btn-primary" href={`${$page.url.pathname}/${data.episodes[0].chapterId}`}
+			>Read Last</a
+		>
 	</div>
 
 	<!-- manga stats -->
