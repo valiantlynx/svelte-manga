@@ -2,18 +2,13 @@
 	import { page } from '$app/stores';
 	export let data: any;
 
-
 	const imageSrc = `${import.meta.env.VITE_HOST_URL}/api${data.img}?width=200&height=300`;
 </script>
 
 <div class="w-full flex flex-col md:flex-row gap-4">
 	<!-- manga image -->
 	<div class="w-full md:w-1/5 h-full">
-		<img
-			class="w-full h-auto object-cover rounded-lg"
-			src={imageSrc}
-			alt={data.title}
-		/>
+		<img class="w-full h-auto object-cover rounded-lg" src={imageSrc} alt={data.title} />
 	</div>
 
 	<!-- manga info -->
