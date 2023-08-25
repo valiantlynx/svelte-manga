@@ -10,8 +10,6 @@
 	function goToMangaChapters(id: any) {
 		window.location.href = $page.url.origin + '/manga/' + id;
 	}
-
-	console.log($page);
 </script>
 
 <main class="p-4 bg-base-100">
