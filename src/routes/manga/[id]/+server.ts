@@ -2,8 +2,12 @@ import type { RequestHandler } from './$types';
 import axios from 'axios';
 import cheerio from 'cheerio';
 
-export const GET: RequestHandler = async ({ url }) => {
+export const GET: RequestHandler = async ({ url, setHeaders }) => {
 	const id = url.pathname;
+	setHeaders({
+		'Access-Control-Allow-Origin': '*',
+		'Cache-Control': `public, s-maxage=${60 * 60 * 24 * 365}`
+	});
 
 	// Your logic for handling the page parameter and generating the response
 	try {

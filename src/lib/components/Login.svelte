@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { authPocketbase } from '$lib/utils/api';
 
 	let username: string;
@@ -17,7 +16,7 @@
 
 		try {
 			await authPocketbase(username, password);
-			goto('/');
+			
 		} catch (err: any) {
 			alert(err.message);
 		}

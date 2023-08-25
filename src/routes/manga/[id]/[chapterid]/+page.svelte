@@ -3,9 +3,12 @@
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { page } from '$app/stores';
+	import ScrollToTop from '$lib/components/ScrollToTop.svelte';
+	import LongstripReadingMode from '$lib/components/LongstripReadingMode.svelte';
+	import GridReadingMode from '$lib/components/GridReadingMode.svelte';
+	import PaginatedReadingMode from '$lib/components/PaginatedReadingMode.svelte';
+	import Chat from '$lib/components/Chat.svelte';
 	export let data: PageData;
-	let scrollPosition = 0;
-	let showScrollToTop = false;
 
 	let readingMode = 'longstrip'; // Default reading mode
 	let imageWidth = 'medium'; // Default image width mode
@@ -13,21 +16,8 @@
 	let chaptersToShow: any = [];
 
 	onMount(() => {
-		window.addEventListener('scroll', handleScroll);
 		chaptersToShow = JSON.parse(window.localStorage.getItem('chaptersToShow') || '[]');
 	});
-
-	function handleScroll() {
-		scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-		showScrollToTop = scrollPosition > 100;
-	}
-
-	function scrollToTop() {
-		window.scrollTo({
-			top: 0,
-			behavior: 'smooth'
-		});
-	}
 
 	function setReadingMode(mode: string) {
 		readingMode = mode;
@@ -57,9 +47,12 @@
 	}
 
 	function goToNextChapter() {
+
 		const currentChapterIndex = chaptersToShow.findIndex(
 			(chapter: any) => chapter.chapterId === $page.params.chapterid
 		);
+
+		
 
 		if (currentChapterIndex < chaptersToShow.length - 1) {
 			const url =
@@ -123,104 +116,26 @@
 
 	<!-- Images Display -->
 	{#if readingMode === 'longstrip'}
-		<div class="flex flex-wrap justify-center max-w-full mx-auto">
-			{#each data?.images as image}
-				<div class={imageWidth == 'full' ? 'w-full' : 'w-3/5'}>
-					<img
-						src={image.imageUrl}
-						alt={`${data.title} ${$page.params.chapterid} Page ${image.pageNumber}`}
-						class="w-full rounded-lg shadow-md mb-4"
-					/>
-				</div>
-			{/each}
-		</div>
+		<LongstripReadingMode {data} {imageWidth} />
 	{/if}
 
 	{#if readingMode === 'grid'}
-		<div class="flex flex-wrap justify-center gap-4 max-w-full mx-auto">
-			{#each data?.images as image}
-				<div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
-					<img
-						src={image.imageUrl}
-						alt={`${data.title} ${$page.params.chapterid} Page ${image.pageNumber}`}
-						class="w-full rounded-lg shadow-md"
-					/>
-				</div>
-			{/each}
-		</div>
+		<GridReadingMode {data} />
 	{/if}
 
 	{#if readingMode === 'paginated'}
-		<div class="flex items-center justify-center mb-4">
-			<button
-				class="px-4 py-2 rounded-lg btn btn-primary"
-				class:disabled={$currentPage === 0}
-				on:click={() => ($currentPage -= 1)}
-			>
-				Prev
-			</button>
-			<h2 class="mx-4 text-lg font-bold">
-				{$currentPage + 1} / {data?.images.length}
-			</h2>
-			<button
-				class="px-4 py-2 rounded-lg btn btn-primary"
-				class:disabled={$currentPage === data?.images.length - 1}
-				on:click={() => ($currentPage += 1)}
-			>
-				Next
-			</button>
-		</div>
-
-		<div class="flex justify-center">
-			{#each data?.images as image, index}
-				{#if $currentPage === index}
-					<div class="w-full max-w-4xl">
-						<img
-							src={image.imageUrl}
-							alt={`${data.title} ${$page.params.chapterid} Page ${image.pageNumber}`}
-							class="w-full rounded-lg shadow-md"
-						/>
-					</div>
-				{/if}
-			{/each}
-		</div>
+		<PaginatedReadingMode {data} />
 	{/if}
 
 	<!-- Previous and Next Chapter Buttons -->
 	<div class="flex justify-center space-x-4">
-		<button
-			class="px-4 py-2 rounded-lg btn btn-primary"
-			on:click={goToPreviousChapter}
-		>
+		<button class="px-4 py-2 rounded-lg btn btn-primary" on:click={goToPreviousChapter}>
 			Previous Chapter
 		</button>
-		<button
-			class="px-4 py-2 rounded-lg btn btn-primary"
-			on:click={goToNextChapter}
-		>
+		<button class="px-4 py-2 rounded-lg btn btn-primary" on:click={goToNextChapter}>
 			Next Chapter
 		</button>
 	</div>
-
-	{#if showScrollToTop}
-		<button
-			class="fixed bottom-4 right-4 btn btn-outline btn-accent px-4 py-2 rounded-lg"
-			on:click={scrollToTop}
-		>
-			Scroll to Top
-		</button>
-	{/if}
+	<ScrollToTop />
+	<Chat />
 </main>
-
-<style>
-	h1 {
-		font-size: 2rem;
-		margin-bottom: 1.5rem;
-		text-align: center;
-	}
-
-	img {
-		max-width: 100%;
-		height: auto;
-	}
-</style>

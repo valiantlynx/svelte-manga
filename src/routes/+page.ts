@@ -1,5 +1,4 @@
 import type { PageLoad } from './$types';
-import axios from 'axios';
 
 export const load = (async ({ params }) => {
 	const page = 1;
@@ -7,14 +6,9 @@ export const load = (async ({ params }) => {
 
 	const url = import.meta.env.VITE_HOST_URL + `/manga?page=${page}`;
 
-	const response = await axios.get(url, {
-		headers: {
-			'Access-Control-Allow-Origin': '*',
-			'Content-Type': 'application/json'
-		}
-	});
-
-	const data = await response.data;
+	const response = await fetch(url)
+	
+	const data = await await response.json();
 	mangas = data.mangas;
 
 	return {
