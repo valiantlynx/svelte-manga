@@ -111,9 +111,7 @@ export const patchPocketbase1only = async (collection: string, id: string, data:
 };
 
 export const getImage = async (url: string, width: number, height: number) => {
-	console.log(url);
-	console.log(width);
-	console.log(height);
+
 	const response = await fetch(url, {
 		method: 'GET',
 		headers: {
@@ -123,11 +121,11 @@ export const getImage = async (url: string, width: number, height: number) => {
 	});
 
 	if (response.ok) {
-		console.log('response ok');
+		
 		const originalImageBlob = await response.blob();
-		console.log(originalImageBlob);
+		
 		const compressedImageBlob = await compressFileImage(originalImageBlob, width, height, 1); // 1 = 100% quality (no compression) - change as needed, e.g 0 = 0% quality (full compression)
-		console.log(compressedImageBlob);
+	
 		return URL.createObjectURL(compressedImageBlob);
 	}
 
@@ -141,10 +139,9 @@ export const compressFileImage = async (
 	quality: number
 ): Promise<File> => {
 	return new Promise<File>((resolve, reject) => {
-		console.log(file);
+	
 		const reader = new FileReader();
-		console.log(reader);
-
+	
 		reader.onload = async (event: any) => {
 			const image = new Image();
 			image.src = event.target.result as string;
@@ -183,10 +180,9 @@ export const compressBlobImage = async (
 ): Promise<Blob> => {
 	return new Promise<Blob>((resolve) => {
 		const image = new Image();
-		console.log(image);
-
+	
 		image.onload = () => {
-			console.log('Image loaded:', image);
+			
 			const canvas = document.createElement('canvas');
 			canvas.width = width;
 			canvas.height = height;
@@ -207,7 +203,7 @@ export const compressBlobImage = async (
 
 		// Wait for the image to load before resolving the promise
 		image.addEventListener('load', () => {
-			console.log('Image loaded:', image);
+			
 		});
 	});
 };
