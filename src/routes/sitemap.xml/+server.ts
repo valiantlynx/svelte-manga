@@ -19,7 +19,6 @@ const renderMainSitemap = async (url: string): Promise<string> => {
 	return mainSitemapContent;
 };
 
-export const prerender = true;
 export const trailingSlash = 'never';
 
 export const GET: RequestHandler = async ({ url }) => {
