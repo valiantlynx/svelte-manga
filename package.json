@@ -10,7 +10,8 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
-		"deploy-test": "pnpm format && pnpm lint && pnpm build && pnpm preview"
+		"deploy-test": "pnpm format && pnpm lint && pnpm build && pnpm preview",
+		"postbuild": "npx svelte-sitemap "
 	},
 	"devDependencies": {
 		"@iconify/svelte": "^3.1.4",
@@ -28,6 +29,7 @@
 		"prettier-plugin-svelte": "^2.10.1",
 		"svelte": "^4.0.0",
 		"svelte-check": "^3.4.3",
+		"svelte-sitemap": "^2.6.0",
 		"tailwindcss": "^3.3.2",
 		"tslib": "^2.4.1",
 		"typescript": "^5.0.0",
@@ -40,6 +42,7 @@
 		"cheerio": "^1.0.0-rc.12",
 		"dotenv": "^16.3.1",
 		"fff-flavored-frontmatter": "1.1.0-alpha.0",
+		"googleapis": "^126.0.1",
 		"lodash": "^4.17.21",
 		"pocketbase": "^0.16.0",
 		"sharp": "^0.32.5",

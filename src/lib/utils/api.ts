@@ -225,3 +225,30 @@ export async function processVippsPayment() {
 		return { success: false, message: 'Error processing Vipps payment' };
 	}
 }
+
+// function that generates the manga pages for the sitemap
+export const genMangaPosts = async (page: number) => {
+	const mangaPosts: any = [];
+	const url = import.meta.env.VITE_HOST_URL + `/api/manga?page=${page}`;
+
+	const response = await fetch(url, {
+		headers: {
+			'Access-Control-Allow-Origin': '*',
+			'Content-Type': 'application/json'
+		}
+	});
+
+	const data = await response.json();
+	const mangas = data.mangas;
+
+	mangas.forEach((manga: any) => {
+		mangaPosts.push({
+			url: manga.src,
+			image: `${'/api' + manga.img}`,
+			title: manga.title,
+			description: manga.description
+		});
+	});
+
+	return mangaPosts;
+};
