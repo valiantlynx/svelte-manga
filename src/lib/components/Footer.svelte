@@ -11,9 +11,15 @@
 	</div>
 	<div>
 		<div class="grid grid-flow-col gap-4">
-			<a href="https://www.facebook.com/animevariant/"><Icon icon="mdi:twitter" /></a>
-			<a href="https://www.facebook.com/animevariant/"><Icon icon="mdi:youtube" /></a>
-			<a href="https://www.facebook.com/animevariant/"><Icon icon="mdi:facebook" /></a>
+			<a href="https://www.facebook.com/animevariant/" class="link link-hover"
+				><Icon icon="mdi:twitter" /></a
+			>
+			<a href="https://www.facebook.com/animevariant/" class="link link-hover"
+				><Icon icon="mdi:youtube" /></a
+			>
+			<a href="https://www.facebook.com/animevariant/" class="link link-hover"
+				><Icon icon="mdi:facebook" /></a
+			>
 		</div>
 	</div>
 	<div>

@@ -26,7 +26,7 @@
 				</p>
 				<div class="ml-auto">
 					<div class="rating rating-sm">
-						{manga.rating}
+						<label class="cursor-auto" for="rating-8">{manga.rating}</label>
 						<input type="radio" name="rating-8" class="mask mask-star-2 bg-info" checked />
 					</div>
 				</div>
