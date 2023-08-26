@@ -1,7 +1,9 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { createPocketbaseUser } from '$lib/utils/api';
 
+	let Error: boolean;
+	let errorMessage: string;
+	let loading = false;
 	let username = '';
 	let password = '';
 	let email = '';
@@ -15,13 +17,21 @@
 	};
 
 	async function signup() {
+		if (Error) {
+			Error = false;
+			loading = false;
+			return;
+		}
+		loading = true;
+
 		try {
-			// create pocketbase user
 			await createPocketbaseUser(data);
-			await goto('/');
-			window.location.reload();
+			window.location.href = '/';
 		} catch (err: any) {
-			alert(err.message);
+			Error = true;
+			errorMessage = err.originalError.data.message;
+			loading = false;
+			return { error: err, status: err.status };
 		}
 	}
 </script>
@@ -39,10 +49,16 @@
 					name="username"
 					placeholder="Username"
 					bind:value={data.username}
+					on:input={() => (Error = false)}
 					minlength="3"
 					maxlength="16"
-					class="input input-bordered w-full"
+					class="input input-bordered w-full{Error ? 'input-error' : ''}"
 				/>
+				<label class="label" for="password">
+					<span class="label-text-alt {Error ? 'text-error' : 'hidden'}"
+						>We might already have a user registered with this username</span
+					>
+				</label>
 			</div>
 			<div>
 				<label class="label" for="password">
@@ -54,6 +70,7 @@
 					name="password"
 					placeholder="Enter Password"
 					bind:value={data.password}
+					on:input={() => (Error = false)}
 					minlength="8"
 					class="input input-bordered w-full"
 				/>
@@ -68,9 +85,15 @@
 					name="passwordConfirm"
 					placeholder="Enter Password Again"
 					bind:value={data.passwordConfirm}
+					on:input={() => (Error = false)}
 					minlength="8"
-					class="input input-bordered w-full"
+					class="input input-bordered w-full {Error ? 'input-error' : ''}"
 				/>
+				<label class="label" for="password">
+					<span class="label-text-alt {Error ? 'text-error' : 'hidden'}"
+						>Is this your confirm password identical to your password?
+					</span>
+				</label>
 			</div>
 			<div>
 				<label class="label" for="email">
@@ -78,14 +101,23 @@
 				</label>
 				<input
 					bind:value={data.email}
+					on:input={() => (Error = false)}
 					type="email"
 					placeholder="info@site.com"
-					class="input input-bordered w-full"
+					class="input input-bordered w-full {Error ? 'input-error' : ''}"
 				/>
+				<label class="label" for="password">
+					<span class="label-text-alt {Error ? 'text-error' : 'hidden'}"
+						>We might already have a user registered with this email</span
+					>
+				</label>
 			</div>
+			<h2 class=" {Error ? 'text-error' : 'hidden'}">{errorMessage} Please try again</h2>
+			<br />
 			<a href="/login" class=" link link-hover">Already registered? Login</a>
+
 			<div>
-				<button on:click={signup} class="btn btn-block">Sign Up</button>
+				<button on:click={signup} class="btn btn-block" disabled={Error}>Sign up</button>
 			</div>
 		</form>
 	</div>

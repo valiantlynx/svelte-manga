@@ -8,7 +8,7 @@ export const load = (async () => {
 
 	const response = await fetch(url);
 
-	const data = await await response.json();
+	const data = await  response.json();
 	mangas = data.mangas;
 
 	return {

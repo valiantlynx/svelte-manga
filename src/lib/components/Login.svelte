@@ -3,14 +3,14 @@
 
 	let username: string;
 	let password: string;
-	let passwordError: boolean;
-
-	function checkPassword() {
-		passwordError = password.length < 8;
-	}
+	let Error: boolean;
+	let errorMessage: string;
+	let loading = false;
 
 	async function login() {
-		if (passwordError) {
+		if (Error) {
+			Error = false;
+			loading = false;
 			return;
 		}
 
@@ -18,7 +18,11 @@
 			await authPocketbase(username, password);
 			window.location.reload();
 		} catch (err: any) {
-			alert(err.message);
+			Error = true;
+
+			errorMessage = err.originalError.data.message;
+			loading = false;
+			return { error: err, status: err.status };
 		}
 	}
 </script>
@@ -47,6 +51,7 @@
 						type="text"
 						placeholder="Username"
 						bind:value={username}
+						on:input={() => (Error = false)}
 						minlength="3"
 						class="w-full input input-bordered"
 					/>
@@ -62,13 +67,24 @@
 						placeholder="Enter Password"
 						minlength="8"
 						type="password"
-						class="w-full input input-bordered"
-						on:submit={checkPassword}
+						on:input={() => (Error = false)}
+						class="w-full input input-bordered {Error ? 'input-error' : ''}"
 					/>
+					<label class="label" for="password">
+						<span class="label-text-alt {Error ? 'text-error' : 'hidden'}"
+							>password or username incorrect</span
+						>
+						<span class="label-text-alt {Error ? 'text-error' : 'hidden'}"
+							>are you sure your registered?</span
+						>
+					</label>
 				</div>
-				<a href="/signup" class=" link link-hover">Not registered? Signup</a>
+				<h2 class=" {Error ? 'text-error' : 'hidden'}">{errorMessage}</h2>
+				<br />
+				<a href="/signup" class=" link link-hover my-2">Not registered? Signup</a>
+
 				<div>
-					<button on:click={login} class="btn btn-block">Login</button>
+					<button on:click={login} class="btn btn-block" disabled={Error}>Login</button>
 				</div>
 			</form>
 		</div>
