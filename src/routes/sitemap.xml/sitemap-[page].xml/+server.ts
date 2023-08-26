@@ -1,9 +1,8 @@
 import type { RequestHandler } from './$types';
-import { site } from '$lib/config/site';
 import { genMangaPosts } from '$lib/utils/api';
 import { google } from 'googleapis';
 
-const render = async (page: number): Promise<string> =>
+const render = async (page: number, url: string): Promise<string> =>
 	`<?xml version='1.0' encoding='utf-8'?>
   <urlset
     xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"
@@ -12,7 +11,7 @@ const render = async (page: number): Promise<string> =>
     xmlns:image="https://www.google.com/schemas/sitemap-image/1.1"
     xmlns:video="https://www.google.com/schemas/sitemap-video/1.1">
     <url>
-      <loc>${site.protocol + site.domain}</loc>
+      <loc>${url}</loc>
     </url>
     ${await genMangaPosts(page).then((mangas) =>
 			mangas
@@ -21,12 +20,12 @@ const render = async (page: number): Promise<string> =>
 						`
     
                 <url>
-                <loc>${site.protocol + site.domain + manga.url}</loc>
+                <loc>${url + manga.url}</loc>
                 <lastmod>${new Date().toISOString()}</lastmod>
                 <priority>0.5</priority>
                 <changefreq>monthly</changefreq>
                 <image:image>
-                  <image:loc>${site.protocol + site.domain + manga.image}</image:loc>
+                  <image:loc>${url + manga.image}</image:loc>
                   <image:caption>${encodeURIComponent(manga.description)}</image:caption>
                   <image:geo_location>Norway</image:geo_location>
                   <image:title>${encodeURIComponent(manga.title)}</image:title>
@@ -40,12 +39,12 @@ const render = async (page: number): Promise<string> =>
   </urlset>`.trim();
 
 // ping google to update the the urls of the company and the images
-const pingGoogle = async (page: number) => {
-	genMangaPosts(page).then((post) => site.protocol + site.domain + post.path);
-	genMangaPosts(page).then((post) => site.protocol + site.domain + post.image);
+const pingGoogle = async (page: number, url: string) => {
+	genMangaPosts(page).then((post) => url + post.path);
+	genMangaPosts(page).then((post) => url + post.image);
 
 	// index the urls
-	indexer(page);
+	indexer(page, url);
 };
 
 const services = {
@@ -59,8 +58,8 @@ const maxIndexingApiCalls = 5;
 let apiCalls = 0;
 let lastCallTime = Date.now();
 
-async function indexer(page: number) {
-	const urls = await genMangaPosts(page).then((post) => site.protocol + site.domain + post.path);
+async function indexer(page: number, url: string) {
+	const urls = await genMangaPosts(page).then((post) => url + post.path);
 
 	// eslint-disable-next-line no-console
 	console.log('google api- r', urls);
@@ -127,10 +126,10 @@ async function indexer(page: number) {
 
 export const trailingSlash = 'never';
 
-export const GET: RequestHandler = async ({ params }) => {
+export const GET: RequestHandler = async ({ params, url }) => {
 	// ping google to update the the urls of the company and the images
-	pingGoogle(Number(params.page));
-	return new Response(await render(Number(params.page)), {
+	pingGoogle(Number(params.page), url.origin);
+	return new Response(await render(Number(params.page), url.origin), {
 		headers: {
 			'content-type': 'application/xml; charset=utf-8'
 		}
