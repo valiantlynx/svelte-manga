@@ -43,3 +43,5 @@ export const pocketbaseResponse = writable({
 
 // search query
 export const searchQuery = writable('');
+
+export const metaKeywords = writable('');

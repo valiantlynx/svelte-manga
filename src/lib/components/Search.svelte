@@ -3,7 +3,7 @@
 	import axios from 'axios';
 	import BigSearchResults from './BigSearchResults.svelte';
 	import SmallSearchResults from './SmallSearchResults.svelte';
-	import { searchQuery } from '$lib/utils/stores';
+	import { metaKeywords, searchQuery } from '$lib/utils/stores';
 
 	export let type: 'small' | 'big' = 'small';
 
@@ -55,6 +55,15 @@
 	}
 	if ($searchQuery) {
 		searchTerm = $searchQuery;
+	}
+
+	// get an array of search results i can use on my meta keywords tag to improve SEO. that way, when someone searches for something, the keywords will be added to the meta keywords tag. but has a default value if there are no search results
+
+	$: {
+		if (searchResults.length > 0) {
+			const keywords = searchResults.map((result: any) => result.title).join(', ');
+			metaKeywords.set(keywords);
+		}
 	}
 </script>
 

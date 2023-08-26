@@ -22,7 +22,21 @@
 			url: '/manga'
 		}
 	];
+
+	const mangaTitles = data.mangas.map((manga: any) => manga.title).join(', ');
 </script>
+
+<svelte:head>
+	<title>Manga List</title>
+	<meta
+		name="keywords"
+		content={`manga, manga list, read manga, manga online, manga reader, manga website ${mangaTitles}`}
+	/>
+	<meta
+		name="description"
+		content="browse through an unlimited list of manga. Read manga online for free at animevariant with no ads, high quality images and support scanlation groups!"
+	/>
+</svelte:head>
 
 <main class="p-4 bg-base-100">
 	<Breadcrumbs {crumbs} />

@@ -9,6 +9,7 @@
 	import Chat from '$lib/components/Chat.svelte';
 	import { goto } from '$app/navigation';
 	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
+	import { site } from '$lib/config/site';
 
 	export let data: PageData;
 
@@ -65,6 +66,62 @@
 		}
 	];
 </script>
+
+<svelte:head>
+	<title>{data.title + ' - ' + $page.params.chapterid + ' - ' + site.title}</title>
+	<meta
+		name="description"
+		content={`${data.title} ${$page.params.chapterid} ${site.title}, read ${data.title} ${$page.params.chapterid} ${site.title} online, ${data.title} ${$page.params.chapterid} ${site.title} free online, ${data.title} ${$page.params.chapterid} ${site.title} free online, ${data.title} ${$page.params.chapterid} ${site.title} high quality, ${data.title} ${$page.params.chapterid} ${site.title} manga scans, ${data.title} ${$page.params.chapterid} ${site.title} manga scan`}
+	/>
+	<meta
+		name="keywords"
+		content={data.title +
+			', ' +
+			data.title +
+			' ' +
+			$page.params.chapterid +
+			', ' +
+			data.title +
+			' ' +
+			$page.params.chapterid +
+			' ' +
+			site.title +
+			',' +
+			`${data.title} ${$page.params.chapterid} ${site.title}, read ${data.title} ${$page.params.chapterid} ${site.title} online, ${data.title} ${$page.params.chapterid} ${site.title} free online, ${data.title} ${$page.params.chapterid} ${site.title} free online, ${data.title} ${$page.params.chapterid} ${site.title} high quality, ${data.title} ${$page.params.chapterid} ${site.title} manga scans, ${data.title} ${$page.params.chapterid} ${site.title} manga scan`}
+	/>
+	<meta
+		property="og:title"
+		content={data.title + ' ' + $page.params.chapterid + ' ' + site.title}
+	/>
+	<meta
+		property="og:description"
+		content={`${data.title} ${$page.params.chapterid} ${site.title}, read ${data.title} ${$page.params.chapterid} ${site.title} online, ${data.title} ${$page.params.chapterid} ${site.title} free online, ${data.title} ${$page.params.chapterid} ${site.title} free online, ${data.title} ${$page.params.chapterid} ${site.title} high quality, ${data.title} ${$page.params.chapterid} ${site.title} manga scans, ${data.title} ${$page.params.chapterid} ${site.title} manga scan`}
+	/>
+	<meta property="og:image" content={data?.images[0].imageUrl} />
+	<meta property="og:url" content={$page.url.href} />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:site" content="@animevariant" />
+	<meta
+		name="twitter:title"
+		content={data.title + ' ' + $page.params.chapterid + ' ' + site.title}
+	/>
+	<meta
+		name="twitter:description"
+		content={`${data.title} ${$page.params.chapterid} ${site.title}, read ${data.title} ${$page.params.chapterid} ${site.title} online, ${data.title} ${$page.params.chapterid} ${site.title} free online, ${data.title} ${$page.params.chapterid} ${site.title} free online, ${data.title} ${$page.params.chapterid} ${site.title} high quality, ${data.title} ${$page.params.chapterid} ${site.title} manga scans, ${data.title} ${$page.params.chapterid} ${site.title} manga scan`}
+	/>
+	<meta name="twitter:image" content={data?.images[0].imageUrl} />
+	<meta name="twitter:url" content={$page.url.href} />
+	<meta name="twitter:domain" content={$page.url.href} />
+	<meta name="twitter:creator" content="@animevariant" />
+	<meta
+		name="twitter:image:alt"
+		content={data.title + ' ' + $page.params.chapterid + ' ' + site.title}
+	/>
+	<meta name="twitter:label4" content="Total Pages" />
+	<meta name="twitter:data4" content={data.images.length} />
+	<meta name="twitter:label5" content="Total Chapters" />
+	<meta name="twitter:data5" content={data.chapters.length} />
+</svelte:head>
 
 <main class="bg-base-100">
 	<Breadcrumbs {crumbs} />
