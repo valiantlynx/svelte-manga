@@ -34,7 +34,7 @@ export const GET: RequestHandler = async ({ url, params }) => {
 
 		return new Response(compressedImageBuffer, {
 			headers: {
-				'Content-Type': 'image/jpeg',
+				'Content-Type': 'image/webp',
 				'Access-Control-Allow-Origin': '*',
 				'Cache-Control': `public, s-maxage=${60 * 60 * 24 * 365}`
 			}
