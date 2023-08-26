@@ -13,7 +13,6 @@ export const GET: RequestHandler = async ({ url }) => {
 
 	try {
 		const apiUrl = `${import.meta.env.VITE_IMAGE_URL}/genre/Isekai?type=topview&page=${page}`;
-		console.log('apiUrl: ', apiUrl); 
 
 		const response: any = await axios
 			.get(apiUrl, {

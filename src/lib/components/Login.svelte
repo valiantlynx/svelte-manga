@@ -5,12 +5,11 @@
 	let password: string;
 	let Error: boolean;
 	let errorMessage: string;
-	let loading = false;
 
 	async function login() {
 		if (Error) {
 			Error = false;
-			loading = false;
+
 			return;
 		}
 
@@ -21,7 +20,7 @@
 			Error = true;
 
 			errorMessage = err.originalError.data.message;
-			loading = false;
+
 			return { error: err, status: err.status };
 		}
 	}

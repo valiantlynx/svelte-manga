@@ -3,7 +3,7 @@
 
 	let Error: boolean;
 	let errorMessage: string;
-	let loading = false;
+
 	let username = '';
 	let password = '';
 	let email = '';
@@ -19,10 +19,9 @@
 	async function signup() {
 		if (Error) {
 			Error = false;
-			loading = false;
+
 			return;
 		}
-		loading = true;
 
 		try {
 			await createPocketbaseUser(data);
@@ -30,7 +29,7 @@
 		} catch (err: any) {
 			Error = true;
 			errorMessage = err.originalError.data.message;
-			loading = false;
+
 			return { error: err, status: err.status };
 		}
 	}
