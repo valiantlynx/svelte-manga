@@ -9,7 +9,7 @@ export const site: SiteConfig = {
 	noImage: import.meta.env.VITE_SITE_NO_IMAGE ?? '/assets/no-image.png',
 	title: 'Animevariant',
 	subtitle: 'Where Imagination Meets Innovation',
-	pocketbase: import.meta.env.VITE_PB_API ?? 'https://nameless-cloud-5581.fly.dev',
+	pocketbase: import.meta.env.VITE_PB_URL ?? 'https://nameless-cloud-5581.fly.dev',
 	lang: 'en-US',
 	description:
 		'Read the latest manga online for free at animevariant.org, update fastest, most full, synthesized 24h free with high-quality images and be the first one to publish new chapters.',
