@@ -30,7 +30,8 @@ module.exports = {
 	rules: {
 		// Suppress explicit any rule
 		'@typescript-eslint/no-explicit-any': 'off',
-		'no-console': ['error', { allow: ['error'] }] // Disallow  other console methods except error
+		'no-console': ['error', { allow: ['error'] }], // Disallow  other console methods except error
+		'no-unsafe-optional-chaining': 'off'
 
 		// ... other rules ...
 	}

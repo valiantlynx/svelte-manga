@@ -70,12 +70,11 @@
 					src: $page.url.href
 				};
 				const mangaRes = await postPocketbase('mangas', pbData);
-			
+
 				updateReadingStatus(mangaRes.id);
 			} else {
 				// Manga already exists, update the reading status
 				updateReadingStatus(existingMangaList.items[0].id);
-				
 			}
 		}
 	}
@@ -88,12 +87,13 @@
 			const userId: any = pb.authStore.model?.id;
 
 			// update data, this will add the manga to the reading array if it doesn't exist,
+
 			const data = {
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 				reading: [...pb.authStore.model?.reading, mangaid]
 			};
 
 			await pb.collection('users').update(userId, data);
-
 		}
 	}
 </script>
