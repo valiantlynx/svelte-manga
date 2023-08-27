@@ -30,54 +30,51 @@
 	let genreIds: any = [];
 	let authorIds: any = [];
 
-	//make a function that makes length characters long hash. and use that as the id for the manga
-	export function makeId(length: number, characters: string) {
-		let result = '';
-
-		const charactersLength = characters.length;
-		for (let i = 0; i < length; i++) {
-			result += characters.charAt(Math.floor(Math.random() * charactersLength));
-		}
-		return result;
-	} // the answer from this function will always be length characters long, and if the input is the same, the output will be the same too because the function is deterministic
-
 	async function createRecord() {
-		// create the manga data to send to pocketbase
-		const pbData = {
-			id: makeId(15, $page.params.id),
-			title: data.title,
-			description: data.description,
-			img: $page.url.origin + '/api' + data.img,
-			updated: data.lastUpdated,
-			views,
-			latestChapter: data.episodes[data.episodes.length - 1].chapterTitle,
-			sourceid: $page.params.id,
-			genres: genreIds,
-			authors: authorIds,
-			src: $page.url.href
-		};
-
 		// if the user is logged in, send the manga data to pocketbase
 		if (pb.authStore.isValid) {
-			for (let i = 0; i < data.author.length; i++) {
-				const genreList = await getPocketbase('genres', {
-					filter: `name="${data.author[i]}"`
-				});
+			// Check if the manga already exists using some unique identifier, for example, the title
+			const existingMangaList = await getPocketbase('mangas', {
+				filter: `title="${data.title}"`
+			});
 
-				if (genreList.items.length === 0) {
-					//now we have all the genres that are not in the database
-					//that means they are authors
-					//so we need to create them in the database
-					const createdManga = await postPocketbase('author', {
-						id: makeId(15, data.author[i]),
-						name: data.author[i]
+			if (existingMangaList.items.length === 0) {
+				// Manga doesn't exist, create it
+				for (let i = 0; i < data.author.length; i++) {
+					const genreList = await getPocketbase('genres', {
+						filter: `name="${data.author[i]}"`
 					});
-					authorIds.push(createdManga?.id);
-				} else {
-					genreIds.push(genreList.items[0].id);
+
+					if (genreList.items.length === 0) {
+						const createdAuthor = await postPocketbase('author', {
+							name: `${data.author[i]}`
+						});
+
+						authorIds.push(createdAuthor.id);
+					} else {
+						genreIds.push(genreList.items[0].id);
+					}
 				}
+
+				console.log(authorIds)
+				// create the manga data to send to pocketbase
+				const pbData = {
+					title: data.title,
+					description: data.description,
+					img: $page.url.origin + '/api' + data.img,
+					updated: data.lastUpdated,
+					views,
+					latestChapter: data.episodes[data.episodes.length - 1].chapterTitle,
+					sourceid: $page.params.id,
+					genres: genreIds,
+					authors: authorIds,
+					src: $page.url.href
+				};
+				const res = await postPocketbase('mangas', pbData);
+				console.log('res', res);
+			} else {
+				console.log('Manga already exists');
 			}
-			await postPocketbase('mangas', pbData);
 		}
 	}
 </script>

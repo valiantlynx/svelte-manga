@@ -58,6 +58,9 @@ devDependencies:
   '@typescript-eslint/parser':
     specifier: ^5.45.0
     version: 5.62.0(eslint@8.47.0)(typescript@5.1.6)
+  '@valiantlynx/image':
+    specifier: ^0.0.2
+    version: 0.0.2(svelte@4.2.0)
   autoprefixer:
     specifier: ^10.4.14
     version: 10.4.15(postcss@8.4.28)
@@ -719,6 +722,14 @@ packages:
     dependencies:
       '@typescript-eslint/types': 5.62.0
       eslint-visitor-keys: 3.4.3
+    dev: true
+
+  /@valiantlynx/image@0.0.2(svelte@4.2.0):
+    resolution: {integrity: sha512-cthhGEd+g4FHfqrszd/cD6ubbJdQdWvHloviWraIifdp/xcmp9KvyTXJQKo4XoFKDFt9hXzsm2DQHy2hbXyWOw==}
+    peerDependencies:
+      svelte: ^4.0.0
+    dependencies:
+      svelte: 4.2.0
     dev: true
 
   /acorn-jsx@5.3.2(acorn@8.10.0):
