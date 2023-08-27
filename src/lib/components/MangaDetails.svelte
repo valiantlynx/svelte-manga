@@ -56,7 +56,6 @@
 					}
 				}
 
-				console.log(authorIds)
 				// create the manga data to send to pocketbase
 				const pbData = {
 					title: data.title,
@@ -70,11 +69,30 @@
 					authors: authorIds,
 					src: $page.url.href
 				};
-				const res = await postPocketbase('mangas', pbData);
-				console.log('res', res);
+				const mangaRes = await postPocketbase('mangas', pbData);
+				
+				updateReadingStatus(mangaRes.id);
 			} else {
 				console.log('Manga already exists');
 			}
+		}
+	}
+
+	// function to update the reading status of the manga on the user record in the users collection, if the manga is not in the user record, add it
+	async function updateReadingStatus(mangaid: string) {
+		// if the user is logged in, send the manga data to pocketbase
+		if (pb.authStore.isValid) {
+			// since we know user is logged in, we can get the user id from the authStore, and use it to update the user record
+			const userId: any = pb.authStore.model?.id;
+
+			// update data, this will add the manga to the reading array if it doesn't exist,
+			const data = {
+				reading: [`${mangaid}`]
+			};
+
+			const record = await pb.collection('users').update(userId, data);
+
+			console.log(record);
 		}
 	}
 </script>
