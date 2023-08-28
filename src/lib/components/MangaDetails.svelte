@@ -29,6 +29,7 @@
 	// get the genreList from pocketbase and return the id every genre that has the same name as the genre in the manga data.author array
 	let genreIds: any = [];
 	let authorIds: any = [];
+	let pbMangaData: any = {};
 
 	async function createOrUpdateReadingProgress(mangaId: string, chapterId: string) {
 		// Check if the user is logged in
@@ -65,6 +66,7 @@
 			const existingMangaList = await getPocketbase('mangas', {
 				filter: `title="${data.title}"`
 			});
+			pbMangaData = existingMangaList.items[0];
 
 			if (existingMangaList.items.length === 0) {
 				// Manga doesn't exist, create it
@@ -98,6 +100,7 @@
 					src: $page.url.href
 				};
 				const mangaRes = await postPocketbase('mangas', pbData);
+				pbMangaData = mangaRes;
 
 				// Call the function to create or update the reading progress
 				await createOrUpdateReadingProgress(mangaRes.id, data.episodes[0].chapterId);
@@ -110,6 +113,36 @@
 			}
 		}
 	}
+
+	let continueFromLastReading = false;
+	let continueReadingUrl: any = '';
+	// if the user is logged in, check if the reading progress record exists, if it does make a continue reading button
+	async function continueReading() {
+		const existingMangaList = await getPocketbase('mangas', {
+			filter: `title="${data.title}"`
+		});
+		pbMangaData = existingMangaList.items[0];
+
+		if (pb.authStore.isValid) {
+			const userId = pb.authStore.model?.id;
+
+			// First, check if a reading progress record already exists for this manga and user
+			const existingProgressList: any = await getPocketbase('reading_progress', {
+				filter: `user="${userId}" && manga="${pbMangaData?.id}"`,
+				expand: 'currentChapter'
+			});
+
+			// If a reading progress record doesn't exist, create it
+			if (existingProgressList.items.length > 0) {
+				// If a reading progress record exists, update the current chapter
+				continueReadingUrl = existingProgressList.items[0].expand?.currentChapter.src;
+
+				continueFromLastReading = true;
+			}
+		}
+	}
+
+	continueReading();
 </script>
 
 <div class="w-full flex flex-col md:flex-row gap-4">
@@ -131,6 +164,11 @@
 		<a class="btn btn-primary" href={`${$page.url.pathname}/${data.episodes[0].chapterId}`}>
 			<button on:click={createRecord}>Read Latest</button>
 		</a>
+		{#if continueFromLastReading}
+			<a class="btn btn-primary" href={`${continueReadingUrl}`}>
+				<button>Continue Reading</button>
+			</a>
+		{/if}
 	</div>
 
 	<!-- manga stats -->
