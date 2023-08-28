@@ -137,8 +137,6 @@
 	onMount(async () => {
 		await createRecord();
 	});
-
-	
 </script>
 
 <svelte:head>
