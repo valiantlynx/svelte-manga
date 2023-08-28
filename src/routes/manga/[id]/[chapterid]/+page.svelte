@@ -10,8 +10,11 @@
 	import { goto } from '$app/navigation';
 	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import { site } from '$lib/config/site';
+	import { postPocketbase, pb, getPocketbase } from '$lib/utils/api';
+	import { onMount } from 'svelte';
 
-	export let data: PageData;
+	export let data: any;
+	console.log('data', data, $page);
 
 	let readingMode = 'longstrip'; // Default reading mode
 	let imageWidth = 'medium'; // Default image width mode
@@ -65,6 +68,79 @@
 			url: `/manga/${$page.params.id}/${$page.params.chapterid}`
 		}
 	];
+
+	// function to update the reading status of the manga on the user record in the users collection, if the manga is not in the user record, add it, else update the reading status of the manga and the reading progress
+	async function createOrUpdateReadingProgress(mangaId: string, chapterId: string) {
+	// Check if the user is logged in
+		if (pb.authStore.isValid) {
+			const userId = pb.authStore.model?.id;
+
+			// Check if the manga already exists in the user record
+			const existingProgressList = await getPocketbase('reading_progress', {
+				filter: `user="${userId}" && manga="${mangaId}"`
+			});
+
+			if (existingProgressList.items.length === 0) {
+				// If the manga doesn't exist, create it
+				const pbData = {
+					user: `${userId}`, // This is the user id, not the username
+					manga: `${mangaId}`, // This is the manga id, not the manga title
+					currentChapter: `${chapterId}`,
+					currentChapterIndex: currentChapterIndex
+				};
+				await postPocketbase('reading_progress', pbData);
+			} else {
+				// If a reading progress record exists, update the current chapter
+				const readingProgressId = existingProgressList.items[0].id;
+				const data = {
+					currentChapter: `${chapterId}`,
+					currentChapterIndex: currentChapterIndex
+				};
+				await pb.collection('reading_progress').update(readingProgressId, data);
+			}
+		}
+	}
+
+	async function createRecord() {
+		// if the user is logged in, send the chapter data to pocketbase
+		if (pb.authStore.isValid) {
+			// Check if the manga already exists using some unique identifier, for example, the title
+			const existingChapterList = await getPocketbase('Chapters', {
+				filter: `chapterId="${$page.params.chapterid}"`
+			});
+
+			
+			if (existingChapterList.items.length === 0) {
+				// Check if the manga already exists using some unique identifier, for example, the title
+				const existingMangaList = await getPocketbase('mangas', {
+					filter: `title~"${data.title}"`
+				});
+
+				
+				// create the chapter data to send to pocketbase
+				const pbData = {
+					title: data.title,
+					chapterId: $page.params.chapterid,
+					src: $page.url.href,
+					manga: existingMangaList.items[0].id
+				};
+				const chapterRes = await postPocketbase('Chapters', pbData);
+				
+				// Call the function to create or update the reading progress
+				await createOrUpdateReadingProgress(chapterRes.manga, chapterRes.id);
+			} else {
+			// Call the function to create or update the reading progress
+				await createOrUpdateReadingProgress(
+					existingChapterList.items[0].manga,
+					existingChapterList.items[0].id
+				);
+			}
+		}
+	}
+
+	onMount(async () => {
+		await createRecord();
+	});
 </script>
 
 <svelte:head>

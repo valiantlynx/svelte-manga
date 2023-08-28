@@ -30,6 +30,34 @@
 	let genreIds: any = [];
 	let authorIds: any = [];
 
+	async function createOrUpdateReadingProgress(mangaId: string, chapterId: string) {
+		// Check if the user is logged in
+		if (pb.authStore.isValid) {
+			const userId = pb.authStore.model?.id;
+
+			// First, check if a reading progress record already exists for this manga and user
+			const existingProgressList = await getPocketbase('reading_progress', {
+				filter: `user="${userId}" && manga="${mangaId}"`
+			});
+
+			// If a reading progress record doesn't exist, create it
+			if (existingProgressList.items.length === 0) {
+				const pbData = {
+					user: `${userId}`, // This is the user id, not the username
+					manga: `${mangaId}`, // This is the manga id, not the manga title
+				};
+				await postPocketbase('reading_progress', pbData);
+			} else {
+				// If a reading progress record exists, update the current chapter
+				const readingProgressId = existingProgressList.items[0].id;
+				const data = {
+					currentChapter: { id: chapterId }
+				};
+				await pb.collection('reading_progress').update(readingProgressId, data);
+			}
+		}
+	}
+
 	async function createRecord() {
 		// if the user is logged in, send the manga data to pocketbase
 		if (pb.authStore.isValid) {
@@ -63,7 +91,7 @@
 					img: $page.url.origin + '/api' + data.img,
 					updated: data.lastUpdated,
 					views,
-					latestChapter: data.episodes[data.episodes.length - 1].chapterTitle,
+					latestChapter: data.episodes[0].chapterTitle,
 					sourceid: $page.params.id,
 					genres: genreIds,
 					authors: authorIds,
@@ -71,29 +99,15 @@
 				};
 				const mangaRes = await postPocketbase('mangas', pbData);
 
-				updateReadingStatus(mangaRes.id);
+				// Call the function to create or update the reading progress
+				await createOrUpdateReadingProgress(mangaRes.id, data.episodes[0].chapterId);
 			} else {
-				// Manga already exists, update the reading status
-				updateReadingStatus(existingMangaList.items[0].id);
+				// Call the function to create or update the reading progress
+				await createOrUpdateReadingProgress(
+					existingMangaList.items[0].id,
+					data.episodes[0].chapterId
+				);
 			}
-		}
-	}
-
-	// function to update the reading status of the manga on the user record in the users collection, if the manga is not in the user record, add it
-	async function updateReadingStatus(mangaid: string) {
-		// if the user is logged in, send the manga data to pocketbase
-		if (pb.authStore.isValid) {
-			// since we know user is logged in, we can get the user id from the authStore, and use it to update the user record
-			const userId: any = pb.authStore.model?.id;
-
-			// update data, this will add the manga to the reading array if it doesn't exist,
-
-			const data = {
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-				reading: [...pb.authStore.model?.reading, mangaid]
-			};
-
-			await pb.collection('users').update(userId, data);
 		}
 	}
 </script>
