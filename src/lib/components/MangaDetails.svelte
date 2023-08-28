@@ -44,7 +44,7 @@
 			if (existingProgressList.items.length === 0) {
 				const pbData = {
 					user: `${userId}`, // This is the user id, not the username
-					manga: `${mangaId}`, // This is the manga id, not the manga title
+					manga: `${mangaId}` // This is the manga id, not the manga title
 				};
 				await postPocketbase('reading_progress', pbData);
 			} else {

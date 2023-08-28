@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { PageData } from './$types';
 	import { writable } from 'svelte/store';
 	import { page } from '$app/stores';
 	import ScrollToTop from '$lib/components/ScrollToTop.svelte';
@@ -14,7 +13,6 @@
 	import { onMount } from 'svelte';
 
 	export let data: any;
-	console.log('data', data, $page);
 
 	let readingMode = 'longstrip'; // Default reading mode
 	let imageWidth = 'medium'; // Default image width mode
@@ -71,7 +69,7 @@
 
 	// function to update the reading status of the manga on the user record in the users collection, if the manga is not in the user record, add it, else update the reading status of the manga and the reading progress
 	async function createOrUpdateReadingProgress(mangaId: string, chapterId: string) {
-	// Check if the user is logged in
+		// Check if the user is logged in
 		if (pb.authStore.isValid) {
 			const userId = pb.authStore.model?.id;
 
@@ -109,14 +107,12 @@
 				filter: `chapterId="${$page.params.chapterid}"`
 			});
 
-			
 			if (existingChapterList.items.length === 0) {
 				// Check if the manga already exists using some unique identifier, for example, the title
 				const existingMangaList = await getPocketbase('mangas', {
 					filter: `title~"${data.title}"`
 				});
 
-				
 				// create the chapter data to send to pocketbase
 				const pbData = {
 					title: data.title,
@@ -125,11 +121,11 @@
 					manga: existingMangaList.items[0].id
 				};
 				const chapterRes = await postPocketbase('Chapters', pbData);
-				
+
 				// Call the function to create or update the reading progress
 				await createOrUpdateReadingProgress(chapterRes.manga, chapterRes.id);
 			} else {
-			// Call the function to create or update the reading progress
+				// Call the function to create or update the reading progress
 				await createOrUpdateReadingProgress(
 					existingChapterList.items[0].manga,
 					existingChapterList.items[0].id
