@@ -104,7 +104,7 @@
 		if (pb.authStore.isValid) {
 			// Check if the manga already exists using some unique identifier, for example, the title
 			const existingChapterList = await getPocketbase('Chapters', {
-				filter: `chapterId="${$page.params.chapterid}"`
+				filter: `src="${$page.url.href}"`
 			});
 
 			if (existingChapterList.items.length === 0) {

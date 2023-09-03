@@ -45,14 +45,15 @@
 			if (existingProgressList.items.length === 0) {
 				const pbData = {
 					user: `${userId}`, // This is the user id, not the username
-					manga: `${mangaId}` // This is the manga id, not the manga title
+					manga: `${mangaId}`, // This is the manga id, not the manga title
+					currentChapter: `${chapterId}`
 				};
 				await postPocketbase('reading_progress', pbData);
 			} else {
 				// If a reading progress record exists, update the current chapter
 				const readingProgressId = existingProgressList.items[0].id;
 				const data = {
-					currentChapter: { id: chapterId }
+					currentChapter: `${chapterId}`
 				};
 				await pb.collection('reading_progress').update(readingProgressId, data);
 			}
