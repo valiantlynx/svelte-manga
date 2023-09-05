@@ -32,7 +32,7 @@
 		</div>
 	</div>
 	{#each data?.images as image}
-		<div class={`w-full md:w-${imageWidth === 'full' ? 'full' : '3/5'}`}>
+		<div class={`w-full lg:w-${imageWidth === 'medium' ? '3/5' : 'full'}`}>
 			<img
 				src={image.imageUrl}
 				alt={`${data.title} ${$page.params.chapterid} Page ${image.pageNumber}`}
