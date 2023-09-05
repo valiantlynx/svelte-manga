@@ -31,6 +31,7 @@
 	}
 
 	function setImageWidth(mode: string) {
+		
 		imageWidth = mode;
 		currentPage.set(0); // Reset current page when switching reading modes
 	}
@@ -283,5 +284,5 @@
 		{/if}
 	</div>
 	<ScrollToTop />
-	<Chat />
+	<Chat  />
 </main>

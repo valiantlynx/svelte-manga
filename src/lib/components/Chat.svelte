@@ -4,6 +4,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { authData } from '$lib/utils/stores';
 	import { pb } from '$lib/utils/api';
+	import { page } from '$app/stores';
 
 	let newMessage: string;
 	let messages: any[] = [];
@@ -28,6 +29,7 @@
 		try {
 			const resultList = await pb.collection('chat_animevariant').getList(1, 50, {
 				sort: 'created',
+				filter: `mangaid="${$page.params.id}"&&chapterid="${$page.params.chapterid}"`,
 				expand: 'sender'
 			});
 
@@ -70,6 +72,8 @@
 		const data = {
 			message: newMessage,
 			sender: pb.authStore.model?.id,
+			chapterid: $page.params.chapterid,
+			mangaid: $page.params.id,
 			receiver: pb.authStore.model?.id
 		};
 		await pb.collection('chat_animevariant').create(data);
