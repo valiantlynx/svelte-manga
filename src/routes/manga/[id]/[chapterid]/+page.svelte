@@ -15,7 +15,7 @@
 	export let data: any;
 
 	let readingMode = 'longstrip'; // Default reading mode
-	let imageWidth = 'medium'; // Default image width mode
+	
 	let currentPage = writable(0);
 
 	// filter  all hte data.chapters.value that starts with '\n
@@ -30,11 +30,6 @@
 		currentPage.set(0); // Reset current page when switching reading modes
 	}
 
-	function setImageWidth(mode: string) {
-		
-		imageWidth = mode;
-		currentPage.set(0); // Reset current page when switching reading modes
-	}
 	function goToPreviousChapter() {
 		if (currentChapterIndex < data.chapters.length - 1) {
 			const url = $page.url.origin + '/manga' + data.chapters[currentChapterIndex + 1].value;
@@ -225,28 +220,11 @@
 		</button>
 	</div>
 
-	<!-- Images width selection between full or medium -->
-	<div class="mb-4 flex justify-center space-x-4">
-		<button
-			class="px-4 py-2 rounded-lg btn btn-primary"
-			class:selected={imageWidth === 'full' ? 'bg-blue-500 text-white' : ''}
-			on:click={() => setImageWidth('full')}
-		>
-			Full
-		</button>
 
-		<button
-			class="px-4 py-2 rounded-lg btn btn-primary"
-			class:selected={imageWidth === 'medium' ? 'bg-blue-500 text-white' : ''}
-			on:click={() => setImageWidth('medium')}
-		>
-			Medium
-		</button>
-	</div>
 
 	<!-- Images Display -->
 	{#if readingMode === 'longstrip'}
-		<LongstripReadingMode {data} {imageWidth} />
+		<LongstripReadingMode {data} {currentPage} />
 	{/if}
 
 	{#if readingMode === 'grid'}
