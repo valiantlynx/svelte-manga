@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	export let data: any;
 	export let currentPage: any;
-	let imageWidth = 'medium'; // Default image width
+	let imageWidth = '3/5'; // Default image width
 
 	function setImageWidth(mode: string) {
 		imageWidth = mode;
@@ -10,29 +10,11 @@
 	}
 </script>
 
-<div class="flex flex-wrap justify-center max-w-full mx-auto">
-	<div class="w-full">
-		<!-- Images width selection between full or medium -->
-		<div class="mb-4 flex justify-center space-x-4">
-			<button
-				class="px-4 py-2 rounded-lg btn btn-primary"
-				class:selected={imageWidth === 'full' ? 'bg-blue-500 text-white' : ''}
-				on:click={() => setImageWidth('full')}
-			>
-				Full
-			</button>
 
-			<button
-				class="px-4 py-2 rounded-lg btn btn-primary"
-				class:selected={imageWidth === 'medium' ? 'bg-blue-500 text-white' : ''}
-				on:click={() => setImageWidth('medium')}
-			>
-				Medium
-			</button>
-		</div>
-	</div>
+
+<div class="flex flex-wrap justify-center max-w-full mx-auto">
 	{#each data?.images as image}
-		<div class={`w-full lg:w-${imageWidth === 'medium' ? '3/5' : 'full'}`}>
+		<div class={imageWidth == 'full' ? 'w-full lg:w-3/5' : 'w-full lg:w-3/5'}>
 			<img
 				src={image.imageUrl}
 				alt={`${data.title} ${$page.params.chapterid} Page ${image.pageNumber}`}
