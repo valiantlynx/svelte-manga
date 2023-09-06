@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	export let data: any;
 	export let currentPage: any;
-	let imageWidth = 'full'; // Default image width
+	let imageWidth = '3/5'; // Default image width
 
 	function setImageWidth(mode: string) {
 		imageWidth = mode;
@@ -32,7 +32,7 @@
 		</div>
 	</div>
 	{#each data?.images as image}
-		<div class={`w-3/5 md:w-${imageWidth}`}>
+		<div class={`w-full md:w-${imageWidth}`}>
 			<img
 				src={image.imageUrl}
 				alt={`${data.title} ${$page.params.chapterid} Page ${image.pageNumber}`}
