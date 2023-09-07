@@ -15,7 +15,7 @@
 	export let data: any;
 
 	let readingMode = 'longstrip'; // Default reading mode
-	
+
 	let currentPage = writable(0);
 
 	// filter  all hte data.chapters.value that starts with '\n
@@ -80,17 +80,19 @@
 					user: `${userId}`, // This is the user id, not the username
 					manga: `${mangaId}`, // This is the manga id, not the manga title
 					currentChapter: `${chapterId}`,
-					currentChapterIndex: currentChapterIndex
+					currentChapterIndex: currentChapterIndex,
+					totalChapters: data.chapters.length - 1
 				};
 				await postPocketbase('reading_progress', pbData);
 			} else {
 				// If a reading progress record exists, update the current chapter
 				const readingProgressId = existingProgressList.items[0].id;
-				const data = {
+				const pbdata = {
 					currentChapter: `${chapterId}`,
-					currentChapterIndex: currentChapterIndex
+					currentChapterIndex: currentChapterIndex,
+					totalChapters: data.chapters.length - 1
 				};
-				await pb.collection('reading_progress').update(readingProgressId, data);
+				await pb.collection('reading_progress').update(readingProgressId, pbdata);
 			}
 		}
 	}
@@ -220,8 +222,6 @@
 		</button>
 	</div>
 
-
-
 	<!-- Images Display -->
 	{#if readingMode === 'longstrip'}
 		<LongstripReadingMode {data} {currentPage} />
@@ -262,5 +262,5 @@
 		{/if}
 	</div>
 	<ScrollToTop />
-	<Chat  />
+	<Chat />
 </main>

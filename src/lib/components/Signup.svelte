@@ -35,7 +35,7 @@
 	}
 </script>
 
-<div class="relative flex flex-col items-center justify-center h-screen overflow-hidden">
+<div class="relative flex flex-col items-center justify-center h-full overflow-hidden m-4">
 	<div class="w-full p-6 bg-base-200 border-t-4 rounded-md shadow-md border-top lg:max-w-lg">
 		<h1 class="text-3xl font-semibold text-center">AnimeVariant</h1>
 		<form class="space-y-4">

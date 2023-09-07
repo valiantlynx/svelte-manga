@@ -1,10 +1,12 @@
 <script lang="ts">
 	import MangaGrid from '$lib/components/MangaGrid.svelte';
+	import ReadingProgress from '$lib/components/ReadingProgress.svelte';
 
 	export let data: any;
 </script>
 
 <h1 class="text-2xl font-bold text-center mb-6">Home</h1>
+<ReadingProgress />
 <MangaGrid {data} />
 
 <svelte:head>

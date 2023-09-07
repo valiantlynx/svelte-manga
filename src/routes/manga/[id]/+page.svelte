@@ -7,6 +7,8 @@
 	import MangaDetails from '$lib/components/MangaDetails.svelte';
 	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import { site } from '$lib/config/site';
+	import ReadingProgress from '$lib/components/ReadingProgress.svelte';
+	import Chat from '$lib/components/Chat.svelte';
 
 	export let data: any;
 
@@ -121,4 +123,6 @@
 		<Chapters {chaptersToShow} {id} />
 		<Pagination {goToPage} {pageNumbers} />
 	</div>
+	<Chat />
+	<ReadingProgress />
 </main>

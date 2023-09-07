@@ -16,7 +16,6 @@
 		<div class="mb-4 flex justify-center space-x-4">
 			<button
 				class="px-4 py-2 rounded-lg btn btn-primary"
-				
 				class:selected={imageWidth === 'full' ? 'bg-blue-500 text-white' : ''}
 				on:click={() => setImageWidth('full')}
 			>
@@ -33,7 +32,7 @@
 		</div>
 	</div>
 	{#each data?.images as image}
-	<div class={imageWidth == 'full' ? 'w-full' : 'w-full lg:w-3/5'}>
+		<div class={imageWidth == 'full' ? 'w-full' : 'w-full lg:w-3/5'}>
 			<img
 				src={image.imageUrl}
 				alt={`${data.title} ${$page.params.chapterid} Page ${image.pageNumber}`}

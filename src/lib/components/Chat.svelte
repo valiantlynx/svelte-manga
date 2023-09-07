@@ -29,7 +29,9 @@
 		try {
 			const resultList = await pb.collection('chat_animevariant').getList(1, 50, {
 				sort: 'created',
-				filter: `mangaid="${$page.params.id}"&&chapterid="${$page.params.chapterid}"`,
+				filter: $page.params.chapterid
+					? `mangaid="${$page.params.id}"&&chapterid="${$page.params.chapterid}"`
+					: `mangaid="${$page.params.id}"`,
 				expand: 'sender'
 			});
 
