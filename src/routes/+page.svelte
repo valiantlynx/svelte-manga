@@ -17,8 +17,9 @@
 		<JoinDiscord />
 		<ReadingProgress />
 	</div>
-</div>
 <ResponsiveBannerAd />
+</div>
+
 
 <svelte:head>
 	<!-- Open Graph Meta Tags (for social media sharing) -->
