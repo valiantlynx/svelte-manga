@@ -11,6 +11,8 @@
 	import { site } from '$lib/config/site';
 	import { postPocketbase, pb, getPocketbase } from '$lib/utils/api';
 	import { onMount } from 'svelte';
+	import ResponsiveBannerAd from '$lib/components/ResponsiveBannerAd.svelte';
+	import AnimevariantGridAds from '$lib/components/AnimevariantGridAds.svelte';
 
 	export let data: any;
 
@@ -261,6 +263,8 @@
 			</button>
 		{/if}
 	</div>
+	<ResponsiveBannerAd />
 	<ScrollToTop />
 	<Chat />
+	<AnimevariantGridAds />
 </main>

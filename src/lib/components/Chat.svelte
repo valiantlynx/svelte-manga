@@ -107,22 +107,19 @@
 	{/if}
 
 	<div class="border-t pt-4">
-		{#if pb.authStore.isValid}
-			<form on:submit|preventDefault={sendMessage} class="space-x-2 flex items-center">
-				<input
-					type="text"
-					placeholder="Type a message..."
-					bind:value={newMessage}
-					maxlength="100"
-					class="input input-bordered flex-grow"
-				/>
+		<form on:submit|preventDefault={sendMessage} class="space-x-2 flex items-center">
+			<input
+				type="text"
+				placeholder={pb.authStore.isValid ? 'Type a message...' : 'Login to chat... ------>'}
+				bind:value={newMessage}
+				maxlength="100"
+				class="input input-bordered flex-grow"
+			/>
+			{#if pb.authStore.isValid}
 				<button type="submit" disabled={!newMessage} class="btn btn-primary"> Send </button>
-			</form>
-		{:else}
-			<div class="text-center">
-				<p class="mb-2 text-gray-600">Log in to join the conversation</p>
-				<Login />
-			</div>
-		{/if}
+			{:else}
+				<a href="/login" type="submit" class="btn btn-primary"> Login </a>
+			{/if}
+		</form>
 	</div>
 </div>

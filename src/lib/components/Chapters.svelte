@@ -1,5 +1,6 @@
 <script lang="ts">
 	import ChapterCard from './ChapterCard.svelte';
+	import ResponsiveBannerAd from './ResponsiveBannerAd.svelte';
 	export let chaptersToShow: any;
 	export let id: any;
 </script>
@@ -10,5 +11,6 @@
 		{#each chaptersToShow as chapter}
 			<ChapterCard {chapter} url={`/manga/${id}/${chapter.chapterId}`} />
 		{/each}
+		<ResponsiveBannerAd />
 	</div>
 </div>

@@ -1,13 +1,23 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
 	export let data: any;
 	export let currentPage: any;
-	let imageWidth = 'full'; // Default image width
+	let imageWidth: string;
 
 	function setImageWidth(mode: string) {
-		imageWidth = mode;
+		window.localStorage.setItem('imageWidth', mode);
+		imageWidth = window.localStorage.getItem('imageWidth') || '3/5';
 		currentPage.set(0); // Reset current page when switching reading modes
 	}
+
+	onMount(() => {
+		// create a image width local storage
+		if (window.localStorage.getItem('imageWidth') === null) {
+			window.localStorage.setItem('imageWidth', '3/4');
+		}
+		imageWidth = window.localStorage.getItem('imageWidth') || '3/5';
+	});
 </script>
 
 <div class="flex flex-wrap justify-center max-w-full mx-auto">

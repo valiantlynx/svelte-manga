@@ -30,7 +30,7 @@
 </script>
 
 <div class="bg-base-100 rounded-lg p-4 shadow-md">
-	<h2 class="text-xl font-semibold mb-4 btn-neutral text-center rounded-lg">
+	<h2 class="text-2xl font-bold text-center mb-6 bg-neutral rounded-lg text-neutral-content">
 		Your Reading Progress
 	</h2>
 

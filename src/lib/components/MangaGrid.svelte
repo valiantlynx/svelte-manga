@@ -1,14 +1,10 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import MangaCard from '$lib/components/MangaCard.svelte';
+	import AnimevariantGridAds from './AnimevariantGridAds.svelte';
+	import PaginationSimple from './PaginationSimple.svelte';
 
 	export let data: any;
 	let pageNo = 1;
-
-	// send the user to the manga chapters page
-	function goToMangaChapters(id: any) {
-		window.location.href = $page.url.origin + '/manga/' + id;
-	}
 
 	// function to get the data from the url
 	const newData = async (pageNo: number) => {
@@ -17,41 +13,34 @@
 		const data = await res.json();
 		return data;
 	};
-
-	function nextPage() {
-		pageNo = pageNo + 1;
-	}
-
-	function previousPage() {
-		if (pageNo > 1) {
-			pageNo = pageNo - 1;
-		}
-	}
 </script>
 
-<main class="p-4 bg-base-100">
+<main class="bg-base-100 w-1/2 sm:w-3/4 md:w-3/5 lg:w-2/3 xl:w-1/2 2xl:w-1/3 mx-4">
+	<h2 class="text-2xl font-bold text-center mb-6 bg-neutral rounded-lg text-neutral-content">
+		Latest Manga
+	</h2>
+
+	<PaginationSimple {data} bind:pageNo />
+
 	{#await newData(pageNo)}
 		<p>loading...</p>
 	{:then data}
-		<div
-			class="w-fit mx-auto grid grid-cols-2 lg:grid-cols-3 md:grid-cols-2 xl:grid-cols-4 justify-items-center justify-center gap-y-6 gap-x-4 mt-10 mb-5"
-		>
+		<div class="mx-auto container gap-y-6 gap-x-4">
 			{#each data.mangas as manga}
-				<MangaCard {manga} {goToMangaChapters} />
+				<MangaCard {manga} />
 			{/each}
 		</div>
 	{:catch error}
 		<p>error: {error.message}</p>
 	{/await}
 
-	<div class="flex justify-center">
-		<div class="join grid grid-cols-2 w-1/4">
-			<button class="join-item btn btn-outline" on:click={previousPage} disabled={pageNo === 1}>
-				Previous Page {pageNo - 1}
-			</button>
-			<button class="join-item btn btn-outline" on:click={nextPage} disabled={!data}>
-				Next Page {pageNo + 1}
-			</button>
-		</div>
-	</div>
+	<PaginationSimple {data} bind:pageNo />
+	<AnimevariantGridAds />
 </main>
+
+<style>
+	.container {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+	}
+</style>

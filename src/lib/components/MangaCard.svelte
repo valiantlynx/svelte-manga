@@ -1,16 +1,14 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	export let manga: any;
-	export let goToMangaChapters: any;
 
 	const imageSrc = `${import.meta.env.VITE_HOST_URL}/api${manga.img}?width=200&height=300`;
 </script>
 
-<div class="w-full bg-base-300 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-	<button
-		class=" w-full"
-		on:click={() => goToMangaChapters(manga.id)}
-		on:keypress={() => goToMangaChapters(manga.id)}
-	>
+<div
+	class="w-full bg-neutral text-neutral-content shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+>
+	<a class=" w-full" href={$page.url.origin + '/manga/' + manga.id}>
 		<img
 			class=" w-full group-hover:opacity-75 overflow-hidden rounded-t-xl"
 			src={imageSrc}
@@ -18,10 +16,10 @@
 		/>
 
 		<div class="px-4 py-3 w-full">
-			<span class=" mr-3 uppercase text-xs">{manga.author[0]}</span>
+			<span class="mr-3 uppercase text-xs truncate block">{manga.author[0]}</span>
 			<p class="text-lg font-bold truncate block capitalize">{manga.title}</p>
 			<div class="flex items-center">
-				<p class=" text-accent border-accent text-sm font-semibold cursor-auto">
+				<p class="text-sm font-semibold cursor-auto truncate block">
 					{manga.latestChapter}
 				</p>
 				<div class="ml-auto">
@@ -32,5 +30,5 @@
 				</div>
 			</div>
 		</div>
-	</button>
+	</a>
 </div>

@@ -9,6 +9,7 @@
 	import { site } from '$lib/config/site';
 	import ReadingProgress from '$lib/components/ReadingProgress.svelte';
 	import Chat from '$lib/components/Chat.svelte';
+	import ResponsiveBannerAd from '$lib/components/ResponsiveBannerAd.svelte';
 
 	export let data: any;
 
@@ -95,7 +96,7 @@
 </script>
 
 <svelte:head>
-	<title>{data.title + ' - ' + site.title}</title>
+	<title>{data.title}</title>
 	<meta name="description" content={data.description} />
 	<meta name="keywords" content={data.author + ',' + data.title + ',' + descriptionArray} />
 	<meta property="og:title" content={data.title} />
@@ -120,9 +121,13 @@
 	<h1 class="text-3xl font-bold mb-6 text-center">Manga Chapters</h1>
 	<div class="grid grid-cols-1 gap-4 m-2 p-3 w-full h-full justify-center">
 		<MangaDetails {data} />
+		<ResponsiveBannerAd />
 		<Chapters {chaptersToShow} {id} />
 		<Pagination {goToPage} {pageNumbers} />
 	</div>
+	<ResponsiveBannerAd />
 	<Chat />
+	<ResponsiveBannerAd />
 	<ReadingProgress />
+	<ResponsiveBannerAd />
 </main>

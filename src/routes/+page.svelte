@@ -1,13 +1,24 @@
 <script lang="ts">
+	import JoinDiscord from '$lib/components/JoinDiscord.svelte';
 	import MangaGrid from '$lib/components/MangaGrid.svelte';
 	import ReadingProgress from '$lib/components/ReadingProgress.svelte';
+	import ResponsiveBannerAd from '$lib/components/ResponsiveBannerAd.svelte';
 
 	export let data: any;
 </script>
 
 <h1 class="text-2xl font-bold text-center mb-6">Home</h1>
-<ReadingProgress />
-<MangaGrid {data} />
+
+<div class="flex flex-wrap justify-center">
+	<MangaGrid {data} />
+
+	<div class="mt-4 w-full lg:w-1/4">
+		<ResponsiveBannerAd />
+		<JoinDiscord />
+		<ReadingProgress />
+	</div>
+</div>
+<ResponsiveBannerAd />
 
 <svelte:head>
 	<!-- Open Graph Meta Tags (for social media sharing) -->
