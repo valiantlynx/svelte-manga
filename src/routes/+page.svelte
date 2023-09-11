@@ -17,9 +17,7 @@
 		<JoinDiscord />
 		<ReadingProgress />
 	</div>
-<center>
-<ResponsiveBannerAd />
-</center>
+
 </div>
 
 
