@@ -1,4 +1,4 @@
-<div class="w-full">
+<div class="w-full py-2 mx-4 rounded-3xl">
 	<script
 		async
 		src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7827487944601896"

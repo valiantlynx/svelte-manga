@@ -19,7 +19,7 @@
 			<ReadingProgress />
 		</div>
 </div>
-<ResponsiveBannerAd />
+
 
 <svelte:head>
 	<!-- Open Graph Meta Tags (for social media sharing) -->

@@ -1,6 +1,10 @@
 <script lang="ts">
 	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import MangaGrid from '$lib/components/MangaGrid.svelte';
+	import JoinDiscord from '$lib/components/JoinDiscord.svelte';
+	import ReadingProgress from '$lib/components/ReadingProgress.svelte';
+	import ResponsiveBannerAd from '$lib/components/ResponsiveBannerAd.svelte';
+
 
 	export let data: any;
 	const crumbs = [
@@ -31,4 +35,13 @@
 
 <h1 class="text-2xl font-bold text-center mb-6">Manga List</h1>
 <Breadcrumbs {crumbs} />
-<MangaGrid {data} />
+<div class="flex flex-wrap justify-center">
+	<MangaGrid {data} />
+
+	<div class="mt-4 w-full lg:w-1/4">
+		<ResponsiveBannerAd />
+		<JoinDiscord />
+		<ReadingProgress />
+	</div>
+
+</div>

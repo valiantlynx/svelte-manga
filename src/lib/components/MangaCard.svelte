@@ -8,7 +8,7 @@
 <div
 	class="w-full bg-neutral text-neutral-content shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
 >
-	<a class=" w-full" href={$page.url.origin + '/manga/' + manga.id}>
+	<a class=" w-full" href={$page.url.origin + '/manga/' + manga.id} target="_self">
 		<img
 			class=" w-full group-hover:opacity-75 overflow-hidden rounded-t-xl"
 			src={imageSrc}

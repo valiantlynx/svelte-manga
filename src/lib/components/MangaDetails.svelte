@@ -159,14 +159,15 @@
 		<a
 			class="btn btn-primary"
 			href={`${$page.url.pathname}/${data.episodes[data.episodes.length - 1].chapterId}`}
+			target="_self"
 		>
 			<button on:click={createRecord}>Read First</button>
 		</a>
-		<a class="btn btn-primary" href={`${$page.url.pathname}/${data.episodes[0].chapterId}`}>
+		<a class="btn btn-primary" href={`${$page.url.pathname}/${data.episodes[0].chapterId}`} target="_self">
 			<button on:click={createRecord}>Read Latest</button>
 		</a>
 		{#if continueFromLastReading}
-			<a class="btn btn-primary" href={`${continueReadingUrl}`}>
+			<a class="btn btn-primary" href={`${continueReadingUrl}`} target="_self">
 				<button>Continue Reading</button>
 			</a>
 		{/if}
