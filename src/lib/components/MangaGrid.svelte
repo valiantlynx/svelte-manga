@@ -15,13 +15,11 @@
 	};
 </script>
 
-<main class="bg-base-100 w-1/2 sm:w-3/4 md:w-3/5 lg:w-2/3 xl:w-1/2 2xl:w-1/3 mx-4">
+<main class="bg-base-100 mx-4">
 	<h2 class="text-2xl font-bold text-center mb-6 bg-neutral rounded-lg text-neutral-content">
 		Latest Manga
 	</h2>
-
 	<PaginationSimple {data} bind:pageNo />
-
 	{#await newData(pageNo)}
 		<p>loading...</p>
 	{:then data}
@@ -33,7 +31,6 @@
 	{:catch error}
 		<p>error: {error.message}</p>
 	{/await}
-
 	<PaginationSimple {data} bind:pageNo />
 	<AnimevariantGridAds />
 </main>

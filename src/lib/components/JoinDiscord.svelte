@@ -1,4 +1,4 @@
-<div class="bg-discord-color w-full py-2 mx-4 rounded-3xl">
+<div class="bg-discord-color w-11/12 py-2 mx-4 rounded-3xl">
 	<h2 class="text-lg font-semibold py-2 mx-5">Join Our Discord!</h2>
 	<p class="text-sm mb-4 mx-5">
 		Be a part of our manga community and discuss your favorite manga series with others.
