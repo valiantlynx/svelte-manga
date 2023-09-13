@@ -49,7 +49,7 @@
 									<img src={chapter.expand?.manga?.img} alt={chapter.expand?.manga?.title} class=" hover:underline" />
 									<div class="card__info--details w-full">
 										<h5 class="w-full truncate block mr-3 uppercase text-xs ">{chapter.expand?.manga?.title}</h5>
-										<p>Chapter {chapter.currentChapterIndex + 1}/{chapter.totalChapters || 1}</p>
+										<p>{chapter.expand?.currentChapter?.chapterId}/{chapter.totalChapters || 1}</p>
 										<!-- Progress Bar -->
 										<div class="flex items-center justify-between">
 											<p class=" font-bold">Progress</p>
