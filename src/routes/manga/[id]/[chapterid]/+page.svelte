@@ -11,10 +11,10 @@
 	import { site } from '$lib/config/site';
 	import { postPocketbase, pb, getPocketbase } from '$lib/utils/api';
 	import { onMount } from 'svelte';
-	import ResponsiveBannerAd from '$lib/components/ResponsiveBannerAd.svelte';
-	import AnimevariantGridAds from '$lib/components/AnimevariantGridAds.svelte';
 
 	export let data: any;
+	export let datamanga: any;
+
 
 	let readingMode = 'longstrip'; // Default reading mode
 
@@ -66,6 +66,9 @@
 	];
 
 	// function to update the reading status of the manga on the user record in the users collection, if the manga is not in the user record, add it, else update the reading status of the manga and the reading progress
+	let genreIds: any = [];
+	let authorIds: any = [];
+	let pbMangaData: any = {};
 	async function createOrUpdateReadingProgress(mangaId: string, chapterId: string) {
 		// Check if the user is logged in
 		if (pb.authStore.isValid) {
@@ -110,20 +113,73 @@
 			if (existingChapterList.items.length === 0) {
 				// Check if the manga already exists using some unique identifier, for example, the title
 				const existingMangaList = await getPocketbase('mangas', {
-					filter: `title~"${data.title}"`
+					filter: `sourceid~"${$page.params.id}"`
 				});
+				// If a manga record doesn't exist, create it
+				if (existingMangaList.items.length === 0) {
+					
+	const urlmanga = `/manga/${$page.params.id}`;
 
-				// create the chapter data to send to pocketbase
-				const pbData = {
-					title: data.title,
-					chapterId: $page.params.chapterid,
-					src: $page.url.href,
-					manga: existingMangaList.items[0].id
-				};
-				const chapterRes = await postPocketbase('Chapters', pbData);
+	const responsemanga = await fetch(import.meta.env.VITE_HOST_URL + `/api/manga/${$page.params.id}?url=${urlmanga}`);
+	const datamanga = await responsemanga.json();
 
-				// Call the function to create or update the reading progress
-				await createOrUpdateReadingProgress(chapterRes.manga, chapterRes.id);
+					console.log("data author", data, datamanga)
+					// Manga doesn't exist, create it
+					for (let i = 0; i < datamanga.author.length; i++) {
+						const genreList = await getPocketbase('genres', {
+							filter: `name="${datamanga.author[i]}"`
+						});
+
+						if (genreList.items.length === 0) {
+							const createdAuthor = await postPocketbase('author', {
+								name: `${datamanga.author[i]}`
+							});
+
+							authorIds.push(createdAuthor.id);
+						} else {
+							genreIds.push(genreList.items[0].id);
+						}
+					}
+
+					// create the manga datamanga to send to pocketbase
+					const pbDataManga = {
+						title: datamanga.title,
+						description: datamanga.description,
+						img: $page.url.origin + '/api' + datamanga.img,
+						updated: datamanga.lastUpdated,
+						views: datamanga.views,
+						latestChapter: datamanga.episodes[0].chapterTitle,
+						sourceid: $page.params.id,
+						genres: genreIds,
+						authors: authorIds,
+						src: $page.url.href
+					};
+					const mangaRes = await postPocketbase('mangas', pbDataManga);
+
+					// create the chapter data to send to pocketbase
+					const pbData = {
+						title: data.title,
+						chapterId: $page.params.chapterid,
+						src: $page.url.href,
+						manga: mangaRes.id
+					};
+					const chapterRes = await postPocketbase('Chapters', pbData);
+
+					// Call the function to create or update the reading progress
+					await createOrUpdateReadingProgress(chapterRes.manga, chapterRes.id);
+				} else {
+					// create the chapter data to send to pocketbase
+					const pbData = {
+						title: data.title,
+						chapterId: $page.params.chapterid,
+						src: $page.url.href,
+						manga: existingMangaList.items[0].id
+					};
+					const chapterRes = await postPocketbase('Chapters', pbData);
+
+					// Call the function to create or update the reading progress
+					await createOrUpdateReadingProgress(chapterRes.manga, chapterRes.id);
+				}
 			} else {
 				// Call the function to create or update the reading progress
 				await createOrUpdateReadingProgress(
@@ -263,8 +319,6 @@
 			</button>
 		{/if}
 	</div>
-	<ResponsiveBannerAd />
 	<ScrollToTop />
 	<Chat />
-	<AnimevariantGridAds />
 </main>
