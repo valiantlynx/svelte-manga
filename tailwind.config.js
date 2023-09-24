@@ -3,6 +3,7 @@ import daisyui from 'daisyui';
 import { theme } from './src/lib/config/general';
 
 export default {
+	mode: 'jit',
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
 		extend: {

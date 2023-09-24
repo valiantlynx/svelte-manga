@@ -37,12 +37,6 @@
 			<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
 				<a href="/">Home</a>
 			</li>
-			<li aria-current={$page.url.pathname === '/chat' ? 'page' : undefined}>
-				<a href="/chat">
-					Chat
-					<span class="badge">New</span>
-				</a>
-			</li>
 			<li aria-current={$page.url.pathname === '/dashboard/profile/preview' ? 'page' : undefined}>
 				<a class="justify-between" href="/dashboard/profile/preview">
 					Dashboard

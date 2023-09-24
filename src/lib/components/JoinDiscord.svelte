@@ -4,7 +4,7 @@
 		Be a part of our manga community and discuss your favorite manga series with others.
 	</p>
 	<a
-		href="https://discord.gg/YnMgNyWe"
+		href="https://discord.gg/wEgMuvRWzj"
 		target="_blank"
 		class="btn-primary mx-5 px-4 my-5 py-2 rounded-md font-semibold block text-center"
 	>
@@ -15,6 +15,6 @@
 <style>
 	/* Add custom Tailwind classes or additional styling here */
 	.bg-discord-color {
-		background-color: #7289da;
+		background-color: #5865F2;
 	}
 </style>
