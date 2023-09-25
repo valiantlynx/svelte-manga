@@ -1,5 +1,5 @@
 <script lang="ts">
-	import InputWithLabel from '$lib/components/ui/InputWithLabel.svelte';
+	import InputWithLabel from '$lib/components/InputWithLabel.svelte';
 	import { pb } from '$lib/utils/api';
 	import { authData } from '$lib/utils/stores';
 
@@ -8,7 +8,7 @@
 
 	async function requestEmailChange() {
 		try {
-			const request = await pb.collection('users').requestEmailChange(newEmail, pb.authStore.token);
+			await pb.collection('users').requestEmailChange(newEmail, pb.authStore.token);
 			emailChangeRequested = true;
 		} catch (error) {
 			console.error('Failed to request email change:', error);

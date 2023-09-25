@@ -15,6 +15,6 @@
 <style>
 	/* Add custom Tailwind classes or additional styling here */
 	.bg-discord-color {
-		background-color: #5865F2;
+		background-color: #5865f2;
 	}
 </style>

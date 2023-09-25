@@ -1,9 +1,7 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import InputWithLabel from '$lib/components/ui/InputWithLabel.svelte';
-	import { patchPocketbase, refreshAuthPocketbase } from '$lib/utils/api';
+	import InputWithLabel from '$lib/components/InputWithLabel.svelte';
 	import { authData } from '$lib/utils/stores';
-	import { compressImage } from '$lib/utils/api';
+	import { compressFileImage, patchPocketbase } from '$lib/utils/api';
 
 	let updated: boolean;
 
@@ -21,7 +19,7 @@
 		// console.log('updateProfile from', $authData, 'to', data);
 		try {
 			// Convert image to compressed base64 before uploading
-			const compressedImage = await compressImage(data.avatar, 200, 200, 0.7);
+			const compressedImage = await compressFileImage(data.avatar, 200, 200, 0.7);
 			data.avatar = compressedImage;
 
 			const formData = new FormData();

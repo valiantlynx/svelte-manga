@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Login from './Login.svelte';
 	import ChatMessage from './ChatMessage.svelte';
 	import { onMount, onDestroy } from 'svelte';
 	import { authData } from '$lib/utils/stores';

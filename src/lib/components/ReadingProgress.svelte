@@ -46,9 +46,15 @@
 							<!-- Manga Cover Image -->
 							<div class="card1 bg-base-200">
 								<div class="card__info w-full">
-									<img src={chapter.expand?.manga?.img} alt={chapter.expand?.manga?.title} class=" hover:underline" />
+									<img
+										src={chapter.expand?.manga?.img}
+										alt={chapter.expand?.manga?.title}
+										class=" hover:underline"
+									/>
 									<div class="card__info--details w-full">
-										<h5 class="w-full truncate block mr-3 uppercase text-xs ">{chapter.expand?.manga?.title}</h5>
+										<h5 class="w-full truncate block mr-3 uppercase text-xs">
+											{chapter.expand?.manga?.title}
+										</h5>
 										<p>{chapter.expand?.currentChapter?.chapterId}/{chapter.totalChapters || 1}</p>
 										<!-- Progress Bar -->
 										<div class="flex items-center justify-between">
@@ -84,13 +90,8 @@
 							</div>
 						</a>
 					</li>
-
-
-			
-					
 				{/each}
 			</ul>
-			
 		{:else}
 			<p class="text-accent hover:underline mb-4 font-bold text-center">
 				You have no reading progress.
@@ -102,7 +103,6 @@
 		</a>
 	{/if}
 </div>
-
 
 <style>
 	.card1 {

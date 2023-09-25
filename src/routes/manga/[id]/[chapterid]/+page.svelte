@@ -13,9 +13,6 @@
 	import { onMount } from 'svelte';
 
 	export let data: any;
-	export let datamanga: any;
-
-
 	let readingMode = 'longstrip'; // Default reading mode
 
 	let currentPage = writable(0);
@@ -68,7 +65,6 @@
 	// function to update the reading status of the manga on the user record in the users collection, if the manga is not in the user record, add it, else update the reading status of the manga and the reading progress
 	let genreIds: any = [];
 	let authorIds: any = [];
-	let pbMangaData: any = {};
 	async function createOrUpdateReadingProgress(mangaId: string, chapterId: string) {
 		// Check if the user is logged in
 		if (pb.authStore.isValid) {
@@ -117,13 +113,13 @@
 				});
 				// If a manga record doesn't exist, create it
 				if (existingMangaList.items.length === 0) {
-					
-	const urlmanga = `/manga/${$page.params.id}`;
+					const urlmanga = `/manga/${$page.params.id}`;
 
-	const responsemanga = await fetch(import.meta.env.VITE_HOST_URL + `/api/manga/${$page.params.id}?url=${urlmanga}`);
-	const datamanga = await responsemanga.json();
+					const responsemanga = await fetch(
+						import.meta.env.VITE_HOST_URL + `/api/manga/${$page.params.id}?url=${urlmanga}`
+					);
+					const datamanga = await responsemanga.json();
 
-					console.log("data author", data, datamanga)
 					// Manga doesn't exist, create it
 					for (let i = 0; i < datamanga.author.length; i++) {
 						const genreList = await getPocketbase('genres', {

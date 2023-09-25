@@ -5,4 +5,7 @@
 	<title>Dashboard</title>
 </svelte:head>
 
-<h1 class="text-2xl font-bold text-center mb-6">Dashboard</h1>
+<!-- simple tailwind dashboard while the actual one is being built. infor users as well -->
+<div class="flex">
+	<h5>Dashboard</h5>
+</div>

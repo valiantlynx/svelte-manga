@@ -10,16 +10,15 @@
 <h1 class="text-2xl font-bold text-center mb-6">Home</h1>
 
 <div class="flex flex-wrap justify-center">
-		<div class="mt-4 w-full lg:w-3/4">
-			<MangaGrid {data} />
-		</div>
-		<div class="mt-4 w-full lg:w-1/4">
-			<ResponsiveBannerAd />
-			<JoinDiscord />
-			<ReadingProgress />
-		</div>
+	<div class="mt-4 w-full lg:w-3/4">
+		<MangaGrid {data} />
+	</div>
+	<div class="mt-4 w-full lg:w-1/4">
+		<ResponsiveBannerAd />
+		<JoinDiscord />
+		<ReadingProgress />
+	</div>
 </div>
-
 
 <svelte:head>
 	<!-- Open Graph Meta Tags (for social media sharing) -->

@@ -5,7 +5,6 @@
 	import ReadingProgress from '$lib/components/ReadingProgress.svelte';
 	import ResponsiveBannerAd from '$lib/components/ResponsiveBannerAd.svelte';
 
-
 	export let data: any;
 	const crumbs = [
 		{
@@ -43,5 +42,4 @@
 		<JoinDiscord />
 		<ReadingProgress />
 	</div>
-
 </div>
