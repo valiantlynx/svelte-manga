@@ -95,7 +95,6 @@ export const getPocketbase = async (collection: string, data: any) => {
 	return resultList;
 };
 
-
 export const postPocketbase = async (collection: string, data: any) => {
 	const resultList = await pb.collection(collection).create(data);
 	return resultList;
@@ -252,4 +251,202 @@ export const genMangaPosts = async (page: number) => {
 	});
 
 	return mangaPosts;
+};
+
+// Function to create reading progress. but first create the manga and the chapter
+export const readingProgress = async (data: any) => {
+	// function to update the reading status of the manga on the user record in the users collection, if the manga is not in the user record, add it, else update the reading status of the manga and the reading progress
+	const genreIds: any = [];
+	const authorIds: any = [];
+	async function createOrUpdateReadingProgress(
+		mangaId: string,
+		chapterId: string,
+		currentChapterIndex: number,
+		totalChapters: number
+	) {
+		// Check if the user is logged in
+		if (pb.authStore.isValid) {
+			const userId = pb.authStore.model?.id;
+
+			// Check if the manga already exists in the user record
+			const existingProgressList = await getPocketbase('reading_progress', {
+				filter: `user="${userId}" && manga="${mangaId}"`
+			});
+
+			if (existingProgressList.items.length === 0) {
+				// If the manga doesn't exist, create it
+				const pbData = {
+					user: `${userId}`, // This is the user id, not the username
+					manga: `${mangaId}`, // This is the manga id, not the manga title
+					currentChapter: `${chapterId}`,
+					currentChapterIndex: currentChapterIndex,
+					totalChapters: totalChapters
+				};
+				await postPocketbase('reading_progress', pbData);
+			} else {
+				// If a reading progress record exists, update the current chapter
+				const readingProgressId = existingProgressList.items[0].id;
+				const pbdata = {
+					currentChapter: `${chapterId}`,
+					currentChapterIndex: currentChapterIndex,
+					totalChapters: totalChapters
+				};
+				await pb.collection('reading_progress').update(readingProgressId, pbdata);
+			}
+		}
+	}
+
+	async function search(entry: any) {
+		try {
+			const response = await fetch(
+				`${import.meta.env.VITE_HOST_URL}/api/manga/search?word=${entry.name}&page=${1}`
+			);
+
+			const data = await response.json();
+			const mangas = data.mangas;
+			return mangas[0];
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
+	async function chaptersIndex(chapterid: string, id: string) {
+		const url = `/manga/${id}/chapter-${chapterid}`;
+
+		try {
+			const response = await fetch(
+				import.meta.env.VITE_HOST_URL + `/api/manga/${id}/${chapterid}?url=${url}`
+			);
+			const data = await response.json();
+
+			const currentChapterIndex = data.chapters.findIndex(
+				(chapter: any) => chapter.value === url?.replace('/manga', '')
+			);
+			const totalChapters = data.chapters.length;
+			return { currentChapterIndex, totalChapters };
+		} catch (error) {
+			console.error(error);
+			return { currentChapterIndex: 1, totalChapters: 1 };
+		}
+	}
+
+	async function createRecord(entry: any) {
+		const manga = await search(entry);
+		// if the user is logged in, send the chapter data to pocketbase
+		if (pb.authStore.isValid) {
+			// Check if the manga already exists using some unique identifier, for example, the title
+			const existingChapterList = await getPocketbase('Chapters', {
+				filter: `src="${manga?.src}"`
+			});
+
+			if (existingChapterList.items.length === 0) {
+				// Check if the manga already exists using some unique identifier, for example, the title
+				const existingMangaList = await getPocketbase('mangas', {
+					filter: `sourceid~"${manga?.mangaParkId}"`
+				});
+				// If a manga record doesn't exist, create it
+				if (existingMangaList.items.length === 0) {
+					const urlmanga = `/manga/${manga?.mangaParkId}`;
+
+					const responsemanga = await fetch(
+						import.meta.env.VITE_HOST_URL + `/api/manga/${manga?.mangaParkId}?url=${urlmanga}`
+					);
+					const datamanga = await responsemanga.json();
+
+					// Manga doesn't exist, create it
+					for (let i = 0; i < datamanga.author.length; i++) {
+						const genreList = await getPocketbase('genres', {
+							filter: `name="${datamanga.author[i]}"`
+						});
+
+						if (genreList.items.length === 0) {
+							const createdAuthor = await postPocketbase('author', {
+								name: `${datamanga.author[i]}`
+							});
+
+							authorIds.push(createdAuthor.id);
+						} else {
+							genreIds.push(genreList.items[0].id);
+						}
+					}
+
+					// create the manga datamanga to send to pocketbase
+					const pbDataManga = {
+						title: datamanga.title,
+						description: datamanga.description,
+						img: import.meta.env.VITE_HOST_URL + '/api' + datamanga.img,
+						updated: datamanga.lastUpdated,
+						views: datamanga.views,
+						latestChapter: datamanga.episodes[0].chapterTitle,
+						sourceid: manga?.mangaParkId,
+						genres: genreIds,
+						authors: authorIds,
+						src: manga?.src
+					};
+					const mangaRes = await postPocketbase('mangas', pbDataManga);
+					// create the chapter data to send to pocketbase
+					const pbData = {
+						title: entry.name,
+						chapterId: `chapter-${entry.ch ? entry.ch : 1}`,
+						src:
+							import.meta.env.VITE_HOST_URL +
+							`/manga/${manga?.mangaParkId}/chapter-${entry.ch ? entry.ch : 1}`,
+						manga: mangaRes.id
+					};
+					const chapterRes = await postPocketbase('Chapters', pbData);
+
+					const { currentChapterIndex, totalChapters } = await chaptersIndex(
+						entry.ch ? entry.ch : 1,
+						manga?.mangaParkId
+					);
+					// Call the function to create or update the reading progress
+					await createOrUpdateReadingProgress(
+						chapterRes.manga,
+						chapterRes.id,
+						currentChapterIndex,
+						totalChapters
+					);
+				} else {
+					// create the chapter data to send to pocketbase
+					const pbData = {
+						title: entry.name,
+						chapterId: `chapter-${entry.ch ? entry.ch : 1}`,
+						src:
+							import.meta.env.VITE_HOST_URL +
+							`/manga/${manga?.mangaParkId}/chapter-${entry.ch ? entry.ch : 1}`,
+						manga: existingMangaList.items[0].id
+					};
+					const chapterRes = await postPocketbase('Chapters', pbData);
+
+					const { currentChapterIndex, totalChapters } = await chaptersIndex(
+						entry.ch ? entry.ch : 1,
+						manga?.mangaParkId
+					);
+					// Call the function to create or update the reading progress
+					await createOrUpdateReadingProgress(
+						chapterRes.manga,
+						chapterRes.id,
+						currentChapterIndex,
+						totalChapters
+					);
+				}
+			} else {
+				const { currentChapterIndex, totalChapters } = await chaptersIndex(
+					entry.ch ? entry.ch : 1,
+					manga?.mangaParkId
+				);
+				// Call the function to create or update the reading progress
+				await createOrUpdateReadingProgress(
+					existingChapterList.items[0].manga,
+					existingChapterList.items[0].id,
+					currentChapterIndex,
+					totalChapters
+				);
+			}
+		}
+	}
+
+	for (let i = 0; i < data.entries.length; i++) {
+		await createRecord(data.entries[i]);
+	}
 };

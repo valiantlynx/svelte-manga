@@ -1,10 +1,10 @@
 <!-- ReadingProgress.svelte -->
 
 <script lang="ts">
-	import { pb, getPocketbase } from '$lib/utils/api';
+	import { pb } from '$lib/utils/api';
 	import { onMount, setContext } from 'svelte';
-	import Icon from '@iconify/svelte';
 	import { writable } from 'svelte/store';
+	import ImportReadingProgress from '$lib/components/ImportReadingProgress.svelte';
 
 	// Create a writable store to hold readingProgress data
 	const readingProgressStore: any = writable([]);
@@ -43,13 +43,10 @@
 		try {
 			const res: any = await pb.collection('reading_progress').getList(1, itemsPerPage, data);
 			readingProgressStore.set(res.items);
-			console.log('Reading progress loaded successfully');
 		} catch (error) {
 			console.error('Error fetching reading progress:', error);
 		}
 	}
-
-	console.log(readingProgressStore);
 
 	// Function to go to the next page
 	function nextPage() {
@@ -64,9 +61,9 @@
 	}
 </script>
 
-<div class="bg-gradient-to-b from-secondary to-base-200 py-8 w-full">
+<div class="bg-gradient-to-b from-secondary to-base-200 py-8 w-full sm:w-3/4">
 	<div class="container mx-auto px-4 sm:px-6 lg:px-8 text-secondary-content">
-		<h2 class="text-3xl font-semibold  text-center mb-8">Your Reading Progress</h2>
+		<h2 class="text-3xl font-semibold text-center mb-8">Your Reading Progress</h2>
 
 		<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
 			{#if pb.authStore.isValid}
@@ -141,3 +138,4 @@
 		</div>
 	</div>
 </div>
+<ImportReadingProgress />
