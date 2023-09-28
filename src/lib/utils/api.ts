@@ -95,6 +95,7 @@ export const getPocketbase = async (collection: string, data: any) => {
 	return resultList;
 };
 
+
 export const postPocketbase = async (collection: string, data: any) => {
 	const resultList = await pb.collection(collection).create(data);
 	return resultList;

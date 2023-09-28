@@ -8,6 +8,7 @@
 >
 	<a href="/"><SideBarIcon tooltip="Home" icon="bx:bx-home" /></a>
 	<a href="/dashboard/profile"> <SideBarIcon tooltip="Profile" icon="iconoir:profile-circle" /></a>
+	<a href="/dashboard/reading-progress"><SideBarIcon tooltip="reading progress" icon="fluent-mdl2:reading-mode" /></a>
 	<a href="/dashboard/settings"><SideBarIcon tooltip="Settings" icon="bx:bx-cog" /></a>
 	<a href="/dashboard/upload"><SideBarIcon tooltip="Upload" icon="ph:upload-bold" /></a>
 	<button on:click={logoutPocketbase}><SideBarIcon tooltip="Logout" icon="bx:bx-log-out" /></button>

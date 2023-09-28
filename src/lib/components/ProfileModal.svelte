@@ -43,6 +43,12 @@
 					<span class="badge">New</span>
 				</a>
 			</li>
+			<li aria-current={$page.url.pathname === '/dashboard/reading-progress' ? 'page' : undefined}>
+				<a class="justify-between" href="/dashboard/reading-progress">
+					Reading Progress
+					<span class="badge">New</span>
+				</a>
+			</li>
 			<li>
 				<button class="signout-button bg-error opacity-80" on:click={logoutPocketbase}
 					>Sign Out</button
