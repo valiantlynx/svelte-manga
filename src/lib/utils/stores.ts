@@ -45,3 +45,15 @@ export const pocketbaseResponse = writable({
 export const searchQuery = writable('');
 
 export const metaKeywords = writable('');
+
+// Initial cart state
+const log: any[] = [
+	{
+		log: 'log',
+		time: new Date(),
+		progress: 0,
+		total: 0
+	}
+];
+
+export const addedReadingProgress = writable(log);
