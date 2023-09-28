@@ -319,10 +319,10 @@ export const readingProgress = async (data: any) => {
 			);
 			const data = await response.json();
 
-			const currentChapterIndex = data.chapters.findIndex(
+			const currentChapterIndex = data.chapters?.findIndex(
 				(chapter: any) => chapter.value === url?.replace('/manga', '')
 			);
-			const totalChapters = data.chapters.length;
+			const totalChapters = data.chapters?.length;
 			return { currentChapterIndex, totalChapters };
 		} catch (error) {
 			console.error(error);
