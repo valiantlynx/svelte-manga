@@ -448,5 +448,7 @@ export const readingProgress = async (data: any) => {
 
 	for (let i = 0; i < data.entries.length; i++) {
 		await createRecord(data.entries[i]);
+		/* eslint-disable no-console */
+		console.log('created: ', data.entries[i].name, i + 1, 'of', data.entries.length);
 	}
 };
