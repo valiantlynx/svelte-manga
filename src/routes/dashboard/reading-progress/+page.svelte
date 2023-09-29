@@ -62,7 +62,7 @@
 </script>
 
 <div class="flex flex-wrap justify-center">
-	<div class="bg-gradient-to-b from-secondary to-base-200 py-8 mt-4 w-full lg:w-3/4">
+	<div class=" py-8 mt-4 w-full lg:w-3/4">
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8 text-secondary-content">
 			<h2 class="text-3xl font-semibold text-center mb-8">Your Reading Progress</h2>
 
@@ -72,7 +72,7 @@
 						<!-- Individual Chapters -->
 						{#each $readingProgressStore as chapter (chapter.id)}
 							<!-- Manga Card -->
-							<div class=" rounded-lg shadow-md overflow-hidden">
+							<div class="bg-secondary rounded-lg shadow-md overflow-hidden">
 								<a href={`${chapter.expand?.currentChapter?.src}`} class="hover:underline">
 									<!-- Manga Cover Image -->
 									<img

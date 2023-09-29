@@ -270,7 +270,7 @@
 		</h2>
 
 		<div class="border border-secondary rounded p-2 h-40 overflow-y-auto scroll-m-3">
-			{#each $addedReadingProgress as progress, progressIndex (progress)}
+			{#each $addedReadingProgress as progress (progress)}
 				<p class="text-sm truncate text-warning">
 					{progress.log}
 				</p>

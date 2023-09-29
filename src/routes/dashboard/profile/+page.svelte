@@ -5,10 +5,8 @@
 	<title>Profile</title>
 </svelte:head>
 
-<div
-	class="flex flex-col items-center justify-center min-w-screen w-full bg-gradient-to-b from-secondary to-base-200"
->
-	<div class="bg-base shadow-lg rounded-lg p-8 space-y-4">
+<div class="flex flex-col items-center justify-center min-w-screen w-full">
+	<div class="bg-base shadow-lg rounded-lg p-8 space-y-4 bg-secondary">
 		<h1 class="text-3xl font-semibold text-center text-secondary-content">Profile Page</h1>
 		<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 			<a

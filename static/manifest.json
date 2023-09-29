@@ -1,13 +1,13 @@
 {
 	"$schema": "https://json.schemastore.org/web-manifest-combined.json",
-	"name": "Animevariant manga",
-	"short_name": "Altlokalt",
+	"name": "Animevariant",
+	"short_name": "Animevariant",
 	"description": "Animevariant manga is a support website for the Animevariant. It is a website that provides manga for free. read manga online, manga online, read manga, manga online free, manga free, manga, read free manga, free manga, read free manga online, manga viewer, manga download, manga viewer, manga reader, manga scans, english manga, manga site, manga website, free manga sites, manga websites, manga website, where can i read manga, read manga free, manga website, manga stream, manga reader sites, manga store, manga website to read for free, read manga free online, manga websites to read for free, read manga online free english, manga free online, free manga websites, online manga reader, manga read online, read manga free online, where to read manga, read manga online free, manga website free, manga comics online, manga reader website, where to read manga online, read manga online for free, manga website to read for free, read manga online free english, manga free online, free manga websites, online manga reader, manga read online, read manga free online, where to read manga, read manga online free, manga website free, manga comics online, manga reader website, where to read manga online, read manga online for free, manga website to read for free, read manga online free english, manga free online, free manga websites, online manga reader, manga read online, read manga free online, where to read manga, read manga online free, manga website free, manga comics online, manga reader website, where to read manga online, read manga online for free, manga website to read for free, read manga online free english, manga free online, free manga websites, online manga reader, manga read online, read manga free online, where to read manga, read manga online free, manga website free, manga comics online, manga reader website, where to read manga online, read manga online for free, manga website to read for free, read manga online free english, manga free online, free manga websites, online manga reader, manga read online, read manga free online, where to read manga, read manga online free, manga website free, manga comics online, manga reader website, where to read manga online, read manga online for free, manga website to read for free, read manga online free english, manga free online, free manga websites, online manga reader, manga read online, read manga free online, where to read manga, read manga online free, manga website free, manga comics online, manga reader website, where to read manga online",
 	"developer": {
 		"name": "valiantlynx",
-		"url": "http://valiantlynx.com"
+		"url": "https://valiantlynx.com"
 	},
-	"start_url": "/login",
+	"start_url": "/dashboard/reading-progress",
 	"display": "standalone",
 	"orientation": "any",
 	"background_color": "#FFFFFF",
