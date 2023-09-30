@@ -59,7 +59,7 @@
 	];
 
 	// get every sentence and word in the description. into an array. so that i can use as keywords
-	let description = data.description.split(' ');
+	let description = data.description?.split(' ');
 	let descriptionArray: any = [];
 	let sentence = '';
 

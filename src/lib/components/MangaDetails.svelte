@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { postPocketbase, pb, getPocketbase } from '$lib/utils/api';
+	import { postPocketbase, pb, getPocketbase, patchPocketbase } from '$lib/utils/api';
 	export let data: any;
 
 	const imageSrc = `${import.meta.env.VITE_HOST_URL}/api${data.img}?width=200&height=300`;
@@ -117,6 +117,7 @@
 
 	let continueFromLastReading = false;
 	let continueReadingUrl: any = '';
+	let progress: any = {};
 	// if the user is logged in, check if the reading progress record exists, if it does make a continue reading button
 	async function continueReading() {
 		const existingMangaList = await getPocketbase('mangas', {
@@ -138,12 +139,29 @@
 				// If a reading progress record exists, update the current chapter
 				continueReadingUrl = existingProgressList.items[0].expand?.currentChapter.src;
 
+				progress = existingProgressList.items[0];
+
 				continueFromLastReading = true;
 			}
 		}
 	}
 
 	continueReading();
+
+	// Function to handle radio button change
+	async function handleRatingChange(event: any) {
+		const selectedValue = parseFloat(event.target.value);
+		progress.rating = selectedValue;
+
+		const pbData = {
+			rating: progress.rating
+		};
+		await patchPocketbase('reading_progress', progress.id, pbData);
+
+		// You can also save the selectedRating to your database here
+		// Example: call a function to save it to your backend
+		// saveRatingToDatabase(selectedRating);
+	}
 </script>
 
 <div class="w-full flex flex-col md:flex-row gap-4">
@@ -170,10 +188,131 @@
 		>
 			<button on:click={createRecord}>Read Latest</button>
 		</a>
-		{#if continueFromLastReading}
-			<a class="btn btn-primary" href={`${continueReadingUrl}`} target="_self">
-				<button>Continue Reading</button>
-			</a>
+
+		{#if pb.authStore.isValid}
+			<!-- logged in stats -->
+			<div class="mt-4 p-4 border border-success rounded-lg shadow-md text-success">
+				<h2 class="text-xl font-bold mb-2">Logged in as {pb.authStore.model?.username}</h2>
+				<div class="grid grid-cols-2 gap-4">
+					{#if continueFromLastReading}
+						<a class="btn btn-primary" href={`${continueReadingUrl}`} target="_self">
+							<button>Continue Reading</button>
+						</a>
+					{/if}
+					<div class="flex flex-col">
+						<span class="font-bold">Current:</span>
+
+						<span>{progress.expand?.currentChapter.chapterId}</span>
+					</div>
+
+					<div class="flex flex-col">
+						<span class="font-bold">Rating:</span>
+						<div class="rating rating-lg rating-half">
+							<input
+								type="radio"
+								name="rating-10"
+								value="0"
+								class="rating-hidden"
+								on:change={handleRatingChange}
+								checked={progress.rating === 0}
+							/>
+							<input
+								type="radio"
+								name="rating-10"
+								value="0.5"
+								class="bg-accent mask mask-star-2 mask-half-1"
+								on:change={handleRatingChange}
+								checked={progress.rating === 0.5}
+							/>
+							<input
+								type="radio"
+								name="rating-10"
+								value="1"
+								class="bg-accent mask mask-star-2 mask-half-2"
+								on:change={handleRatingChange}
+								checked={progress.rating === 1}
+							/>
+							<input
+								type="radio"
+								name="rating-10"
+								value="1.5"
+								class="bg-accent mask mask-star-2 mask-half-1"
+								on:change={handleRatingChange}
+								checked={progress.rating === 1.5}
+							/>
+							<input
+								type="radio"
+								name="rating-10"
+								value="2"
+								class="bg-accent mask mask-star-2 mask-half-2"
+								on:change={handleRatingChange}
+								checked={progress.rating === 2}
+							/>
+							<input
+								type="radio"
+								name="rating-10"
+								value="2.5"
+								class="bg-accent mask mask-star-2 mask-half-1"
+								on:change={handleRatingChange}
+								checked={progress.rating === 2.5}
+							/>
+							<input
+								type="radio"
+								name="rating-10"
+								value="3"
+								class="bg-accent mask mask-star-2 mask-half-2"
+								on:change={handleRatingChange}
+								checked={progress.rating === 3}
+							/>
+							<input
+								type="radio"
+								name="rating-10"
+								value="3.5"
+								class="bg-accent mask mask-star-2 mask-half-1"
+								on:change={handleRatingChange}
+								checked={progress.rating === 3.5}
+							/>
+							<input
+								type="radio"
+								name="rating-10"
+								value="4"
+								class="bg-accent mask mask-star-2 mask-half-2"
+								on:change={handleRatingChange}
+								checked={progress.rating === 4}
+							/>
+							<input
+								type="radio"
+								name="rating-10"
+								value="4.5"
+								class="bg-accent mask mask-star-2 mask-half-1"
+								on:change={handleRatingChange}
+								checked={progress.rating === 4.5}
+							/>
+							<input
+								type="radio"
+								name="rating-10"
+								value="5"
+								class="bg-accent mask mask-star-2 mask-half-2"
+								on:change={handleRatingChange}
+								checked={progress.rating === 5}
+							/>
+							{progress.rating}
+						</div>
+					</div>
+					<div class="flex flex-col">
+						<span class="font-bold">Status:</span>
+						<span>{progress.status}</span>
+					</div>
+					<div class="flex flex-col">
+						<span class="font-bold">Completed:</span>
+						<span>{progress.completed}</span>
+					</div>
+					<div class="flex flex-col">
+						<span class="font-bold">Started:</span>
+						<span>{progress.started}</span>
+					</div>
+				</div>
+			</div>
 		{/if}
 	</div>
 
