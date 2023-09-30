@@ -18,7 +18,7 @@
 	let currentPage = writable(0);
 
 	// filter  all hte data.chapters.value that starts with '\n
-	data.chapters = data.chapters.filter((chapter: any) => chapter.value.startsWith('/'));
+	data.chapters = data.chapters?.filter((chapter: any) => chapter.value.startsWith('/'));
 
 	const currentChapterIndex = data.chapters.findIndex(
 		(chapter: any) => chapter.value === $page.url.pathname?.replace('/manga', '')
