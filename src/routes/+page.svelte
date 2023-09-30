@@ -1,17 +1,17 @@
 <script lang="ts">
 	import JoinDiscord from '$lib/components/JoinDiscord.svelte';
 	import MangaGrid from '$lib/components/MangaGrid.svelte';
+	import Popular from '$lib/components/Popular.svelte';
 	import ReadingProgress from '$lib/components/ReadingProgress.svelte';
 	import ResponsiveBannerAd from '$lib/components/ResponsiveBannerAd.svelte';
-
-	export let data: any;
 </script>
 
 <h1 class="text-2xl font-bold text-center mb-6">Home</h1>
 
 <div class="flex flex-wrap justify-center">
 	<div class="mt-4 w-full lg:w-3/4">
-		<MangaGrid {data} />
+		<Popular />
+		<MangaGrid />
 	</div>
 	<div class="mt-4 w-full lg:w-1/4">
 		<ResponsiveBannerAd />

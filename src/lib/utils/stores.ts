@@ -46,7 +46,6 @@ export const searchQuery = writable('');
 
 export const metaKeywords = writable('');
 
-// Initial cart state
 const log: any[] = [
 	{
 		log: 'log',
@@ -57,3 +56,11 @@ const log: any[] = [
 ];
 
 export const addedReadingProgress = writable(log);
+
+const popularmanga: any[] = [{}];
+
+export const popular: any = writable(popularmanga);
+
+const latestmanga: any[] = [{}];
+
+export const latest: any = writable(latestmanga);

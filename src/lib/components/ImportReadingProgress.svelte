@@ -37,11 +37,16 @@
 		// function to update the reading status of the manga on the user record in the users collection, if the manga is not in the user record, add it, else update the reading status of the manga and the reading progress
 		const genreIds: any = [];
 		const authorIds: any = [];
+
 		async function createOrUpdateReadingProgress(
 			mangaId: string,
 			chapterId: string,
 			currentChapterIndex: number,
-			totalChapters: number
+			totalChapters: number,
+			rating: number,
+			started: string,
+			status: string,
+			completed: string
 		) {
 			// Check if the user is logged in
 			if (pb.authStore.isValid) {
@@ -59,7 +64,11 @@
 						manga: `${mangaId}`, // This is the manga id, not the manga title
 						currentChapter: `${chapterId}`,
 						currentChapterIndex: currentChapterIndex,
-						totalChapters: totalChapters
+						totalChapters: totalChapters,
+						rating: rating,
+						started: started,
+						status: status,
+						completed: completed
 					};
 					await postPocketbase('reading_progress', pbData);
 				} else {
@@ -68,7 +77,11 @@
 					const pbdata = {
 						currentChapter: `${chapterId}`,
 						currentChapterIndex: currentChapterIndex,
-						totalChapters: totalChapters
+						totalChapters: totalChapters,
+						rating: rating,
+						started: started,
+						status: status,
+						completed: completed
 					};
 					await pb.collection('reading_progress').update(readingProgressId, pbdata);
 				}
@@ -183,7 +196,11 @@
 							chapterRes.manga,
 							chapterRes.id,
 							currentChapterIndex,
-							totalChapters
+							totalChapters,
+							entry.rating,
+							entry.started,
+							entry.status,
+							entry.completed
 						);
 					} else {
 						// create the chapter data to send to pocketbase
@@ -206,7 +223,11 @@
 							chapterRes.manga,
 							chapterRes.id,
 							currentChapterIndex,
-							totalChapters
+							totalChapters,
+							entry.rating,
+							entry.started,
+							entry.status,
+							entry.completed
 						);
 					}
 				} else {
@@ -219,7 +240,11 @@
 						existingChapterList.items[0].manga,
 						existingChapterList.items[0].id,
 						currentChapterIndex,
-						totalChapters
+						totalChapters,
+						entry.rating,
+						entry.started,
+						entry.status,
+						entry.completed
 					);
 				}
 			}

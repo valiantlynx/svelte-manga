@@ -73,7 +73,7 @@
 						{#each $readingProgressStore as chapter (chapter.id)}
 							<!-- Manga Card -->
 							<div class="bg-secondary text-secondary-content rounded-lg shadow-md overflow-hidden">
-								<a href={`${chapter.expand?.currentChapter?.src}`} class="hover:underline">
+								<a href={`/manga/${chapter.expand?.manga?.sourceid}`} class="hover:underline">
 									<!-- Manga Cover Image -->
 									<img
 										src={chapter.expand?.manga?.img}

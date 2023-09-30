@@ -1,9 +1,10 @@
 <script lang="ts">
 	import MangaCard from '$lib/components/MangaCard.svelte';
+	import { onMount } from 'svelte';
 	import AnimevariantGridAds from './AnimevariantGridAds.svelte';
 	import PaginationSimple from './PaginationSimple.svelte';
 
-	export let data: any;
+	let data: any;
 	let pageNo = 1;
 
 	// function to get the data from the url
@@ -13,6 +14,10 @@
 		const data = await res.json();
 		return data;
 	};
+
+	onMount(async () => {
+		data = await newData(pageNo);
+	});
 </script>
 
 <main class="bg-base-100 mx-4">
