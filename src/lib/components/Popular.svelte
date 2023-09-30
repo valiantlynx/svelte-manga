@@ -13,7 +13,7 @@
 		const newData = async (pageNo: number) => {
 			const url =
 				import.meta.env.VITE_PB_URL +
-				`/api/collections/reading_progress/records?page=${pageNo}&perPage=20&filter=user%3D%2277760erf1db6qql%22&expand=manga&sort=rating`;
+				`/api/collections/reading_progress/records?page=${pageNo}&perPage=20&filter=user%3D%2277760erf1db6qql%22&expand=manga&sort=-rating`;
 			const res = await fetch(url);
 			const data = await res.json();
 			const mangas = data.items.map((manga: any) => manga.expand?.manga);
@@ -29,7 +29,7 @@
 			page: pageNo,
 			filter: 'user="77760erf1db6qql"',
 			expand: 'manga',
-			sort: 'rating'
+			sort: '-rating'
 		};
 		const res = await pb.collection('reading_progress').getList(1, 20, datapb);
 		const mangas = res.items.map((manga) => manga.expand?.manga);
