@@ -167,57 +167,61 @@
 <div class="w-full flex flex-col md:flex-row gap-4">
 	<!-- manga image -->
 	<div class="w-full md:w-1/5 h-full">
-		<img class="w-full h-auto object-cover rounded-lg" src={imageSrc} alt={data.title} />
+		<a href={`${$page.url.pathname}/${data.episodes[data.episodes.length - 1].chapterId}`}>
+			<img
+				class="w-full h-auto object-cover rounded-lg border border-primary"
+				src={imageSrc}
+				alt={data.title}
+			/>
+		</a>
 	</div>
 
 	<!-- manga info -->
-	<div class="w-full md:w-1/2 p-4 border rounded-lg shadow-md">
+	<div class="w-full md:w-1/2 p-4 border border-primary rounded-lg shadow-md">
 		<h2 class="text-xl font-bold mb-2">{data.title}</h2>
 		<p class="mb-4">{data.description}</p>
 		<a
 			class="btn btn-primary"
 			href={`${$page.url.pathname}/${data.episodes[data.episodes.length - 1].chapterId}`}
-			target="_self"
 		>
 			<button on:click={createRecord}>Read First</button>
 		</a>
-		<a
-			class="btn btn-primary"
-			href={`${$page.url.pathname}/${data.episodes[0].chapterId}`}
-			target="_self"
-		>
+		<a class="btn btn-primary" href={`${$page.url.pathname}/${data.episodes[0].chapterId}`}>
 			<button on:click={createRecord}>Read Latest</button>
 		</a>
 		<div class="relative">
 			{#if !pb.authStore.isValid}
-			<!-- Not logged in overlay -->
-			<div class="absolute inset-0 flex items-center justify-center bg-gray-800">
-			  <div class="bg-base-100 z-10 p-4 rounded-lg shadow-md text-center">
-				<p class="text-lg font-bold mb-4">Login for free to unlock auto reading-progress tracker feature:</p>
-				<a href="/login" class="btn btn-primary">Login</a>
-			  </div>
-			</div>
-		  {/if}
+				<!-- Not logged in overlay -->
+				<div class="absolute inset-0 flex items-center justify-center bg-primary">
+					<div class="bg-base-100 z-10 p-4 rounded-lg shadow-md text-center">
+						<p class="text-lg font-bold mb-4">
+							Login for free to unlock auto reading-progress tracker feature:
+						</p>
+						<a href="/login" class="btn btn-primary">Login</a>
+					</div>
+				</div>
+			{/if}
 			{#if pb.authStore.isValid}
 				<!-- logged in stats -->
-				<div class="mt-4 p-4 border border-success rounded-lg shadow-md text-success">
+				<div class="mt-4 p-4 border border-primary rounded-lg shadow-md">
 					<h2 class="text-xl font-bold mb-2">Logged in as {pb.authStore.model?.username}</h2>
 					<div class="grid grid-cols-2 gap-4">
 						{#if continueFromLastReading}
-							<a class="btn btn-primary" href={`${continueReadingUrl}`} target="_self">
+							<a class="btn btn-primary animate-bounce" href={`${continueReadingUrl}`}>
 								<button>Continue Reading</button>
 							</a>
-							{:else}
+						{:else}
 							<p class="text-error font-bold mb-4">
-								You haven't started reading this manga yet. Read at least one chapter to start tracking your reading progress.
+								You haven't started reading this manga yet. Read at least one chapter to start
+								tracking your reading progress.
 							</p>
 						{/if}
 						<div class="flex flex-col">
 							<span class="font-bold">Current:</span>
-	
+
 							<span>{progress.expand?.currentChapter.chapterId}</span>
 						</div>
-	
+
 						<div class="flex flex-col">
 							<span class="font-bold">Rating:</span>
 							<div class="rating rating-lg rating-half">
@@ -326,22 +330,24 @@
 						</div>
 					</div>
 				</div>
-				{:else}
+			{:else}
 				<!-- logged out stats -->
-				<div class="mt-4 p-4 border border-success rounded-lg shadow-md text-success bg-opacity-50 blur-sm">
+				<div
+					class="mt-4 p-4 border border-primary rounded-lg shadow-md text-success bg-opacity-50 blur-sm"
+				>
 					<h2 class="text-xl font-bold mb-2">Logged in as {pb.authStore.model?.username}</h2>
 					<div class="grid grid-cols-2 gap-4">
 						{#if continueFromLastReading}
-							<a class="btn btn-primary" href={`${continueReadingUrl}`} target="_self">
+							<a class="btn btn-primary animate-bounce" href={`${continueReadingUrl}`}>
 								<button>Continue Reading</button>
 							</a>
 						{/if}
 						<div class="flex flex-col">
 							<span class="font-bold">Current:</span>
-	
+
 							<span>{progress.expand?.currentChapter.chapterId}</span>
 						</div>
-	
+
 						<div class="flex flex-col">
 							<span class="font-bold">Rating:</span>
 							<div class="rating rating-lg rating-half">
@@ -451,14 +457,11 @@
 					</div>
 				</div>
 			{/if}
-
 		</div>
-
-	
 	</div>
 
 	<!-- manga stats -->
-	<div class="  p-4 border rounded-lg shadow-md">
+	<div class="  p-4 border border-primary rounded-lg shadow-md">
 		<h2 class="text-xl font-bold mb-2">Manga Stats</h2>
 		<div class="grid grid-cols-2 gap-4">
 			<div class="flex flex-col">

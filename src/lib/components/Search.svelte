@@ -73,21 +73,21 @@
 		<div>
 			<div>
 				<input
-					class="input input-bordered join-item w-full"
+					class="input input-bordered input-primary join-item w-full"
 					value={$searchQuery && type === 'big' ? $searchQuery : ''}
 					placeholder="Search"
 					on:input={handleSearch}
 				/>
 			</div>
 		</div>
-		<select class="select select-bordered join-item w-1/3">
+		<select class="select select-bordered select-primary join-item w-1/3">
 			<option disabled selected>Manga</option>
 			<option disabled class="disabled:btn-error">Anime -soon</option>
 			<option disabled class="disabled:btn-error">Chapters -soon</option>
 			<option disabled class="disabled:btn-error">News -soon</option>
 		</select>
 
-		<a href="/manga/search" class="btn join-item w-1/5">Search</a>
+		<a href="/manga/search" class="btn btn-primary join-item w-1/5">Search</a>
 	</div>
 
 	{#if type === 'small'}

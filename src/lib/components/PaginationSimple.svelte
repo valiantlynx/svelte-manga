@@ -13,7 +13,7 @@
 			Previous - {pageNo - 1}
 		</button>
 		<button
-			class="join-item btn btn-primary border-secondary"
+			class="join-item btn btn-primary border-secondary animate-pulse"
 			on:click={() => pageNo++}
 			disabled={!data}
 		>

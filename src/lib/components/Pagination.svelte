@@ -8,12 +8,12 @@
 	<!-- pagination -->
 	<div class="join">
 		<button
-			class="join-item btn"
+			class="join-item btn btn-primary"
 			value={Number($currentPage) - 1}
 			on:click={goToPage}
 			disabled={Number($currentPage) === 1}>«</button
 		>
-		<select class="select select-accent w-full max-w-xs" on:change={goToPage}>
+		<select class="select select-primary w-full max-w-xs" on:change={goToPage}>
 			<option disabled selected>{$currentPage}</option>
 			{#each pageNumbers as pageNumber}
 				{#if pageNumber !== $currentPage}
@@ -22,7 +22,7 @@
 			{/each}
 		</select>
 		<button
-			class="join-item btn"
+			class="join-item btn btn-primary"
 			value={Number($currentPage) + 1}
 			on:click={goToPage}
 			disabled={Number($currentPage) === pageNumbers.length}>»</button

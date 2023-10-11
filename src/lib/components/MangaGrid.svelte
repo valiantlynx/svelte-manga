@@ -21,7 +21,7 @@
 </script>
 
 <main class="bg-base-100 mx-4">
-	<h2 class="text-2xl font-bold text-center mb-6 bg-neutral rounded-lg text-neutral-content">
+	<h2 class="text-2xl font-bold text-center mb-6 bg-primary rounded-lg text-primary-content">
 		Latest Manga
 	</h2>
 	<PaginationSimple {data} bind:pageNo />

@@ -3,7 +3,7 @@
 	import Icon from '@iconify/svelte';
 </script>
 
-<footer class="footer footer-center p-10 bg-base-200 text-base-content rounded mt-auto">
+<footer class="footer footer-center p-10 bg-base-300 text-base-content rounded mt-auto">
 	<div class="grid grid-flow-col gap-4">
 		<a href="/about" class="link link-hover">About us</a>
 		<a href="/contact" class="link link-hover">Contact</a>
@@ -11,13 +11,13 @@
 	</div>
 	<div>
 		<div class="grid grid-flow-col gap-4">
-			<a href="https://www.facebook.com/animevariant/" class="link link-hover"
+			<a href="https://www.facebook.com/animevariant/" class="link link-hover hover:link-primary"
 				><Icon icon="mdi:twitter" /></a
 			>
-			<a href="https://www.youtube.com/@valiantlynx/" class="link link-hover"
+			<a href="https://www.youtube.com/@valiantlynx/" class="link link-hover hover:link-primary"
 				><Icon icon="mdi:youtube" /></a
 			>
-			<a href="https://www.facebook.com/animevariant/" class="link link-hover"
+			<a href="https://www.facebook.com/animevariant/" class="link link-hover hover:link-primary"
 				><Icon icon="mdi:facebook" /></a
 			>
 		</div>

@@ -30,8 +30,8 @@
 	}
 </script>
 
-<div class="bg-base-100 rounded-lg p-4 shadow-md">
-	<h2 class="text-2xl font-bold text-center mb-6 bg-neutral rounded-lg text-neutral-content">
+<div class="bg-base-100 rounded-lg p-4 shadow-md text-base-content">
+	<h2 class="text-2xl font-bold text-center mb-6 bg-primary rounded-lg text-primary-content">
 		Your Reading Progress
 	</h2>
 
@@ -41,10 +41,10 @@
 			<ul class="grid grid-cols-1 gap-4">
 				{#each readingProgress as chapter (chapter.id)}
 					<!-- Manga Card -->
-					<li class="bg-base-200 rounded-lg shadow-md">
+					<li class="rounded-lg shadow-md">
 						<a href={`${chapter.expand?.currentChapter?.src}`} class=" hover:underline">
 							<!-- Manga Cover Image -->
-							<div class="card1 bg-base-200">
+							<div class="card1 bg-base-300">
 								<div class="card__info w-full">
 									<img
 										src={chapter.expand?.manga?.img}
@@ -64,21 +64,21 @@
 											<div class="flex mb-2 items-center justify-between">
 												<div>
 													<span
-														class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full bg-accent"
+														class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full bg-primary text-primary-content"
 													>
 														Reading
 													</span>
 												</div>
 												<div class="text-right">
-													<span class="text-xs font-semibold inline-block text-accent">
+													<span class="text-xs font-semibold inline-block text-primary">
 														{calculateProgressPercentage(chapter).toFixed(2)}%
 													</span>
 												</div>
 											</div>
-											<div class="flex h-2 mb-2 overflow-hidden text-xs bg-blue-200 rounded">
+											<div class="flex h-2 mb-2 overflow-hidden text-xs bg-base-100 rounded">
 												<div
 													style={`width:${calculateProgressPercentage(chapter)}%`}
-													class="shadow-none flex flex-col text-center whitespace-nowrap justify-center bg-warning"
+													class="shadow-none flex flex-col text-center whitespace-nowrap justify-center bg-secondary"
 												/>
 											</div>
 										</div>

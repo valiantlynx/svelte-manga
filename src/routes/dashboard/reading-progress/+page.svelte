@@ -62,7 +62,7 @@
 </script>
 
 <div class="flex flex-wrap justify-center">
-	<div class=" py-8 mt-4 w-full lg:w-3/4">
+	<div class=" py-8 w-full lg:w-3/4 border border-secondary">
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 			<h2 class="text-3xl font-semibold text-center mb-8">Your Reading Progress</h2>
 
@@ -72,7 +72,7 @@
 						<!-- Individual Chapters -->
 						{#each $readingProgressStore as chapter (chapter.id)}
 							<!-- Manga Card -->
-							<div class="bg-secondary text-secondary-content rounded-lg shadow-md overflow-hidden">
+							<div class="bg-base-300 text-base-content rounded-lg shadow-md overflow-hidden">
 								<a href={`/manga/${chapter.expand?.manga?.sourceid}`} class="hover:underline">
 									<!-- Manga Cover Image -->
 									<img
@@ -89,16 +89,16 @@
 										</p>
 										<!-- Progress Bar -->
 										<div class="flex items-center justify-between mt-2">
-											<p class="font-semibold text-info">Progress</p>
-											<span class="text-sm font-semibold text-neutral">
+											<p class="font-semibold text-primary">Progress</p>
+											<span class="text-sm font-semibold text-accent">
 												{calculateProgressPercentage(chapter).toFixed(2)}%
 											</span>
 										</div>
 										<div class="mt-2">
-											<div class="bg-accent h-2 rounded-full">
+											<div class="bg-base-100 h-2 rounded-full">
 												<div
 													style={`width:${calculateProgressPercentage(chapter)}%`}
-													class="bg-info h-2 rounded-full"
+													class="bg-secondary h-2 rounded-full"
 												/>
 											</div>
 										</div>
@@ -109,29 +109,23 @@
 						<!-- Pagination -->
 						<div class="col-span-full flex justify-center mt-8">
 							{#if pageNo > 1}
-								<button
-									class="px-4 py-2 text-white bg-blue-500 rounded-full shadow-md hover:bg-blue-600 mr-4"
-									on:click={prevPage}
-								>
-									Previous
+								<button class="btn-primary btn mx-4" on:click={prevPage}>
+									Previous - {pageNo - 1}
 								</button>
 							{/if}
 							{#if $readingProgressStore.length === itemsPerPage}
-								<button
-									class="px-4 py-2 text-white bg-blue-500 rounded-full shadow-md hover:bg-blue-600"
-									on:click={nextPage}
-								>
-									Next
+								<button class="btn-primary btn" on:click={nextPage}>
+									Next - {pageNo + 1}
 								</button>
 							{/if}
 						</div>
 					{:else}
-						<p class="text-center text-white text-xl mt-4">You have no reading progress.</p>
+						<p class="text-center text-base-content text-xl mt-4">You have no reading progress.</p>
 					{/if}
 				{:else}
 					<a
 						href="/login"
-						class="text-center text-white text-xl mt-4 font-semibold hover:underline block"
+						class="text-center text-base-content text-xl mt-4 font-semibold hover:underline block"
 					>
 						Log In to View Reading Progress
 					</a>

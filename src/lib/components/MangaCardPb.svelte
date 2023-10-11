@@ -3,9 +3,9 @@
 </script>
 
 <div
-	class="w-full bg-neutral text-neutral-content shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+	class="w-full bg-base-300 text-base-content shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
 >
-	<a class=" w-full" href={'/manga/' + manga.sourceid} target="_self">
+	<a class=" w-full" href={'/manga/' + manga.sourceid}>
 		<img
 			class=" w-full group-hover:opacity-75 overflow-hidden rounded-t-xl"
 			src={manga.img}
@@ -20,9 +20,7 @@
 					{manga.latestChapter}
 				</p>
 				<div class="ml-auto">
-					
-						<label class="cursor-auto" for="rating-8">:{manga.views}</label>
-				
+					<label class="cursor-auto" for="rating-8">:{manga.views}</label>
 				</div>
 			</div>
 		</div>

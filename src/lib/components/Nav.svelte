@@ -7,7 +7,7 @@
 
 <!-- Small Devices Layout -->
 <div>
-	<div class="navbar bg-base-200 max-w-full sm:hidden">
+	<div class="navbar bg-base-300 max-w-full sm:hidden">
 		<div class="flex-1">
 			<a class="btn btn-ghost normal-case text-xl" href="/">AnimeVariant</a>
 			<ThemeChanger />
@@ -16,7 +16,7 @@
 	</div>
 	<!-- Show search bar only on pages other than search -->
 	{#if $page.url.pathname !== '/manga/search'}
-		<div class="navbar bg-base-200 flex flex-col sm:hidden">
+		<div class="navbar bg-base-300 flex flex-col sm:hidden">
 			<div class="flex-none sm:flex sm:gap-2">
 				<Search type="small" />
 			</div>
@@ -25,7 +25,7 @@
 </div>
 
 <!-- Large Devices Layout -->
-<div class="navbar bg-base-200 hidden sm:flex">
+<div class="navbar bg-base-300 hidden sm:flex">
 	<div class="flex-1">
 		<a class="btn btn-ghost normal-case text-xl" href="/">AnimeVariant</a>
 		<ThemeChanger />

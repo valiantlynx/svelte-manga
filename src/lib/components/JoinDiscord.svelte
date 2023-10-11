@@ -6,7 +6,7 @@
 	<a
 		href="https://discord.gg/wEgMuvRWzj"
 		target="_blank"
-		class="btn-primary mx-5 px-4 my-5 py-2 rounded-md font-semibold block text-center"
+		class="btn-primary mx-5 px-4 my-5 py-2 animate-bounce rounded-md font-semibold block text-center"
 	>
 		Join Discord
 	</a>

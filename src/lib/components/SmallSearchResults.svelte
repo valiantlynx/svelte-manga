@@ -4,7 +4,7 @@
 	export let handleClick: any;
 </script>
 
-<div class="absolute z-10 bg-base-200 rounded-box shadow-lg top-16" hidden={$searchQuery === ''}>
+<div class="absolute z-10 bg-base-200 rounded-box shadow-lg" hidden={$searchQuery === ''}>
 	<ul class="menu p-2 shadow-lg bg-base-100 rounded-box w-full">
 		{#if searchResults.length > 0}
 			{#each searchResults as result}

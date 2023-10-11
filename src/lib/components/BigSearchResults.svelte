@@ -4,11 +4,14 @@
 	export let handleClick: any;
 </script>
 
-<ul class="bg-base-200 w-full rounded-box overflow-y-auto -z-0" hidden={$searchQuery === ''}>
+<ul
+	class="bg-base-100 w-full text-base-content rounded-box overflow-y-auto -z-0"
+	hidden={$searchQuery === ''}
+>
 	{#if searchResults.length > 0}
 		<div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4 w-full">
 			{#each searchResults as result}
-				<li class="btn-neutral shadow-md rounded-lg p-4 m-1">
+				<li class="btn-ghost bg-base-300 shadow-md rounded-lg p-4 m-1">
 					<button
 						on:click={handleClick(result.src)}
 						aria-label={'Go to ' + result.title + ' manga page'}

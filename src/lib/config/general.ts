@@ -11,8 +11,44 @@ export const API_BASE_URL = 'https://api.texbab.com';
 
 export const theme: ThemeConfig = [
 	{
+		name: 'halloween',
+		text: '🎃 Halloween'
+	},
+	{
+		name: 'dracula',
+		text: '🧛 Dracula'
+	},
+	{
+		name: 'cyberpunk',
+		text: '🤖 Cyberpunk'
+	},
+	{
 		name: 'business',
 		text: '🏢 Business'
+	},
+	{
+		name: 'lofi',
+		text: '🎶 Lo-Fi'
+	},
+	{
+		name: 'coffee',
+		text: '☕ Coffee'
+	},
+	{
+		name: 'forest',
+		text: '🌳 Forest'
+	},
+	{
+		name: 'wireframe',
+		text: '📏 Wireframe'
+	},
+	{
+		name: 'night',
+		text: '🌃 Night'
+	},
+	{
+		name: 'retro',
+		text: '🌇 Retro'
 	},
 	{
 		name: 'winter',
@@ -21,10 +57,6 @@ export const theme: ThemeConfig = [
 	{
 		name: 'bumblebee',
 		text: '🐝 Bumblebee'
-	},
-	{
-		name: 'retro',
-		text: '🌇 Retro'
 	},
 	{
 		name: 'light',
@@ -51,32 +83,16 @@ export const theme: ThemeConfig = [
 		text: '🌃 Synthwave'
 	},
 	{
-		name: 'cyberpunk',
-		text: '🤖 Cyberpunk'
-	},
-	{
 		name: 'valentine',
 		text: '🌸 Valentine'
-	},
-	{
-		name: 'halloween',
-		text: '🎃 Halloween'
 	},
 	{
 		name: 'garden',
 		text: '🏡 Garden'
 	},
 	{
-		name: 'forest',
-		text: '🌳 Forest'
-	},
-	{
 		name: 'aqua',
 		text: '💦 Aqua'
-	},
-	{
-		name: 'lofi',
-		text: '🎶 Lo-Fi'
 	},
 	{
 		name: 'pastel',
@@ -86,10 +102,7 @@ export const theme: ThemeConfig = [
 		name: 'fantasy',
 		text: '🧚 Fantasy'
 	},
-	{
-		name: 'wireframe',
-		text: '📏 Wireframe'
-	},
+	
 	{
 		name: 'black',
 		text: '🖤 Black'
@@ -97,10 +110,6 @@ export const theme: ThemeConfig = [
 	{
 		name: 'luxury',
 		text: '💎 Luxury'
-	},
-	{
-		name: 'dracula',
-		text: '🧛 Dracula'
 	},
 	{
 		name: 'cmyk',
@@ -118,14 +127,6 @@ export const theme: ThemeConfig = [
 	{
 		name: 'lemonade',
 		text: '🍋 Lemonade'
-	},
-	{
-		name: 'night',
-		text: '🌃 Night'
-	},
-	{
-		name: 'coffee',
-		text: '☕ Coffee'
 	}
 ];
 

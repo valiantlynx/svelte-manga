@@ -22,7 +22,7 @@
 
 {#if showScrollToTop}
 	<button
-		class="fixed bottom-4 right-4 btn btn-outline btn-accent px-4 py-2 rounded-lg"
+		class="fixed bottom-4 right-4 font-bold animate-pulse btn btn-outline btn-primary px-4 py-2 rounded-lg"
 		on:click={scrollToTop}
 	>
 		Scroll to Top

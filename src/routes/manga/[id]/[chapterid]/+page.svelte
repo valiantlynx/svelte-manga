@@ -300,7 +300,7 @@
 		</button>
 		{#if currentChapterIndex === 0}
 			<button
-				class="px-4 py-2 rounded-lg btn btn-primary"
+				class="px-4 py-2 rounded-lg btn btn-secondary"
 				on:click={() => goto(`/manga/${$page.params.id}`)}
 			>
 				Manga Details

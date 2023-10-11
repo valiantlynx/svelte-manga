@@ -96,7 +96,7 @@
 
 	{#if !canAutoScroll}
 		<div class="text-center justify-center flex">
-			<button on:click={autoScroll} class="btn btn-secondary">
+			<button on:click={autoScroll} class="btn btn-primary">
 				{#if unreadMessages}
 					💬
 				{/if}
@@ -105,14 +105,14 @@
 		</div>
 	{/if}
 
-	<div class="border-t pt-4">
+	<div class="border-t border-primary pt-4">
 		<form on:submit|preventDefault={sendMessage} class="space-x-2 flex items-center">
 			<input
 				type="text"
 				placeholder={pb.authStore.isValid ? 'Type a message...' : 'Login to chat... ------>'}
 				bind:value={newMessage}
 				maxlength="100"
-				class="input input-bordered flex-grow"
+				class="input input-bordered input-primary flex-grow animate-pulse"
 			/>
 			{#if pb.authStore.isValid}
 				<button type="submit" disabled={!newMessage} class="btn btn-primary"> Send </button>
