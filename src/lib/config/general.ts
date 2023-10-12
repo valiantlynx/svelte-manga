@@ -102,7 +102,7 @@ export const theme: ThemeConfig = [
 		name: 'fantasy',
 		text: '🧚 Fantasy'
 	},
-	
+
 	{
 		name: 'black',
 		text: '🖤 Black'

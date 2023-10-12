@@ -5,6 +5,7 @@
 	import { onMount, setContext } from 'svelte';
 	import { writable } from 'svelte/store';
 	import ImportReadingProgress from '$lib/components/ImportReadingProgress.svelte';
+	import PersonalRating from '$lib/components/PersonalRating.svelte';
 
 	// Create a writable store to hold readingProgress data
 	const readingProgressStore: any = writable([]);
@@ -62,7 +63,7 @@
 </script>
 
 <div class="flex flex-wrap justify-center">
-	<div class=" py-8 w-full lg:w-3/4 border border-secondary">
+	<div class=" py-8 w-full lg:w-3/4 border border-primary">
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 			<h2 class="text-3xl font-semibold text-center mb-8">Your Reading Progress</h2>
 
@@ -72,7 +73,7 @@
 						<!-- Individual Chapters -->
 						{#each $readingProgressStore as chapter (chapter.id)}
 							<!-- Manga Card -->
-							<div class="bg-base-300 text-base-content rounded-lg shadow-md overflow-hidden">
+							<div class="bg-base-300 text-base-content rounded-lg shadow-md">
 								<a href={`/manga/${chapter.expand?.manga?.sourceid}`} class="hover:underline">
 									<!-- Manga Cover Image -->
 									<img
@@ -80,30 +81,98 @@
 										alt={chapter.expand?.manga?.title}
 										class="w-full h-48 object-cover"
 									/>
-									<div class="p-4">
+								</a>
+								<div class="p-4">
+									<a href={`/manga/${chapter.expand?.manga?.sourceid}`} class="hover:underline">
 										<h5 class="text-lg font-semibold truncate">
 											{chapter.expand?.manga?.title}
 										</h5>
 										<p class="text-sm">
 											{chapter.expand?.currentChapter?.chapterId}/{chapter.totalChapters || 1}
 										</p>
-										<!-- Progress Bar -->
-										<div class="flex items-center justify-between mt-2">
-											<p class="font-semibold text-primary">Progress</p>
-											<span class="text-sm font-semibold text-accent">
-												{calculateProgressPercentage(chapter).toFixed(2)}%
-											</span>
-										</div>
-										<div class="mt-2">
-											<div class="bg-base-100 h-2 rounded-full">
-												<div
-													style={`width:${calculateProgressPercentage(chapter)}%`}
-													class="bg-secondary h-2 rounded-full"
-												/>
+									</a>
+									<!-- Progress Bar -->
+									<div class="flex items-center justify-between mt-2">
+										<p class="font-semibold text-primary">Progress</p>
+
+										<div class="dropdown dropdown-end dropdown-hover">
+											<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+											<label
+												tabindex="0"
+												class="btn btn-circle btn-ghost btn-xs text-info"
+												for="progress info"
+											>
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													fill="none"
+													viewBox="0 0 24 24"
+													class="w-4 h-4 stroke-warning"
+													><path
+														stroke-linecap="round"
+														stroke-linejoin="round"
+														stroke-width="2"
+														d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+													/></svg
+												>
+											</label>
+											<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+											<div
+												tabindex="0"
+												class="card compact dropdown-content z-[10] absolute shadow bg-base-200 rounded-box w-64"
+											>
+												<div class="card-body">
+													<h2 class="card-title">You needed more info?</h2>
+													<h4 class="font-bold">title</h4>
+													<p class="text-sm">
+														{chapter.expand?.manga?.title}
+													</p>
+													<h4 class="font-bold">personal rating</h4>
+													<div class="relative rating rating-lg rating-half">
+														<input
+															type="radio"
+															name="rating-10"
+															value="0.5"
+															class="bg-accent mask mask-star-2"
+															checked
+														/>{chapter.rating} stars
+													</div>
+
+													<span class="text-sm font-semibold text-accent">
+														{calculateProgressPercentage(chapter).toFixed(2)}% read
+													</span>
+													<div class="mt-2">
+														<div class="bg-base-100 h-2 rounded-full">
+															<div
+																style={`width:${calculateProgressPercentage(chapter)}%`}
+																class="bg-primary h-2 rounded-full"
+															/>
+														</div>
+													</div>
+													<h4 class="font-bold">description</h4>
+													<p class="text-sm">
+														{chapter.expand?.manga?.description}
+													</p>
+													<h4 class="font-bold">current chapter</h4>
+													<p class="text-sm">
+														{chapter.expand?.currentChapter?.chapterId}
+													</p>
+													<h4 class="font-bold">status</h4>
+													<p class="text-sm">
+														{chapter.status}
+													</p>
+												</div>
 											</div>
 										</div>
 									</div>
-								</a>
+									<div class="mt-2">
+										<div class="bg-base-100 h-2 rounded-full">
+											<div
+												style={`width:${calculateProgressPercentage(chapter)}%`}
+												class="bg-primary h-2 rounded-full"
+											/>
+										</div>
+									</div>
+								</div>
 							</div>
 						{/each}
 						<!-- Pagination -->

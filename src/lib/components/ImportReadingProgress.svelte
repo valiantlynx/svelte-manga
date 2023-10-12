@@ -269,7 +269,7 @@
 </svelte:head>
 
 <div
-	class="container mx-auto p-4 sm:p-8 max-w-xl border border-secondary rounded-lg shadow-md w-full lg:w-1/4"
+	class="container mx-auto p-4 sm:p-8 max-w-xl border border-primary rounded-lg shadow-md w-full lg:w-1/4"
 >
 	<h2 class="text-3xl font-semibold text-center mb-6">Import Reading Progress</h2>
 	<div class="form-control mb-7">
@@ -278,7 +278,7 @@
 		</label>
 		<input
 			type="file"
-			class="file-input file-input-secondary w-full max-w-xs"
+			class="file-input file-input-primary w-full max-w-xs"
 			id="progress-input"
 			on:change={handleFiles}
 		/>
@@ -294,7 +294,7 @@
 			</p>
 		</h2>
 
-		<div class="border border-secondary rounded p-2 h-40 overflow-y-auto scroll-m-3">
+		<div class="border border-primary rounded p-2 h-40 overflow-y-auto scroll-m-3">
 			{#each $addedReadingProgress as progress (progress)}
 				<p class="text-sm truncate text-warning">
 					{progress.log}

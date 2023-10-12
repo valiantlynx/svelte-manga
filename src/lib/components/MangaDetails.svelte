@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { postPocketbase, pb, getPocketbase, patchPocketbase } from '$lib/utils/api';
+	import { postPocketbase, pb, getPocketbase } from '$lib/utils/api';
+	import PersonalRating from './PersonalRating.svelte';
 	export let data: any;
 
 	const imageSrc = `${import.meta.env.VITE_HOST_URL}/api${data.img}?width=200&height=300`;
@@ -147,21 +148,6 @@
 	}
 
 	continueReading();
-
-	// Function to handle radio button change
-	async function handleRatingChange(event: any) {
-		const selectedValue = parseFloat(event.target.value);
-		progress.rating = selectedValue;
-
-		const pbData = {
-			rating: progress.rating
-		};
-		await patchPocketbase('reading_progress', progress.id, pbData);
-
-		// You can also save the selectedRating to your database here
-		// Example: call a function to save it to your backend
-		// saveRatingToDatabase(selectedRating);
-	}
 </script>
 
 <div class="w-full flex flex-col md:flex-row gap-4">
@@ -223,98 +209,7 @@
 						</div>
 
 						<div class="flex flex-col">
-							<span class="font-bold">Rating:</span>
-							<div class="rating rating-lg rating-half">
-								<input
-									type="radio"
-									name="rating-10"
-									value="0"
-									class="rating-hidden"
-									on:change={handleRatingChange}
-									checked={progress.rating === 0}
-								/>
-								<input
-									type="radio"
-									name="rating-10"
-									value="0.5"
-									class="bg-accent mask mask-star-2 mask-half-1"
-									on:change={handleRatingChange}
-									checked={progress.rating === 0.5}
-								/>
-								<input
-									type="radio"
-									name="rating-10"
-									value="1"
-									class="bg-accent mask mask-star-2 mask-half-2"
-									on:change={handleRatingChange}
-									checked={progress.rating === 1}
-								/>
-								<input
-									type="radio"
-									name="rating-10"
-									value="1.5"
-									class="bg-accent mask mask-star-2 mask-half-1"
-									on:change={handleRatingChange}
-									checked={progress.rating === 1.5}
-								/>
-								<input
-									type="radio"
-									name="rating-10"
-									value="2"
-									class="bg-accent mask mask-star-2 mask-half-2"
-									on:change={handleRatingChange}
-									checked={progress.rating === 2}
-								/>
-								<input
-									type="radio"
-									name="rating-10"
-									value="2.5"
-									class="bg-accent mask mask-star-2 mask-half-1"
-									on:change={handleRatingChange}
-									checked={progress.rating === 2.5}
-								/>
-								<input
-									type="radio"
-									name="rating-10"
-									value="3"
-									class="bg-accent mask mask-star-2 mask-half-2"
-									on:change={handleRatingChange}
-									checked={progress.rating === 3}
-								/>
-								<input
-									type="radio"
-									name="rating-10"
-									value="3.5"
-									class="bg-accent mask mask-star-2 mask-half-1"
-									on:change={handleRatingChange}
-									checked={progress.rating === 3.5}
-								/>
-								<input
-									type="radio"
-									name="rating-10"
-									value="4"
-									class="bg-accent mask mask-star-2 mask-half-2"
-									on:change={handleRatingChange}
-									checked={progress.rating === 4}
-								/>
-								<input
-									type="radio"
-									name="rating-10"
-									value="4.5"
-									class="bg-accent mask mask-star-2 mask-half-1"
-									on:change={handleRatingChange}
-									checked={progress.rating === 4.5}
-								/>
-								<input
-									type="radio"
-									name="rating-10"
-									value="5"
-									class="bg-accent mask mask-star-2 mask-half-2"
-									on:change={handleRatingChange}
-									checked={progress.rating === 5}
-								/>
-								{progress.rating}
-							</div>
+							<PersonalRating bind:progress />
 						</div>
 						<div class="flex flex-col">
 							<span class="font-bold">Status:</span>
@@ -349,98 +244,7 @@
 						</div>
 
 						<div class="flex flex-col">
-							<span class="font-bold">Rating:</span>
-							<div class="rating rating-lg rating-half">
-								<input
-									type="radio"
-									name="rating-10"
-									value="0"
-									class="rating-hidden"
-									on:change={handleRatingChange}
-									checked={progress.rating === 0}
-								/>
-								<input
-									type="radio"
-									name="rating-10"
-									value="0.5"
-									class="bg-accent mask mask-star-2 mask-half-1"
-									on:change={handleRatingChange}
-									checked={progress.rating === 0.5}
-								/>
-								<input
-									type="radio"
-									name="rating-10"
-									value="1"
-									class="bg-accent mask mask-star-2 mask-half-2"
-									on:change={handleRatingChange}
-									checked={progress.rating === 1}
-								/>
-								<input
-									type="radio"
-									name="rating-10"
-									value="1.5"
-									class="bg-accent mask mask-star-2 mask-half-1"
-									on:change={handleRatingChange}
-									checked={progress.rating === 1.5}
-								/>
-								<input
-									type="radio"
-									name="rating-10"
-									value="2"
-									class="bg-accent mask mask-star-2 mask-half-2"
-									on:change={handleRatingChange}
-									checked={progress.rating === 2}
-								/>
-								<input
-									type="radio"
-									name="rating-10"
-									value="2.5"
-									class="bg-accent mask mask-star-2 mask-half-1"
-									on:change={handleRatingChange}
-									checked={progress.rating === 2.5}
-								/>
-								<input
-									type="radio"
-									name="rating-10"
-									value="3"
-									class="bg-accent mask mask-star-2 mask-half-2"
-									on:change={handleRatingChange}
-									checked={progress.rating === 3}
-								/>
-								<input
-									type="radio"
-									name="rating-10"
-									value="3.5"
-									class="bg-accent mask mask-star-2 mask-half-1"
-									on:change={handleRatingChange}
-									checked={progress.rating === 3.5}
-								/>
-								<input
-									type="radio"
-									name="rating-10"
-									value="4"
-									class="bg-accent mask mask-star-2 mask-half-2"
-									on:change={handleRatingChange}
-									checked={progress.rating === 4}
-								/>
-								<input
-									type="radio"
-									name="rating-10"
-									value="4.5"
-									class="bg-accent mask mask-star-2 mask-half-1"
-									on:change={handleRatingChange}
-									checked={progress.rating === 4.5}
-								/>
-								<input
-									type="radio"
-									name="rating-10"
-									value="5"
-									class="bg-accent mask mask-star-2 mask-half-2"
-									on:change={handleRatingChange}
-									checked={progress.rating === 5}
-								/>
-								{progress.rating}
-							</div>
+							<PersonalRating progress />
 						</div>
 						<div class="flex flex-col">
 							<span class="font-bold">Status:</span>
