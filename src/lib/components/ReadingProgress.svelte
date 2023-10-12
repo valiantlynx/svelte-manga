@@ -41,7 +41,7 @@
 			<ul class="grid grid-cols-1 gap-4">
 				{#each readingProgress as chapter (chapter.id)}
 					<!-- Manga Card -->
-					<li class="rounded-lg shadow-md">
+					<li class="rounded-lg shadow-md border border-primary">
 						<a href={`${chapter.expand?.currentChapter?.src}`} class=" hover:underline">
 							<!-- Manga Cover Image -->
 							<div class="card1 bg-base-300">
@@ -58,7 +58,7 @@
 										<p>{chapter.expand?.currentChapter?.chapterId}/{chapter.totalChapters || 1}</p>
 										<!-- Progress Bar -->
 										<div class="flex items-center justify-between">
-											<p class=" font-bold">Progress</p>
+											<p class="font-bold ">Progress</p>
 										</div>
 										<div class="relative pt-1">
 											<div class="flex mb-2 items-center justify-between">
