@@ -21,6 +21,13 @@
 </div>
 
 <svelte:head>
+	<title>AnimeVariant</title>
+	<!-- Canonical Link -->
+	<link rel="canonical" href="https://animevariant.com/" />
+
+	<!-- Author Meta Tag -->
+	<meta name="author" content="Valiantlynx" />
+
 	<!-- Open Graph Meta Tags (for social media sharing) -->
 	<meta property="og:title" content="AnimeVariant" />
 	<meta

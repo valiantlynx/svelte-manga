@@ -23,7 +23,7 @@
 					{manga.latestChapter}
 				</p>
 				<div class="ml-auto">
-					<div class="rating rating-sm ">
+					<div class="rating rating-sm">
 						<label class="cursor-auto text-secondary" for="rating-8">{manga.rating}</label>
 						<input type="radio" name="rating-8" class="mt-1 mask mask-star-2 bg-info" checked />
 					</div>

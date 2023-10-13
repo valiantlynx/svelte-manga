@@ -5,7 +5,6 @@
 	import { onMount, setContext } from 'svelte';
 	import { writable } from 'svelte/store';
 	import ImportReadingProgress from '$lib/components/ImportReadingProgress.svelte';
-	import PersonalRating from '$lib/components/PersonalRating.svelte';
 
 	// Create a writable store to hold readingProgress data
 	const readingProgressStore: any = writable([]);

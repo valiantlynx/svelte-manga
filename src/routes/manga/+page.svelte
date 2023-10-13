@@ -21,6 +21,7 @@
 </div>
 
 <svelte:head>
+	<title>AnimeVariant manga page</title>
 	<!-- Open Graph Meta Tags (for social media sharing) -->
 	<meta property="og:title" content="AnimeVariant" />
 	<meta
