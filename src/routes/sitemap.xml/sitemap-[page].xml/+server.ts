@@ -45,8 +45,8 @@ const pingGoogle = async (page: number, url: string) => {
 	
 	await genMangaPosts(page).then((mangas) => {
 		mangas.map((manga: { url: string; image: string; title: string; description: string }) => {
-			links.push("https://www.animevariant.com" + manga.url);
-			images.push("https://www.animevariant.com" + manga.image);
+			links.push(url + manga.url);
+			images.push(url + manga.image);
 		});
 	});
 
