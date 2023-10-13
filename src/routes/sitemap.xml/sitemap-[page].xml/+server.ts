@@ -69,11 +69,6 @@ let apiCalls = 0;
 let lastCallTime = Date.now();
 
 async function indexer(urls: string[]) {
-	
-
-	// eslint-disable-next-line no-console
-	console.log('google api- r', urls);
-
 	try {
 		for (let i = 0; i < urls.length && apiCalls < maxIndexingApiCalls; i++) {
 			const url = urls[i];
