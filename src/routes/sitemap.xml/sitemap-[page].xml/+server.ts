@@ -40,11 +40,21 @@ const render = async (page: number, url: string): Promise<string> =>
 
 // ping google to update the the urls of the company and the images
 const pingGoogle = async (page: number, url: string) => {
-	genMangaPosts(page).then((post) => url + post.path);
-	genMangaPosts(page).then((post) => url + post.image);
+	const links: any[] = []
+	const images: any[] = []
+	
+	await genMangaPosts(page).then((mangas) => {
+		mangas.map((manga: { url: string; image: string; title: string; description: string }) => {
+			links.push("https://www.animevariant.com" + manga.url);
+			images.push("https://www.animevariant.com" + manga.image);
+		});
+	});
 
 	// index the urls
-	indexer(page, url);
+	indexer(links);
+	// index the images
+	indexer(images);
+
 };
 
 const services = {
@@ -58,8 +68,8 @@ const maxIndexingApiCalls = 5;
 let apiCalls = 0;
 let lastCallTime = Date.now();
 
-async function indexer(page: number, url: string) {
-	const urls = await genMangaPosts(page).then((post) => url + post.path);
+async function indexer(urls: string[]) {
+	
 
 	// eslint-disable-next-line no-console
 	console.log('google api- r', urls);
@@ -102,7 +112,7 @@ async function indexer(page: number, url: string) {
 					.catch((error) => {
 						// If the API call fails, log the error and continue
 						// eslint-disable-next-line no-console
-						console.error(`Error indexing ${url}...`, error);
+						console.error(`Error indexing ${url} ...`, error.message, error.domain, error.reason);
 					});
 
 				// Increment API usage and update last call time
@@ -111,7 +121,7 @@ async function indexer(page: number, url: string) {
 
 				if (indexRequest) {
 					// eslint-disable-next-line no-console
-					console.log(`Indexed ${url}...`);
+					console.log(`Indexed ${url} ...`);
 
 					// If the API call succeeds, log the response
 					// eslint-disable-next-line no-console
