@@ -29,7 +29,7 @@
 			page: pageNo,
 			filter: 'user="77760erf1db6qql"',
 			expand: 'manga',
-			sort: '-rating'
+			sort: '-updated'
 		};
 		const res = await pb.collection('reading_progress').getList(1, 20, datapb);
 		const mangas = res.items.map((manga) => manga.expand?.manga);

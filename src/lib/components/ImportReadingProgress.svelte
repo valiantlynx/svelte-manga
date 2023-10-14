@@ -269,7 +269,7 @@
 </svelte:head>
 
 <div
-	class="container mx-auto p-4 sm:p-8 max-w-xl border border-primary rounded-lg shadow-md w-full lg:w-1/4"
+	class="container mx-auto p-4 sm:p-8 max-w-xl border border-primary rounded-r-lg shadow-md w-full lg:w-1/4"
 >
 	<h2 class="text-3xl font-semibold text-center mb-6">Import Reading Progress</h2>
 	<div class="form-control mb-7">

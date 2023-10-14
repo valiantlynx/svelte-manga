@@ -62,7 +62,7 @@
 </script>
 
 <div class="flex flex-wrap justify-center">
-	<div class=" py-8 w-full lg:w-3/4 border border-primary">
+	<div class=" py-8 w-full lg:w-3/4 border border-primary rounded-l-lg">
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 			<h2 class="text-3xl font-semibold text-center mb-8">Your Reading Progress</h2>
 
