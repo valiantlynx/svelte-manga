@@ -40,9 +40,9 @@ const render = async (page: number, url: string): Promise<string> =>
 
 // ping google to update the the urls of the company and the images
 const pingGoogle = async (page: number, url: string) => {
-	const links: any[] = []
-	const images: any[] = []
-	
+	const links: any[] = [];
+	const images: any[] = [];
+
 	await genMangaPosts(page).then((mangas) => {
 		mangas.map((manga: { url: string; image: string; title: string; description: string }) => {
 			links.push(url + manga.url);
@@ -54,7 +54,6 @@ const pingGoogle = async (page: number, url: string) => {
 	indexer(links);
 	// index the images
 	indexer(images);
-
 };
 
 const services = {
@@ -120,7 +119,7 @@ async function indexer(urls: string[]) {
 
 					// If the API call succeeds, log the response
 					// eslint-disable-next-line no-console
-					console.log(indexRequest);
+					console.log('index success', indexRequest.status, indexRequest.statusText);
 				}
 			}
 		}
