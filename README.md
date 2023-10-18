@@ -52,3 +52,16 @@ still not convinced?
 For a more detailed explanation go here (https://internetcomputer.org/docs/current/tokenomics/identity-auth/what-is-ic-identity/)
 
 Copyright 2022 Smart Innovative Products AS (www.smartinnovativeproducts.com)
+
+
+
+# make a brach on the main repo named the same as the monorepo
+# add this as a subtree to the main repo
+git subtree add --prefix=apps/chatbotAI https://github.com/valiantlynx/chatbotAI.git valiantlynx-turborepo --squash
+
+# pull the subtree
+git subtree pull --prefix=apps/chatbotAI https://github.com/valiantlynx/chatbotAI.git valiantlynx-turborepo --squash
+
+# push the subtree
+git subtree push --prefix=apps/chatbotAI https://github.com/valiantlynx/chatbotAI.git valiantlynx-turborepo
+
