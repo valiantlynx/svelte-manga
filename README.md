@@ -56,10 +56,10 @@ Copyright 2022 Smart Innovative Products AS (www.smartinnovativeproducts.com)
 
 # make a brach on the main repo named the same as the monorepo
 # add this as a subtree to the main repo
-git subtree add --prefix=apps/chatbotAI https://github.com/valiantlynx/chatbotAI.git valiantlynx-turborepo --squash
+git subtree add --prefix=apps/svelte-manga https://github.com/valiantlynx/svelte-manga.git valiantlynx-turborepo --squash
 
 # pull the subtree
-git subtree pull --prefix=apps/chatbotAI https://github.com/valiantlynx/chatbotAI.git valiantlynx-turborepo --squash
+git subtree pull --prefix=apps/svelte-manga https://github.com/valiantlynx/svelte-manga.git valiantlynx-turborepo --squash
 
 # push the subtree
-git subtree push --prefix=apps/chatbotAI https://github.com/valiantlynx/chatbotAI.git valiantlynx-turborepo
+git subtree push --prefix=apps/svelte-manga https://github.com/valiantlynx/svelte-manga.git valiantlynx-turborepo
