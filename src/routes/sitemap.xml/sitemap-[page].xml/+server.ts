@@ -1,6 +1,9 @@
 import type { RequestHandler } from './$types';
 import { genMangaPosts, getPocketbase } from '$lib/utils/api';
-import { google } from 'googleapis';
+// import { google } from 'googleapis'; // googleapi'd dependency google-auth-library has a circular dependency. too memory heavy in docker container
+
+//temp fix for googleapis
+const google: any = {};
 
 const render = async (page: number, url: string): Promise<string> =>
 	`<?xml version='1.0' encoding='utf-8'?>
@@ -50,11 +53,8 @@ const pingGoogle = async (page: number, url: string) => {
 		});
 	});
 
-
 	// get the pocketbase services credentials
 	const services = await getPocketbase('credentials', {}).then((data) => data.items);
-
-	
 
 	const service = services[0].creds;
 
@@ -63,7 +63,6 @@ const pingGoogle = async (page: number, url: string) => {
 	// index the images
 	await indexer(images, service);
 };
-
 
 // Set up variables for tracking API usage
 const maxIndexingApiCalls = 5;
@@ -135,7 +134,7 @@ export const trailingSlash = 'never';
 
 export const GET: RequestHandler = async ({ params, url }) => {
 	// ping google to update the the urls of the company and the images
-	pingGoogle(Number(params.page), url.origin);
+	// pingGoogle(Number(params.page), url.origin);
 	return new Response(await render(Number(params.page), url.origin), {
 		headers: {
 			'content-type': 'application/xml; charset=utf-8'
