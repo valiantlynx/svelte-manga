@@ -12,52 +12,181 @@
 
 \maketitle
 
-\section*{Question 1}
-Suppose you have a mechanical clock that has a minute hand, but no hour hand. You take a photograph of the clock when the minute hand points at 16:00 AM and then take additional photos every 55 minutes. Upon showing those photos, in time order, to someone:
-\begin{enumerate}
-    \item What would that person think about the direction of motion of the minute hand as time advances?
-    \begin{enumerate}
-        \item They would think that time is moving backwards. Every time you take a photo, the minute hand would point to a number five minutes less than the earlier one.
-        \item Upon showing a person the images in time order it would appear that the minute hand is going counter-clockwise.
-    \end{enumerate}
-    \item How often would you take photos, measured in photos/hour so that the successive photos show proper (true) clockwise minute-hand rotation?
-    \begin{enumerate}
-        \item You would have to take at least 3 or more photos/hour.
-        \item Thinking of the hour as 1 period, you need at least 2 samples in each period to capture the true clockwise minute hand rotation.
-    \end{enumerate}
-\end{enumerate}
+\section*{Problem 1a}
+Given sequence \( x_1(n) = \{1, 1, 0, 0, 0\} \) and a 5-sample Discrete Fourier Transform (DFT):
+\[ X_1(m) = \sum_{n=0}^{4} x_1(n) \cdot e^{-j\frac{2\pi}{5}mn} \]
 
-\section*{Question 2}
-Assume we sampled a continuous \( x(t) \) signal and obtained 103 time domain samples. What important parameter is missing in order to analyze \( x(t) \)?
-\begin{enumerate}
-    \item The important parameter missing in order to analyze \( x(t) \) is the sampling rate.
-    \item Without the sampling rate, we know we took 103 samples, but we have no idea over what period of time those samples were taken, which limits our ability to analyze the signal in the frequency domain or to reproduce the continuous signal from these samples.
-\end{enumerate}
+then:
+\[ X_1(m) = 1 \cdot e^{-j\frac{2\pi}{5} \cdot 0 \cdot m} + 1 \cdot e^{-j\frac{2\pi}{5} \cdot 1 \cdot m} + 0 \cdot e^{-j\frac{2\pi}{5} \cdot 2 \cdot m} + 0 \cdot e^{-j\frac{2\pi}{5} \cdot 3 \cdot m} + 0 \cdot e^{-j\frac{2\pi}{5} \cdot 4 \cdot m} \]
+Simplify:
+\[ X_1(m) = 1 + e^{-j\frac{2\pi}{5}m} \]
 
-\section*{Question 3}
-Consider a continuous time-domain sine wave whose cyclic frequency is 1000Hz, which is defined by \( x(t) = \cos(2 \pi \cdot 1000t + \frac{\pi}{7}) \).
-\begin{enumerate}
-    \item Write the equation for the discrete \( x(n) \) sequence at sampling frequency 4000Hz.
-    \begin{enumerate}
-        \item The discrete sequence \( x(n) \) will be defined as \( x(n) = \cos\left(\frac{5 \pi \cdot 1000n}{4000} + \frac{\pi}{7}\right) \) which simplifies to \( x(n) = \cos\left(\frac{\pi}{2} \cdot n + \frac{\pi}{7}\right) \).
-    \end{enumerate}
-    \item Write the equation for the discrete \( x(n) \) sequence at sampling frequency 1500Hz.
-    \begin{enumerate}
-        \item The discrete sequence \( x(n) \) will be defined as \( x(n) = \cos\left(\frac{5 \pi \cdot 1000n}{1500} + \frac{\pi}{7}\right) \) which simplifies to \( x(n) = \cos\left(\frac{4\pi}{3} \cdot n + \frac{\pi}{7}\right) \).
-    \end{enumerate}
-\end{enumerate}
+\section*{Problem 1b}
+Given sequence \( x_2(n) = \{1, 1, 0, 0, 0, 0, 0, 0\} \), a zero-padded version of \( x_1(n) \), and an 8-point FFT:
+\[ X_2(m) = \text{FFT}(x_2(n)) \]
 
-\section*{Question 4}
-A signal \( x(t) = \cos(5 \pi \cdot 400t) \) is sampled at the sampling rate \( f_s = 2000\,Hz \). The sampled signal \( x(n) \) can be expressed as a sum of a positive rotating and a negative rotating pointer.
-\begin{enumerate}
-    \item How many samples does it take for the pointers to make a full rotation?
-    \begin{enumerate}
-        \item Considering the frequency of the signal (800Hz) and the sampling rate \( f_s = 2000\,Hz \), it takes \(\frac{f_s}{2 \cdot \text{frequency of the signal}} = \frac{2000}{2 \cdot 800} = 1.25\) samples for the pointers to make a full rotation. Since the number of samples must be an integer, it would take 2 samples for a complete cycle.
-    \end{enumerate}
-    \item How many radians will the pointers change from one sample to the next?
-    \begin{enumerate}
-        \item The frequency of the signal is 800Hz and the sampling rate is 2000Hz, therefore, the phase change between samples can be calculated as \( 2\pi \cdot \frac{800}{2000} = 0.8\pi \) radians. Hence, the pointers will change by \( 0.8\pi \) radians from one sample to the next.
-    \end{enumerate}
-\end{enumerate}
+Let's calculate the 8-point FFT for \( x_2(n) \):
+\[ X_2(0) = \sum_{n=0}^{7} x_2(n) \cdot e^{-j\frac{2\pi}{8} \cdot 0 \cdot n} = 1 + 1 + 0 + 0 + 0 + 0 + 0 + 0 = 2 \]
+
+\[ X_2(1) = \sum_{n=0}^{7} x_2(n) \cdot e^{-j\frac{2\pi}{8} \cdot 1 \cdot n} = 1 \cdot e^{-j\frac{2\pi}{8} \cdot 0 \cdot 1} + 1 \cdot e^{-j\frac{2\pi}{8} \cdot 1 \cdot 1} + 0 + 0 + 0 + 0 + 0 + 0 = 1 - j \approx 0.7071 - 0.7071j \]
+
+Continue this process for all \( X_2(2) \), \( X_2(3) \), \( X_2(4) \), \( X_2(5) \), \( X_2(6) \), and \( X_2(7) \).
+
+Finally, \( |X_2(m)| \):
+\[ |X_2(m)| = \sqrt{\text{Re}(X_2(m))^2 + \text{Im}(X_2(m))^2} \]
+
+involves calculating the magnitude for each \( X_2(m) \) value obtained from the FFT.
+
+\section*{Problem 1c}
+Given sequence \( x_3(n) = \{1, 1, 0, 0, 0, 0, 0, 0, 0, 0\} \), another zero-padded version of \( x_1(n) \), and a 10-point DFT:
+\[ X_3(m) = \sum_{n=0}^{9} x_3(n) \cdot e^{-j\frac{2\pi}{10}mn} \]
+
+then:
+\[
+X_3(m) = 1 \cdot e^{-j\frac{2\pi}{10} \cdot 0 \cdot m} + 1 \cdot e^{-j\frac{2\pi}{10} \cdot 1 \cdot m} + 0 \cdot e^{-j\frac{2\pi}{10} \cdot 2 \cdot m} + \ldots + 0 \cdot e^{-j\frac{2\pi}{10} \cdot 9 \cdot m}
+\]
+
+compute \( X_3(m) \) for a few values of \( m \):
+
+1. For \( m = 0 \):
+\[ X_3(0) = 1 + 1 = 2 \]
+
+2. For \( m = 1 \):
+\[ X_3(1) = 1 - j \]
+
+3. For \( m = 2 \):
+\[ X_3(2) = 1 \cdot e^{-j\frac{2\pi}{10} \cdot 1 \cdot 2} = 1 \cdot e^{-j\frac{4\pi}{10}} = 1 \cdot e^{-j\frac{2\pi}{5}} \]
+
+Continue this process for \( m = 3, 4, \ldots, 9 \).
+
+Finally, the expression \( |X_3(m)| \) (magnitude) as a function of \( m \) is given by:
+\[ |X_3(m)| = \sqrt{\text{Re}(X_3(m))^2 + \text{Im}(X_3(m))^2} \]
+
+involves calculating the magnitude for each \( X_3(m) \) value obtained from the DFT.
+
+
+\section*{Problem 1d}
+Compare \( |X_1(m)| \), \( |X_2(m)| \), and \( |X_3(m)| \) and discuss the differences and similarities. \\
+
+To compare the magnitudes, \( |X_1(m)| \), \( |X_2(m)| \), and \( |X_3(m)| \): \\
+they are:
+\[ |X_1(m)| = |1 + e^{-j\frac{2\pi}{5}m}| \]
+\[ |X_2(m)| = \sqrt{\text{Re}(X_2(m))^2 + \text{Im}(X_2(m))^2} \]
+\[ |X_3(m)| = \sqrt{\text{Re}(X_3(m))^2 + \text{Im}(X_3(m))^2} \]
+
+Differences and similarities:\\
+
+\textbf{Differences:} \\
+- \( |X_1(m)| \) is based on the original sequence without zero-padding.\\
+- \( |X_2(m)| \) and \( |X_3(m)| \) involve zero-padded sequences, providing additional frequency resolution.\\
+
+\textbf{Similarities:}\\
+- All three magnitudes represent the frequency content of the respective sequences.\\
+- Peaks in the magnitudes indicate significant frequencies in the sequences.\\
+
+In summary, zero-padding in \(x_2(n)\) and \(x_3(n)\) enhances the frequency resolution in \(|X_2(m)|\) and \(|X_3(m)|\) compared to \(|X_1(m)|\). The similarities lie in the fundamental frequency representation, while differences arise from the extent of zero-padding and the resulting frequency resolution.\\
+
+\section*{Problem 2a}
+A cosine signal is analyzed with a 64-points DFT, the result is shown below. The sampling frequency is \(16 \, \text{kHz}\). What is the frequency of the signal?
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{DFT Index (x)} & \textbf{Amplitude} \\
+\hline
+5 & $A_1$ \\
+\hline
+59 & $A_2$ \\
+\hline
+\end{tabular}
+\end{center}
+
+The frequencies corresponding to the peaks at \(x = 5\) and \(x = 59\) are given by:
+
+For \(x = 5\):
+\[ f_1 = \frac{5 \cdot 16 \, \text{kHz}}{64} \]
+
+For \(x = 59\):
+\[ f_2 = \frac{59 \cdot 16 \, \text{kHz}}{64} \]
+
+Calculate these values to find the frequencies \(f_1\) and \(f_2\):
+
+\[
+f_1 = \frac{5 \cdot 16 \, \text{kHz}}{64} = \frac{5 \cdot 16}{64} \, \text{kHz} = \frac{5}{4} \, \text{kHz}
+\]
+
+\[
+f_2 = \frac{59 \cdot 16 \, \text{kHz}}{64} = \frac{59 \cdot 16}{64} \, \text{kHz} = \frac{59}{4} \, \text{kHz}
+\]
+
+So, the frequencies of the signal corresponding to the peaks at \(x = 5\) and \(x = 59\) are \(f_1 = \frac{5}{4} \, \text{kHz}\) and \(f_2 = \frac{59}{4} \, \text{kHz}\) respectively.
+
+\section*{Problem 3a}
+What is the purpose of replacing a rectangular window with, for instance, a Hanning window in relation to DFT calculations?
+
+The purpose of replacing a rectangular window with a Hanning window (or other types of windows) in DFT calculations is to mitigate the effects of spectral leakage and improve the frequency resolution of the analysis.
+
+Rectangular windows abruptly cut off the signal at the edges, leading to spectral leakage. This leakage can cause smearing of spectral components and result in inaccurate frequency estimations. Windows with smoother transitions, like the Hanning window, taper the signal at the edges, reducing spectral leakage.
+
+The Hanning window, in particular, is often used because it provides a good balance between reducing leakage and maintaining a reasonable amplitude resolution. It has a shape that smoothly tapers to zero at the edges, minimizing abrupt discontinuities.
+
+By using a windowing function like Hanning, the DFT calculation can yield more accurate and detailed frequency information, especially when analyzing signals with non-integer periods.
+
+
+
+\section*{Problem 3b}
+Study the differences in the DFT results with the two window types in two cases. For the first case, the analyzed sinusoidal signal has an integer number of periods in the analysis window. For the second case, there is not an integer number of periods.
+
+Let \( x(n) \) be the analyzed sinusoidal signal.
+
+\subsection*{Case 1: Integer Number of Periods}
+
+\subsubsection*{Rectangular Window (\( w_R(n) \))}
+\[ x_R(n) = x(n) \cdot w_R(n) \]
+
+The rectangular window is given by:
+\[ w_R(n) = \begin{cases} 1, & 0 \leq n \leq N-1 \\ 0, & \text{otherwise} \end{cases} \]
+
+Let \( N = 64 \) (assuming a 64-point DFT).
+
+ \( x_R(n) \) by multiplying \( x(n) \) with \( w_R(n) \).
+
+\subsubsection*{Hanning Window (\( w_H(n) \))}
+\[ x_H(n) = x(n) \cdot w_H(n) \]
+
+The Hanning window is given by:
+\[ w_H(n) = 0.5 - 0.5 \cos\left(\frac{2\pi n}{N-1}\right) \]
+
+ \( x_H(n) \) by multiplying \( x(n) \) with \( w_H(n) \).
+
+\subsubsection*{DFT Calculation}
+Perform the Discrete Fourier Transform (DFT) on both \( x_R(n) \) and \( x_H(n) \). The DFT is given by:
+\[ X(k) = \sum_{n=0}^{N-1} x(n) \cdot e^{-j\frac{2\pi}{N}kn} \]
+
+ \( |X_R(k)| \) and \( |X_H(k)| \), representing the magnitudes of the DFT results for the rectangular and Hanning window, respectively.
+
+\subsection*{Case 2: Non-Integer Number of Periods}
+
+\subsubsection*{Rectangular Window (\( w_R(n) \))}
+\[ x_R(n) = x(n) \cdot w_R(n) \]
+
+Let \( N = 64 \) (assuming a 64-point DFT).
+
+ \( x_R(n) \) by multiplying \( x(n) \) with \( w_R(n) \).
+
+\subsubsection*{Hanning Window (\( w_H(n) \))}
+\[ x_H(n) = x(n) \cdot w_H(n) \]
+
+The Hanning window is given by:
+\[ w_H(n) = 0.5 - 0.5 \cos\left(\frac{2\pi n}{N-1}\right) \]
+
+ \( x_H(n) \) by multiplying \( x(n) \) with \( w_H(n) \).
+
+\subsubsection*{DFT Calculation}
+Perform the Discrete Fourier Transform (DFT) on both \( x_R(n) \) and \( x_H(n) \). The DFT is given by:
+\[ X(k) = \sum_{n=0}^{N-1} x(n) \cdot e^{-j\frac{2\pi}{N}kn} \]
+
+ \( |X_R(k)| \) and \( |X_H(k)| \), representing the magnitudes of the DFT results for the rectangular and Hanning window, respectively.
+
 
 \end{document}
