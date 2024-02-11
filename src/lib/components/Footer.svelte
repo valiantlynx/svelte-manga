@@ -8,6 +8,7 @@
 		<a href="/contact" class="link link-hover">Contact</a>
 		<a href="/privacy-policy" class="link link-hover">Privacy</a>
 		<a href="/pricing" class="link link-hover">Pricing</a>
+		<a href="/sitemap.xml" class="link link-hover">Sitemap</a>
 	</div>
 	<div>
 		<div class="grid grid-flow-col gap-4">

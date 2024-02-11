@@ -1,8 +1,8 @@
 import { getImageURL, serializeNonPOJOs } from '$lib/utils/api';
 
 export const load = async (event) => {
-	const blogs = await event.locals.pb.collection('blogs').getList(1, 7, {
-		sort: 'created',
+	const blogs = await event.locals.pb.collection('blogs').getList(1, 10, {
+		sort: '-create',
 		expand: 'author'
 	});
 

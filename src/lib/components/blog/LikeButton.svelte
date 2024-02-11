@@ -59,8 +59,18 @@ onDestroy(()=>{
 			}
 			loading = false;
 		};
-	} else {
-		toast.error('Please login to like this post');
+	} else 
+	return async ({ result, update }) => {
+			switch (result.type) {
+				case 'error':
+				toast.error('Please login to like this post');
+					break;
+				default:
+					await update();
+			}
+			loading = false;
+		};{
+	
 	}
 	};
 </script>
