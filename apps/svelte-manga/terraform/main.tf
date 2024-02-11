@@ -67,8 +67,8 @@ resource "aws_security_group" "sg_ec2" {
 }
 
 resource "aws_instance" "public_instance" {
-  ami                    = "ami-0f5ee92e2d63afc18"
-  instance_type          = "t2.micro"
+  ami                    = "ami-0014ce3e52359afbd"
+  instance_type          = "t3.micro"
   key_name               = aws_key_pair.key_pair.key_name
   vpc_security_group_ids = [aws_security_group.sg_ec2.id]
 
@@ -108,7 +108,7 @@ resource "null_resource" "run_ansible" {
   depends_on = [local_file.dynamic_inventory]
 
   provisioner "local-exec" {
-    command = "ansible-playbook -i dynamic_inventory.ini deploy-app.yml"
+    command = "ansible-playbook -i dynamic_inventory.ini ../ansible/deploy-app.yml"
     working_dir = path.module
   }
 }

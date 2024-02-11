@@ -1,4 +1,3 @@
----
 - hosts: ec2_instances
   become: true
   tasks:
@@ -24,8 +23,9 @@
         repo: https://github.com/valiantlynx/svelte-manga.git
         dest: /var/www/html/nodejs-demo
 
-    - name: Build Docker image
-      command: docker build -t node-app /var/www/html/nodejs-demo
+    - name: Change directory to app location
+      become: false
+      command: cd /var/www/html/nodejs-demo
 
-    - name: Run Docker container
-      command: docker run -d -p 3000:3000 --name node-app-container node-app
+    - name: Build and run Docker Compose
+      command: docker-compose up -d

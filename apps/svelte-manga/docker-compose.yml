@@ -5,13 +5,13 @@ services:
     container_name: svelte-manga
     build:
       context: .
-      dockerfile: ./apps/svelte-manga/Dockerfile
+      dockerfile: Dockerfile
     restart: always
     ports:
       - 3000:3000
     networks:
       - valiantlynx-turborepo
-      
+
 # Define a network, which allows containers to communicate
 # with each other, by using their container name as a hostname
 networks:
