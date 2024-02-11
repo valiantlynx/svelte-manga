@@ -1,132 +1,99 @@
-[![Animevariant](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/svelte-manga.yaml/badge.svg)](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/svelte-manga.yaml)
-[![breath-first-search](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/breath-first-search.yaml/badge.svg)](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/breath-first-search.yaml)
-[![chatbot-ai](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/chatbot-ai.yaml/badge.svg)](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/chatbot-ai.yaml)
-[![depth-first-search](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/depth-first-search.yaml/badge.svg)](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/depth-first-search.yaml)
-[![issues](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/issues.yaml/badge.svg)](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/issues.yaml)
 [![Lint Code Base](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/linter.yaml/badge.svg)](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/linter.yaml)
-[![weather](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/weather.yml/badge.svg)](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/weather.yml)
+[![Animevariant](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/svelte-manga.yaml/badge.svg)](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/svelte-manga.yaml)
+[![breath-first-search](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/breath-first-search%20copy.yaml/badge.svg)](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/breath-first-search%20copy.yaml)
+[![chatbot-ai](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/chatbot-ai.yaml/badge.svg)](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/chatbot-ai.yaml)
+[![issues](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/issues.yaml/badge.svg)](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/issues.yaml)
+[![logger](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/logger.yaml/badge.svg)](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/logger.yaml)
+[![weather](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/weather.yml/badge.svg?branch=main)](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/weather.yml)
 
-# Animevariant
+  <!-- [![Minfuel Svelte](https://github.com/minfuel/minfuel-turborepo/actions/workflows/minfuel-svelte.yaml/badge.svg)](https://github.com/minfuel/minfuel-turborepo/actions/workflows/minfuel-svelte.yaml) -->
 
-## Quick Start
+# AnimeVariant
 
-## Included Packages and Tools
+## Welcome to the AnimeVariant project
 
-This Turborepo includes the following packages/apps and utilities:
+- Watch Anime and read Manga online.
+- Earn money by reading and watching anime.
+- We never ask for personal infomation
+- AnimeVariant is Decentralised app Written in React and motoko.
 
-### Apps and Packages
+## Desentralised Urls
 
-`docs`: A documentation app with [Next.js](https://nextjs.org/) and [Tailwind CSS](https://tailwindcss.com/)
-`web`: A web app with [Next.js](https://nextjs.org/) and [Tailwind CSS](https://tailwindcss.com/)
-`ui`: A React component library with [Tailwind CSS](https://tailwindcss.com/) shared by both `web` and `docs` applications
-`svelte-docs`: A documentation app with [SvelteKit](https://kit.svelte.dev/)
-`svelte-manga`: A web app with [SvelteKit](https://kit.svelte.dev/)
-`svelte-ui`: A Svelte component library shared by both `svelte-web` and `svelte-docs`
-`eslint-config-custom`: ESLint configurations (includes `eslint-config-next`, `eslint-plugin-svelte`, and `eslint-config-prettier`)
-`tsconfig`: `tsconfig.json` files used throughout the monorepo
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+- animeVariant - https://animevariant.com -main website.
+- animeVariant dapp - https://52nbc-syaaa-aaaak-acxcq-cai.ic0.app/#/ -main dapp.
+- variant - https://5ilw3-6iaaa-aaaak-acxbq-cai.ic0.app/ -wallet for variant tokens.
 
-### Building `packages/ui`
+## Own Your Art.
 
-This example is set up to build `packages/ui` and output the transpiled source and compiled styles to `dist/`. This is done to share one `tailwind.config.js` easily and ensure that only the CSS used by the current application and its dependencies is generated.
-An alternative is to consume `packages/ui` directly from source without building. If you choose this option, update your `tailwind.config.js` to recognize your package locations, so it can find all usages of the `tailwindcss` class names. For instance:
+AnimeVariant offers everyone the opportunity to truly own the art they wish. Creators can mint their work as non fungible tokens and sell it to the whole world. In the web AnimeVariant offers all user the opportunity to buy the works they like and sell if they wish. A trading place for all art.
 
-```js
-  content: [
-    // App content
-    `src/**/*.{js,ts,jsx,tsx}`,
-    // Include packages if not transpiling
-    "../../packages/**/*.{js,ts,jsx,tsx}",
-  ],
+## How it works - How to earn money
+
+- All revenue from views and ads get turned into tokens
+- Popularity of an artwork or creator increases value.
+- Verfied Original artwork increases value.
+- If the creator is popular enough, they can suggest for tokens to view their work.
+  Value of an art work i divided into percenteges and revenue is delivered as shown below.
+
+### Users
+
+- They can buy what they like and get unconditional acces to it.
+- if bought they will own the nft and are entitled to revieve 70% of all revenue.
+- They can choose to sell the owned artworks as well.
+
+### creators
+
+- The initial sum for selling it the first time.
+- They can also buy and sell,thus also ahave all privileges of a user.
+- They are entitled to 10% of each if their artwork revenue.
+- Verified(as Original) creator are entitled to 20% of each if their artwork revenue.
+
+The rest of the percentages are divided as follows:
+
+- 9%(19% from unverified creators) of each sale goes to the animeVariant pool.
+  The pool stores real money such that the artwork that are being traded actually have value
+- 1% of each sale goes to animeVariant.
+
+## How do you trade without personal information.
+
+Not to worry. We use a state of the art blochain tecnonology in the internet compouter blockchain called internet Identity .What?
+Internet Identity is an authentication framework. It installs an "anchor" into your device in which get stored compatible cryptography enebled devices. Such as fingerprints, faceid and pins in your phone. You can also use portable HSM, such as a YubiKey or Ledger wallet. THis makes it very convenient as you never need to remember any passwords. You dont need to provide email, phonenumber or any personal info.
+The "anchor is stored in your device and only that device. it is never in the blockchain nor can it be moved to a new device. This means you have to use the same device to log in with the same identity(account).
+still not convinced?
+For a more detailed explanation go here (https://internetcomputer.org/docs/current/tokenomics/identity-auth/what-is-ic-identity/)
+
+
+# deploy-nodeapp-terraform-ansible
+
+## Steps to deploy
+### Configure AWS 
+```hcl
+Replace this credentials in main.tf
+
+provider "aws" {
+  region     = "AWS_REGION"
+  access_key = "AWS_ACCESS_KEY"
+  secret_key = "AWS_SECRET_KEY"
+}
 ```
 
-### Utilities
-
-This Turborepo includes a set of useful tools:
-[Tailwind CSS](https://tailwindcss.com/) for styling
-[TypeScript](https://www.typescriptlang.org/) for static type checking
-[ESLint](https://eslint.org/) for code linting
-[Prettier](https://prettier.io/) for code formatting
-
-# Turborepo Docker Starter
-
-This repository is your Turborepo Docker starter pack. It's designed to help you quickly set up a Turborepo project that includes a Docker-based deployment workflow.
-
-## Getting Started
-
-1. Build the Docker containers and start the applications:
-
-```sh
-  docker network create minfuel-turborepo
-  COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f docker-compose.yml build
-  docker-compose -f docker-compose.yml up -d
-
+## Command to execute
+### Initialize terraform
+```hcl
+terraform init
 ```
 
-Open [http://localhost:3000](http://localhost:3000/) in your browser.
+### Run terraform script
+```hcl
+terraform apply
 
-2. To shut down all running containers:
-
-```sh
-  docker kill $(docker ps -q) && docker rm $(docker ps -a -q)
-
+Enter Name of the SSH key pair
 ```
 
-### Remote Caching
-
-This Turborepo includes optional remote caching. In the Dockerfiles of the apps, uncomment the build arguments for `TURBO_TEAM` and `TURBO_TOKEN`. Then, pass these build arguments to your Docker build.
-You can test this behavior using a command like:
-`docker build -f apps/svelte-manga/Dockerfile . --build
-
-### adding new projects with their own git history
-```sh
-git subtree add --prefix=apps/anime-site https://github.com/valiantlynx/anime-site.git master --squash
-git subtree pull --prefix=apps/anime-site https://github.com/valiantlynx/anime-site.git master --squash
-git subtree push --prefix=apps/anime-site https://github.com/valiantlynx/anime-site.git master
-
+### Destroy all resouces
+```hcl
+terraform destroy
 ```
+https://www.youtube.com/watch?v=alAZl5udvAI
 
-### publishing packages 
-```sh
-yarn publish:packages // this will publish all packages that are not private
-```
-
-free svg icons: https://www.svgrepo.com/svg/122485/car-placeholder
-
-
-
-Kasm UI Login Credentials
-
-------------------------------------
-  username: admin@kasm.local
-  password: AkMe6YHYqhMPX
-------------------------------------
-  username: user@kasm.local
-  password: cYEKUucyE6WjB
-------------------------------------
-
-Kasm Database Credentials
-------------------------------------
-  username: kasmapp
-  password: 9sfV0yHRigy9IyuMAh5n
-------------------------------------
-
-Kasm Redis Credentials
-------------------------------------
-  password: LA5EXvzADgRqocHBTe0J
-------------------------------------
-
-Kasm Manager Token
-------------------------------------
-  password: 7IgC7IPEPFgsDvK6Q8ol
-------------------------------------
-
-Kasm Guac Token
-------------------------------------
-  password: qGGiIOlrbSXo3A1iaCRhLM
-------------------------------------
-
-Service Registration Token
-------------------------------------
-  password: 9tGSauaLhAXMVaOmuXw6
-------------------------------------
+Copyright 2022 AnimeVariant AS (www.AnimeVariant.com)
