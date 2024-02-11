@@ -46,3 +46,4 @@ terraform/*_override.tf.json
 # Ignore CLI configuration files
 terraform/.terraformrc
 terraform/terraform.rc
+terraform/poi
