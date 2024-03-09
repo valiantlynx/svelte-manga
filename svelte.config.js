@@ -3,7 +3,7 @@ import adapterNode from '@sveltejs/adapter-node';
 
 import { vitePreprocess } from '@sveltejs/kit/vite';
 
-const deployTarget = process.env.DEPLOY_TARGET || 'auto'; // Default to 'auto'
+const deployTarget = process.env.DEPLOY_TARGET || 'node'; // Default to 'auto'
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
