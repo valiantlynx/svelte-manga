@@ -3,7 +3,6 @@ export const actions = {
 	test: async (event) => {
 		const data = await event.request.formData();
 		const text = data.get('text');
-		console.log('text', text);
 
 		try {
 			const response = await fetch('http://localhost:8003/category_chain/invoke/', {
@@ -24,7 +23,6 @@ export const actions = {
 			}
 
 			const chain = await response.json();
-			console.log('data', chain);
 
 			// Now you can work with the `data` object, which contains the response from the server
 			// For example, you can return it or store it in a component's state
@@ -32,7 +30,7 @@ export const actions = {
 				chain
 			};
 		} catch (err) {
-			console.log('err', err);
+			console.error('err', err);
 		}
 	}
 };

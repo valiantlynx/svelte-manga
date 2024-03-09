@@ -39,7 +39,6 @@ export const actions = {
 				readingProgress: readingProgress.items
 			};
 		} catch (err) {
-			console.log('err', err);
 			throw error(err.status, err.message);
 		}
 	}

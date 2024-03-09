@@ -2,9 +2,11 @@ import { error } from '@sveltejs/kit';
 import { serializeNonPOJOs } from '$lib/utils/api';
 
 export const load = async (event) => {
-	const popularMangas = await Popular(event.locals, 1);
 	const latestMangas = await Latest(event, 1);
+	const popularMangas = await Popular(event.locals, 1);
 
+
+	console.log("--Z", latestMangas)
 	return {
 		popularMangas,
 		latestMangas
@@ -16,15 +18,13 @@ export const actions = {
 	popular: async (event) => {
 		const data = await event.request.formData();
 		const page = data.get('page');
-		console.log('page', page);
 		try {
 			const popularMangas = await Popular(event.locals, page);
-			console.log('popularMangas', popularMangas);
+	
 			return {
 				popularMangas
 			};
 		} catch (err) {
-			console.log('err', err);
 			throw error(err.status, err.message);
 		}
 	},
@@ -37,7 +37,6 @@ export const actions = {
 				latestMangas
 			};
 		} catch (err) {
-			console.log('err', err);
 			throw error(err.status, err.message);
 		}
 	}
@@ -45,6 +44,7 @@ export const actions = {
 
 // function to get the data from the url
 const Popular = async (locals, pageNo) => {
+
 	const resultList = serializeNonPOJOs(
 		await locals.pb.collection('reading_progress').getList(1, 20, {
 			filter: 'user = "77760erf1db6qql"',

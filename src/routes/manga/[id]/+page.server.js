@@ -36,7 +36,6 @@ export const actions = {
 				chaptersToShow
 			};
 		} catch (err) {
-			console.log('err', err);
 			throw error(err.status, err.message);
 		}
 	}
