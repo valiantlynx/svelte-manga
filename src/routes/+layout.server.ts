@@ -22,6 +22,8 @@ export const load = async (event) => {
 		siteName,
 		isSmallDevice
 	};
+
+	console.log("vvvv", event.locals, data)
 	return data;
 };
 
