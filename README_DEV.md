@@ -38,10 +38,48 @@ docker-compose down
 ```
 
 # (Optional) everything after this is optional
+# deployment
+there are two ways. one is simpler using azure container. it just deploys the app to your azure account.
+the 2nd option is more heavy duty but comes with more. while the first is just a container. the second one is a full on server. the server is a free tier ec2(if you only have one server).
+to choose, its the one in the workflows folder thats active. for azure have the deploy-azure.yml and vision-ai.yml in the folder and the other two in the extra_workflows folder.
+for terraform have the deploy-terraform.yml, detroy.yml and vision-ai.yml in the workflow folder and deploy-azure.yml in the extra_workflows folder
+
+for both you need docker hub account
 # docker hub 
 go to https://hub.docker.com/settings/security and create and copy the token. together with your username go to (your repository)https://github.com/valiantlynx/python-development-environment/settings/secrets/actions and make these repository secrets
 - DOCKER_HUB_USERNAME = your username
 - DOCKER_HUB_PASSWORD = your docker access token
+
+# azure
+its just a github action that uses your dockerfile. 
+got to [azure](https://portal.azure.com/#home) and search for `web app for containers`
+choose this:![web app for containers](assets/image.png)
+
+and then these details:
+![basic container](assets/image2.png)
+
+in the docker section choose what your docker details will be in docker hub. (username/container-name):
+![docker details](assets/image3.png)
+
+leave the rest as they are(yes even deployment can be done later) and review and create.
+after the resource is built go to it then deployment center and choose this config(try to relly on azures auto fill to fill this form if possible):
+![config stuff](assets/image4.png)
+to remove that error so we can save. we need to set the variables in azure
+got to configurations and edit the two docker stuff that are empty:
+![env in azure](assets/image5.png)
+go to general settings tab and turn on SCM basic auth.
+save it and go back to deployment center. your might have to redo some of the former step. then save
+
+
+we need some env variables for authentication in git hub action. go back to overview and on the top is the option Download publish profile. copy the whole file and lets go to github
+
+first the login stuff. go to (your repository)https://github.com/valiantlynx/vision-ai/settings/secrets/actions and make these repository secrets(you might see two env variables azure made delete them)
+if your planing to use azure
+- AZUREAPPSERVICE_PUBLISHPROFILE = the thing you downloaded and copied
+
+now the next time you commit to there is a succesfull pull or push to the main branch and the docker image is on docker hub then azure will redeploy
+
+to see the app azure provides a free url something like https://vision-ai.azurewebsites.net/ go there and you might have to wait like 10 min the first time around. or make a commit to main again a couple times
 
 # terrafrom
 this does alot for and is simpler to set up. 
