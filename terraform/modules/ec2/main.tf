@@ -59,7 +59,7 @@ resource "null_resource" "run_ansible" {
     command = <<EOF
       sleep 30;
       sudo apt update -y;
-      env ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ${self.triggers.inventory_file} ../../../ansible/deploy-app.yml
+      env ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ${self.triggers.inventory_file} ${abspath(path.module)}/../../../ansible/deploy-app.yml
     EOF
 
     working_dir = path.module
