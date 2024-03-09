@@ -1,0 +1,94 @@
+---
+version: '3.8'
+
+services:
+  svelte-manga:
+    image: valiantlynx/svelte-manga:latest
+    container_name: svelte-manga
+    restart: always
+    networks:
+      - monitoring
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/logs:/var/log/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    depends_on:
+      - svelte-manga
+    restart: unless-stopped
+    networks:
+      - monitoring
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/logs:/var/log/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    networks:
+      - monitoring
+    command: >
+      certonly --webroot -w /var/www/certbot --force-renewal --email valiantlynxz@gmail.com
+      -d altlokal.no -d www.altlokal.no
+      -d svelte-manga.com -d www.svelte-manga.com
+      -d digilokal.no -d www.digilokal.no
+      -d digilokale.com -d www.digilokale.com
+      -d digilokale.no -d www.digilokale.no
+      -d dinlokal.no -d www.dinlokal.no
+      -d minlokal.no -d www.minlokal.no
+      -d blioppdage.com -d www.blioppdage.com
+      -d blioppdage.no -d www.blioppdage.no
+      -d blioppdaget.com -d www.blioppdaget.com
+      -d bovimobilitet.no -d www.bovimobilitet.no
+      -d bovimobility.com -d www.bovimobility.com
+      -d bovimobility.no -d www.bovimobility.no
+      -d digicv.no -d www.digicv.no
+      -d digisoknad.no -d www.digisoknad.no
+      -d godtilbud.no -d www.godtilbud.no
+      -d kunstivestfold.no -d www.kunstivestfold.no
+      -d minlokale.com -d www.minlokale.com
+      -d vestfoldkunst.com -d www.vestfoldkunst.com
+      --agree-tos --non-interactive
+
+  node-exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node_exporter
+    ports:
+      - 9100:9100
+    command: 
+      - '--path.rootfs=/host'
+    pid: host
+    restart: unless-stopped
+    networks:
+      - monitoring
+    volumes:
+      - '/:/host:ro,rslave'
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - 8080:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    restart: unless-stopped
+    privileged: true
+    devices:
+      - /dev/kmsg
+    networks:
+      - monitoring
+  
+networks:
+  monitoring: {}
