@@ -38,4 +38,4 @@ EXPOSE 4173
 SHELL ["/bin/bash", "-c"]
 
 # Start the SvelteKit app in development mode
-CMD ["yarn", "dev"]
+CMD ["yarn", "dev", "--host"]

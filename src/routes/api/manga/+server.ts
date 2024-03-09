@@ -10,10 +10,8 @@ export const GET: RequestHandler = async ({ url }) => {
 		'Access-Control-Allow-Origin': '*',
 		'Content-Type': 'application/json'
 	};
-
+	const apiUrl = `${import.meta.env.VITE_IMAGE_URL_MANGANELO}/genre-45`;
 	try {
-		const apiUrl = `${import.meta.env.VITE_IMAGE_URL}/genre/Isekai?type=topview&page=${page}`;
-
 		const response: any = await axios
 			.get(apiUrl, {
 				headers: {
@@ -76,7 +74,7 @@ export const GET: RequestHandler = async ({ url }) => {
 		return new Response(
 			JSON.stringify({
 				error: error.message,
-				failure: error
+				failure: apiUrl
 			}),
 			{ headers }
 		);
