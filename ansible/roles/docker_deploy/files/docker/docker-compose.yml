@@ -66,6 +66,7 @@ services:
       -d stellarmanga.com -d www.stellarmanga.com
       -d waterscans.com -d www.waterscans.com
       -d whalescans.com -d www.whalescans.com
+      -d animevariant.com -d www.animevariant.com
       --agree-tos --non-interactive
 
   node-exporter:
