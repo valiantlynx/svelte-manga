@@ -52,10 +52,6 @@ resource "local_file" "dynamic_inventory" {
   }
 }
 
-resource "local_file" "ansible_playbook" {
-  filename = "${abspath(path.module)}/../../../ansible/deploy-app.yml"
-}
-
 resource "null_resource" "run_ansible" {
   depends_on = [local_file.dynamic_inventory]
 
@@ -63,7 +59,7 @@ resource "null_resource" "run_ansible" {
     command = <<EOF
       sleep 30;
       sudo apt update -y;
-      env ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ${self.triggers.inventory_file} ${self.triggers.ansible_file}
+      env ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ${self.triggers.inventory_file} ../../../ansible/deploy-app.yml
     EOF
 
     working_dir = path.module
@@ -72,6 +68,5 @@ resource "null_resource" "run_ansible" {
   triggers = {
     always_run = "${timestamp()}"
     inventory_file = abspath(local_file.dynamic_inventory.filename)
-    ansible_file = abspath(local_file.ansible_playbook.filename)
   }
 }
