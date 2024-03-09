@@ -4,24 +4,19 @@ import cheerio from 'cheerio';
 
 export const GET: RequestHandler = async ({ url }) => {
 	const page = url.searchParams.get('page');
-	const state = url.searchParams.get('state');
-	const category = url.searchParams.get('category');
-	const type = url.searchParams.get('type');
 
 	// Your logic for handling the page parameter and generating the response
 	const headers = {
 		'Access-Control-Allow-Origin': '*',
 		'Content-Type': 'application/json'
 	};
-	const apiUrl = `${import.meta.env.VITE_IMAGE_URL}/manga_list?type=${type}&page=${page}&state=${state}&category=${category}`;
+	const apiUrl = `${import.meta.env.VITE_IMAGE_URL_MANGANELO}/genre-45`;
 	try {
-		console.log("apiUrl", apiUrl)
-
 		const response: any = await axios
 			.get(apiUrl, {
 				headers: {
 					'Access-Control-Allow-Origin': '*',
-					'Content-Type': 'aphttps://ww6.manganelo.tvplication/json'
+					'Content-Type': 'application/json'
 				}
 			})
 			.catch((err: any) => {
@@ -68,7 +63,6 @@ export const GET: RequestHandler = async ({ url }) => {
 			scrapedData.push(content);
 		});
 
-		console.log(scrapedData)
 		return new Response(
 			JSON.stringify({
 				page: page,

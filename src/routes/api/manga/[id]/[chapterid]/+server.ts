@@ -13,7 +13,7 @@ export const GET: RequestHandler = async ({ url, setHeaders }) => {
 	const trimmedPathname = souceUrl.substring(souceUrl.indexOf('/', 1));
 
 	try {
-		const urlLink = `${import.meta.env.VITE_IMAGE_URL}/chapter${trimmedPathname}`;
+		const urlLink = `${import.meta.env.VITE_IMAGE_URL_MANGANELO}/chapter${trimmedPathname}`;
 
 		const response = await axios.get(urlLink);
 		const $ = cheerio.load(response.data);

@@ -2,16 +2,8 @@ import { error } from '@sveltejs/kit';
 import { serializeNonPOJOs } from '$lib/utils/api';
 
 export const load = async (event) => {
+	const latestMangas = await Latest(event, 1);
 	const popularMangas = await Popular(event.locals, 1);
-	const page = 1;
-	const state = "all";
-	const category = "Isekai";
-	const type = "latest";
-	const latestMangas = await Latest(event, page, type, state, category);
-
-
-
-	console.log("--Z", latestMangas)
 	return {
 		popularMangas,
 		latestMangas
@@ -36,11 +28,8 @@ export const actions = {
 	latest: async (event) => {
 		const data = await event.request.formData();
 		const page = data.get('page');
-		const state = "all";
-		const category = "Isekai";
-		const type = "latest";
 		try {
-			const latestMangas = await Latest(event, page, type, state, category);
+			const latestMangas = await Latest(event, page);
 			return {
 				latestMangas
 			};
@@ -67,9 +56,10 @@ const Popular = async (locals, pageNo) => {
 	return mangas;
 };
 
-const Latest = async (event, pageNo, type, state, category) => {
-	const url = `${event.url.origin}/api/manga?type=${type}&page=${pageNo}&state=${state}&category=${category}`
+const Latest = async (event, pageNo) => {
+	const url = event.url.origin + '/api/manga?page=' + pageNo;
 	const res = await event.fetch(url);
 	const data = await res.json();
+
 	return data.mangas;
 };

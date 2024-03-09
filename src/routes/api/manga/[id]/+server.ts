@@ -11,7 +11,7 @@ export const GET: RequestHandler = async ({ url, setHeaders }) => {
 
 	// Your logic for handling the page parameter and generating the response
 	try {
-		const url = `${import.meta.env.VITE_IMAGE_URL}${souceUrl}`;
+		const url = `${import.meta.env.VITE_IMAGE_URL_MANGANELO}${souceUrl}`;
 
 		const response = await axios.get(url);
 

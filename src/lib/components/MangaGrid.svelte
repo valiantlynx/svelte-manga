@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import AnimevariantGridAds from './AnimevariantGridAds.svelte';
 	import PaginationSimple from './PaginationSimple.svelte';
-	console.log("---->", $page.form?.latestMangas)
+	console.log("---->", $page.form)
 </script>
 
 <main class="bg-base-200 mb-4 border border-primary">
