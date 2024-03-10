@@ -46,9 +46,13 @@ export const GET: RequestHandler = async ({ url }) => {
 			const src = srcElement.attr('href');
 			const id = src ? src.split('/').slice(-1)[0] : null;
 			const titleId = titleElement.text();
+
+			// extract the image path
+			const parsedImg = imgElement.attr('src').split('.com').slice(-1)[0]
+			console.log(parsedImg)
 			const content = {
 				title: titleElement.text(),
-				img:  imgElement.attr('src') + '?width=200&height=300',
+				img: url.origin + '/api' + parsedImg + '?width=200&height=300',
 				latestChapter: chaptersElement.text(),
 				rating: ratingElement.text(),
 				src,
@@ -59,10 +63,11 @@ export const GET: RequestHandler = async ({ url }) => {
 					? [authorElement.text(), authorElement.find('a').attr('href')]
 					: null
 			};
-			console.log(content)
+			
 
 			scrapedData.push(content);
 		});
+		console.log(scrapedData[1])
 
 		return new Response(
 			JSON.stringify({
