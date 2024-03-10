@@ -13,6 +13,8 @@ export const load = async (event) => {
 	const chaptersToShow = updateChaptersToShow(1, manga);
 	const similarManga = await getSimilarManga(event);
 
+	console.log(event.url.origin + `/api/manga/${id}?url=${url}`)
+
 	return {
 		manga,
 		chaptersToShow,
