@@ -66,6 +66,8 @@ export const GET: RequestHandler = async ({ url }) => {
 
 			scrapedData.push(content);
 		});
+		console.log(scrapedData.slice(0, 10));
+
 
 		return new Response(
 			JSON.stringify({

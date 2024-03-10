@@ -4,7 +4,7 @@ import { serializeNonPOJOs } from '$lib/utils/api';
 export const load = async (event) => {
 	const { id } = event.params;
 
-	const url = `/manga/${id}`;
+	const url = `/${id}`;
 
 	const response = await fetch(event.url.origin + `/api/manga/${id}?url=${url}`);
 	const manga = await response.json();
@@ -13,7 +13,7 @@ export const load = async (event) => {
 	const chaptersToShow = updateChaptersToShow(1, manga);
 	const similarManga = await getSimilarManga(event);
 
-	console.log(event.url.origin + `/api/manga/${id}?url=${url}`)
+	console.log("id:",manga)
 
 	return {
 		manga,
