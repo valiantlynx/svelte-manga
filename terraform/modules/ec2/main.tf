@@ -61,7 +61,7 @@ resource "null_resource" "run_ansible" {
       sudo apt update -y;
       cd ../../../ansible/;
       ls -a;
-      ls deplo-app.yml;
+      ls deploy-app.yml;
       env ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ${self.triggers.inventory_file} deploy-app.yml
     EOF
 
