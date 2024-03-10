@@ -3,7 +3,7 @@ import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ url, params }) => {
 	const imageUrl =
-		import.meta.env.VITE_IMAGE_URL_MANGANELO + '/' + params.get_image + '/' + params.image || '';
+		import.meta.env.VITE_IMAGE_URL_MANGANELO_IMAGE_SRC + '/' + params.get_image + '/' + params.image + '/' + params.image1 || '';
 	const width = Number(url.searchParams.get('width')) || 200;
 	const height = Number(url.searchParams.get('height')) || 300;
 	const quality = Number(url.searchParams.get('quality')) || 100;

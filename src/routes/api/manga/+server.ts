@@ -49,10 +49,9 @@ export const GET: RequestHandler = async ({ url }) => {
 
 			// extract the image path
 			const parsedImg = imgElement.attr('src').split('.com').slice(-1)[0]
-			console.log(parsedImg)
 			const content = {
 				title: titleElement.text(),
-				img: url.origin + '/api' + parsedImg + '?width=200&height=300',
+				img: url.origin + '/api' + parsedImg,
 				latestChapter: chaptersElement.text(),
 				rating: ratingElement.text(),
 				src,
@@ -67,7 +66,6 @@ export const GET: RequestHandler = async ({ url }) => {
 
 			scrapedData.push(content);
 		});
-		console.log(scrapedData[1])
 
 		return new Response(
 			JSON.stringify({
