@@ -32,6 +32,7 @@ export const actions = {
 			const url = `/${id}`;
 			const response = await fetch(event.url.origin + `/api/manga/${id}?url=${url}`);
 			const manga = await response.json();
+			console.log("manga", manga)
 			const chaptersToShow = updateChaptersToShow(page, manga);
 			return {
 				chaptersToShow
@@ -42,11 +43,12 @@ export const actions = {
 	}
 };
 
-let chaptersPerPage = 12;
+let chaptersPerPage = 10;
 function updateChaptersToShow(currentPage, manga) {
 	const startIndex = (currentPage - 1) * chaptersPerPage;
 	const endIndex = startIndex + chaptersPerPage;
 	const chaptersToShow = manga.episodes.slice(startIndex, endIndex);
+	console.log(chaptersToShow)
 	return chaptersToShow;
 }
 // Generate an array of page numbers for pagination buttons
