@@ -31,7 +31,6 @@
 			url: `/manga/${$page.params.id}/${$page.params.chapterid}`
 		}
 	];
-	console.log(data)
 </script>
 
 <svelte:head>
