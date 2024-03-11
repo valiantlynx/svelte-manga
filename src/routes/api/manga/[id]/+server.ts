@@ -62,14 +62,12 @@ export const GET: RequestHandler = async ({ url: requestUrl, setHeaders }) => {
 		
 			const data = chapterElements
 				.map((index, element) => {
-					console.log(element);
 					const src = $(element).attr('href');
-					
 	
 					// Assuming the URL structure is consistent
 					const urlSegments = src ? src.split('/') : [];
-					const mangaId = urlSegments.length > 4 ? urlSegments[4] : null; // manga-ox128591
-					const chapter = urlSegments.length > 5 ? urlSegments[5] : null; // chapter-5
+					const mangaId = urlSegments.length > 3 ? urlSegments[3] : null; // manga-ox128591
+					const chapter = urlSegments.length > 4 ? urlSegments[4] : null; // chapter-5
 					const chapterId = chapter ? chapter.split('-').slice(-1)[0] : null; // Extracts '5' from 'chapter-5'
 					const chapterPrefix = chapter ? chapter.replace(`-${chapterId}`, '') : ''; // 'chapter'
 	
@@ -82,13 +80,14 @@ export const GET: RequestHandler = async ({ url: requestUrl, setHeaders }) => {
 					};
 				})
 				.get();
-				console.log(data); 
+			// extract the image path
+			const parsedImg = imgElement.attr('src').split('.com').slice(-1)[0]
 				
 			return new Response(
 				JSON.stringify({
 					episodes: data,
 					title: titleElement.text(),
-					img: imgElement.attr('src'),
+					img: requestUrl.origin + '/api' + parsedImg,
 					description: descriptionElement.text(),
 					author: authors,
 					rating: ratingElement.text(),

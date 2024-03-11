@@ -13,7 +13,6 @@ export const load = async (event) => {
 	const chaptersToShow = updateChaptersToShow(1, manga);
 	const similarManga = await getSimilarManga(event);
 
-	console.log("id:",manga)
 
 	return {
 		manga,
@@ -30,7 +29,7 @@ export const actions = {
 		const page = data.get('page');
 		try {
 			const { id } = event.params;
-			const url = `/manga/${id}`;
+			const url = `/${id}`;
 			const response = await fetch(event.url.origin + `/api/manga/${id}?url=${url}`);
 			const manga = await response.json();
 			const chaptersToShow = updateChaptersToShow(page, manga);

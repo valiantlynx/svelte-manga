@@ -5,7 +5,6 @@
 	import Share from '$lib/components/share/Share.svelte';
 	let data = $page.data.manga;
 
-	const imageSrc = `${$page.url.origin}/api${data.img}?width=200&height=300`;
 
 	// turn the views into a number by removing the commas and the last character, if the last character is a k  then multiply the number by 1000, if the last character is an m then multiply the number by 1000000
 	let views = data.views;
@@ -157,7 +156,7 @@
 		<a href={`${$page.url.pathname}/${data.episodes[data.episodes.length - 1].chapterId}`}>
 			<img
 				class="w-full h-auto object-cover rounded-lg border border-primary"
-				src={imageSrc}
+				src={data.img}
 				alt={data.title}
 			/>
 		</a>
@@ -300,7 +299,7 @@
 		title={data.title}
 		url={$page.url.href}
 		text={data.description}
-		image={imageSrc}
+		image={data.img}
 		hashtags="manga"
 
 	 />
