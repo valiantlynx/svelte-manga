@@ -7,7 +7,6 @@
 	import {CardWithCustomColor} from '@valiantlynx/svelte-ui';
 	import { page } from '$app/stores';
 	import Share from '$lib/components/share/Share.svelte';
-	
 </script>
 
 <Feedback />

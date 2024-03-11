@@ -9,7 +9,7 @@
 	<!-- chapters -->
 	<div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
 		{#each  ( $page.form?.chaptersToShow ? $page.form?.chaptersToShow : $page.data.chaptersToShow) as chapter}
-			<ChapterCard {chapter} url={`/manga/${id}/${chapter.chapterId}`} />
+			<ChapterCard {chapter} url={`/manga/${id}/${chapter.chapterPrefix}-${chapter.chapterId}`} />
 		{/each}
 		<ResponsiveBannerAd />
 	</div>

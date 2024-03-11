@@ -11,7 +11,6 @@ RUN apt-get update && apt-get install -y \
     sudo \ 
     && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs \
-    # Clean up
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory in the container
@@ -29,9 +28,19 @@ RUN npm install --global yarn
 # Install project dependencies
 RUN yarn install
 
+#install nvim dependecies, will be replaced in dot files
+RUN curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+RUN sudo rm -rf /opt/nvim
+RUN sudo tar -C /opt -xzf nvim-linux64.tar.gz
+RUN echo 'export PATH="$PATH:/opt/nvim-linux64/bin"' >> ~/.bashrc
+RUN chmod +x ~/.bashrc
+RUN ~/.bashrc
+RUN git clone https://github.com/nvim-lua/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
+
 # Expose the port the app runs on
 EXPOSE 3000
 EXPOSE 5173
+EXPOSE 5174
 EXPOSE 4173
 
 # Use bash to handle terminal commands
