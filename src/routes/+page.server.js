@@ -53,6 +53,7 @@ const Popular = async (locals, pageNo) => {
 	);
 
 	const mangas = resultList.items.map((manga) => manga.expand?.manga);
+	console.log("eee", mangas[3])
 	return mangas;
 };
 
@@ -61,5 +62,6 @@ const Latest = async (event, pageNo) => {
 	const res = await event.fetch(url);
 	const data = await res.json();
 
+	console.log(data.mangas[3])
 	return data.mangas;
 };
