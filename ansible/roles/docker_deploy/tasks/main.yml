@@ -34,6 +34,7 @@
     mode: "0644"
 
 - name: Create 'monitoring' network if it does not exist
+  become: true # Escalate if necessary for Docker commands
   ansible.builtin.command: docker network create monitoring
   register: network_creation
   failed_when: network_creation.rc != 0 and 'already exists' not in network_creation.stderr
