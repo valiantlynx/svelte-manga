@@ -36,7 +36,6 @@ variable "cloudflare_zone_ids" {
     "quasarreads.com" = "f79e0b0d8507722dff7afb59bd227353"
     "pixelmanga.com" = "dea3d85ce962b8acff4cf53a13f3b1b6"
     "redscans.com" = "e815c570ce8c1c28c04b8bff4eb6b4a3"
-    "readmangabliss.com" = "4083ccfffd1a719af57f3859b65add73"
     "scanshub.com" = "60572f7ff93f816c55654e4d79e4e460"
     "starletmanga.com" = "481f6f45b89fdaebeb249f7414e275fe"
     "stellarmanga.com" = "6a57fead2038d5c9d055665e957440f6"
