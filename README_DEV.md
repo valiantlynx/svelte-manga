@@ -181,3 +181,5 @@ Error: Process completed with exit code 1.
 ```
 
 it cause of the line ending of the os you are using. i was stumped for a while, but to fix it. just remember all line endings og the terraform/ and ansible/ dir's should have linux line endings(LF). this is cause i made the project in linux os and that github action run on linux. this is simple to do in most text editers just google it 
+
+also have the dns in alphabetical order
