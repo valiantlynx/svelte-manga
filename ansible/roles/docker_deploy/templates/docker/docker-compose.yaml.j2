@@ -25,8 +25,7 @@ services:
     restart: unless-stopped
     networks:
       - monitoring
-
-  {% if cloudflare_zone_ids | length > 0 %}
+      
   certbot:
     image: certbot/certbot
     container_name: certbot
@@ -42,7 +41,6 @@ services:
       -d {{ domain }} -d www.{{ domain }}
       {% endfor %}
       --agree-tos --non-interactive
-  {% endif %}
   
   node-exporter:
     image: quay.io/prometheus/node-exporter:latest

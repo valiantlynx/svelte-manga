@@ -2,12 +2,15 @@
 - name: Include Cloudflare domain and zone IDs variables
   ansible.builtin.include_vars:
     file: "vars/cloudflare_vars.yml"
-    name: "cloudflare_zone_ids"
 
+
+- name: Debug cloudflare_zone_ids variable content
+  ansible.builtin.debug:
+    var: cloudflare_zone_ids
 
 - name: Generate Docker Compose file with dynamic domain names
   ansible.builtin.template:
-    src: "docker/docker-compose.yml.j2"
+    src: "docker/docker-compose.yaml.j2"
     dest: "{{ ansible_env.HOME }}/docker-compose.yml"
     mode: "0644"
     
