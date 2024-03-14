@@ -16,9 +16,10 @@
     
 - name: Ensure nginx directory exists
   ansible.builtin.file:
-    path: /home/ubuntu/nginx
+    path: "{{ ansible_env.HOME }}/nginx"
     state: directory
     mode: '0755'
+
 
 - name: Generate http NGINX configuration with dynamic domain names
   ansible.builtin.template:
