@@ -10,13 +10,6 @@
     src: "docker/docker-compose.yml.j2"
     dest: "{{ ansible_env.HOME }}/docker-compose.yml"
     mode: "0644"
-
-{# - name: Copy initial NGINX HTTP configuration to the EC2 instance
-  ansible.builtin.copy:
-    dest: "{{ ansible_env.HOME }}/"
-    src: "nginx"
-    mode: "0644"
-    force: true #}
     
 - name: Generate http NGINX configuration with dynamic domain names
   ansible.builtin.template:
