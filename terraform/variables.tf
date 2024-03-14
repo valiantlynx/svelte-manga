@@ -12,10 +12,10 @@ variable "cloudflare_zone_ids" {
   type = map(string)
   description = "Mapping of domain names to Cloudflare zone IDs"
   default = {
+    "animevariant.com" = "e2348ce2e55eafb8317c9a111450b6b4"
     "astromanga.com" = "b240f1f918bbc994dc53a9a9940ba321"
     "auramanga.com" = "af9e01fbe3661f4df40b7d29aeb9aa9a"
     "comicbreeze.com" = "b873248295e363bb48df041a63b6fd8c"
-    "animevariant.com" = "e2348ce2e55eafb8317c9a111450b6b4"
     "comicharbor.com" = "7a12ce251110331ca06d29a6974b2185"
     "ghostscans.com" = "0cfb6927807213ea51e5c3c3dda00f5f"
     "ethermanga.com" = "cb47acbf10fe8ee7b50afdca0190001c"
