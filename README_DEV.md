@@ -146,3 +146,38 @@ terraform destroy --auto-approve
 ansible-playbook -i 13.60.38.190, -e "ansible_user=ubuntu ansible_ssh_private_key_file=modules/pk/terraform-key.pem" ../ansible/deploy-app.yml
 ansible-playbook -i ../ansible/inventory/dynamic_inventory.ini ../ansible/deploy-app.yml
 ```
+
+# error in terraform actions
+if you see an error like 
+```bash 
+│ Get:22 http://azure.archive.ubuntu.com/ubuntu jammy-security/universe
+│ Translation-en [162 kB]
+│ Fetched 9514 kB in 2s (5622 kB/s)
+│ Reading package lists...
+│ Building dependency tree...
+│ Reading state information...
+│ 34 packages can be upgraded. Run 'apt list --upgradable' to see them.
+│ /bin/sh: 2: 
+: not found
+│ /bin/sh: 3: 
+: not found
+│ .
+│ ..
+│ ansible.cfg
+│ deploy-app.yml
+│ inventory
+│ roles
+│ /bin/sh: 4: 
+: not found
+│ deploy-app.yml
+│ /bin/sh: 5: 
+: not found
+│ ERROR! the playbook: deploy-app.yml
+ could not be found
+│ 
+╵
+Error: Terraform exited with code 1.
+Error: Process completed with exit code 1.
+```
+
+it cause of the line ending of the os you are using. i was stumped for a while, but to fix it. just remember all line endings og the terraform/ and ansible/ dir's should have linux line endings(LF). this is cause i made the project in linux os and that github action run on linux. this is simple to do in most text editers just google it 
