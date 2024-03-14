@@ -58,4 +58,6 @@ services:
       - monitoring
   
 networks:
-  monitoring: {}
+  monitoring:
+    name: monitoring
+    external: true
