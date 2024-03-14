@@ -24,24 +24,7 @@ services:
       - svelte-manga
     restart: unless-stopped
     networks:
-      - monitoring
-      
-  certbot:
-    image: certbot/certbot
-    container_name: certbot
-    volumes:
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/logs:/var/log/letsencrypt
-      - ./certbot/www:/var/www/certbot
-    networks:
-      - monitoring
-    command: >
-      certonly --webroot -w /var/www/certbot --force-renewal --email valiantlynxz@gmail.com
-      {% for domain in cloudflare_zone_ids.keys() %}
-      -d {{ domain }} -d www.{{ domain }}
-      {% endfor %}
-      --agree-tos --non-interactive
-  
+      - monitoring  
   node-exporter:
     image: quay.io/prometheus/node-exporter:latest
     container_name: node_exporter

@@ -8,12 +8,18 @@
   ansible.builtin.debug:
     var: cloudflare_zone_ids
 
-- name: Generate Docker Compose file with dynamic domain names
+- name: Generate Docker Compose file
   ansible.builtin.template:
     src: "docker/docker-compose.yaml.j2"
     dest: "{{ ansible_env.HOME }}/docker-compose.yml"
     mode: "0644"
     
+- name: Generate Docker Compose file for certbot with dynamic domain names
+  ansible.builtin.template:
+    src: "docker/docker-compose.certbot.yml.j2"
+    dest: "{{ ansible_env.HOME }}/docker-compose.certbot.yml"
+    mode: "0644"
+
 - name: Ensure nginx directory exists
   ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/nginx"
@@ -39,11 +45,23 @@
   args:
     chdir: "{{ ansible_env.HOME }}/" # Ensure this points to where docker-compose.yml is located
 
-- name: Obtain SSL certificates with Certbot
-  command: docker-compose run --rm certbot
-  become: true
-  args:
-    chdir: "{{ ansible_env.HOME }}/"
+- name: Check if SSL certificate needs renewal
+  ansible.builtin.command: >
+    openssl x509 -checkend 864000 -noout -in {{ ansible_env.HOME }}/certbot/conf/live/YOURDOMAIN/fullchain.pem
+  register: cert_check
+  failed_when: cert_check.rc > 1
+  ignore_errors: yes
+
+- name: Determine the primary domain
+  set_fact:
+    primary_domain: "{{ cloudflare_zone_ids.keys() | list | first }}"
+
+- name: Check if SSL certificate needs renewal for the primary domain
+  ansible.builtin.command: >
+    openssl x509 -checkend 864000 -noout -in {{ ansible_env.HOME }}/certbot/conf/live/{{ primary_domain }}/fullchain.pem
+  register: cert_check
+  failed_when: cert_check.rc > 1
+  ignore_errors: yes
 
 - name: Generate https NGINX configuration with dynamic domain names
   ansible.builtin.template:
