@@ -37,36 +37,9 @@ services:
       - monitoring
     command: >
       certonly --webroot -w /var/www/certbot --force-renewal --email valiantlynxz@gmail.com
-      -d astromanga.com -d www.astromanga.com
-      -d auramanga.com -d www.auramanga.com
-      -d comicbreeze.com -d www.comicbreeze.com
-      -d comicharbor.com -d www.comicharbor.com
-      -d ethermanga.com -d www.ethermanga.com
-      -d ghostscans.com -d www.ghostscans.com
-      -d knightscans.com -d www.knightscans.com
-      -d mangaburst.com -d www.mangaburst.com
-      -d mangacrest.com -d www.mangacrest.com
-      -d mangafable.com -d www.mangafable.com
-      -d mangaloom.com -d www.mangaloom.com
-      -d mangaorbit.com -d www.mangaorbit.com
-      -d mangaspectra.com -d www.mangaspectra.com
-      -d mangawhiz.com -d www.mangawhiz.com
-      -d mangazenith.com -d www.mangazenith.com
-      -d nebulamanga.com -d www.nebulamanga.com
-      -d otakureads.com -d www.otakureads.com
-      -d owlscans.com -d www.owlscans.com
-      -d pageturnmanga.com -d www.pageturnmanga.com
-      -d pangeamanga.com -d www.pangeamanga.com
-      -d pixelmanga.com -d www.pixelmanga.com
-      -d quasarreads.com -d www.quasarreads.com
-      -d readmangabliss.com -d www.readmangabliss.com
-      -d redscans.com -d www.redscans.com
-      -d scanshub.com -d www.scanshub.com
-      -d starletmanga.com -d www.starletmanga.com
-      -d stellarmanga.com -d www.stellarmanga.com
-      -d waterscans.com -d www.waterscans.com
-      -d whalescans.com -d www.whalescans.com
-      -d animevariant.com -d www.animevariant.com
+      {% for domain in cloudflare_zone_ids.keys() %}
+      -d {{ domain }} -d www.{{ domain }}
+      {% endfor %}
       --agree-tos --non-interactive
 
   node-exporter:
