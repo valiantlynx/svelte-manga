@@ -16,3 +16,7 @@ services:
       -d {{ domain }} -d www.{{ domain }}
       {% endfor %}
       --agree-tos --non-interactive
+networks:
+  monitoring:
+    name: monitoring
+    external: true
