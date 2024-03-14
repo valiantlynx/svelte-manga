@@ -1,25 +1,16 @@
-variable "sg_id" {
-  description = "SG ID for EC2"
-  type = string
+variable "public_ip" {
+  description = "The ip's of the instance."
+  type        = list(string)
 }
 
-variable "subnets" {
-  description = "Subnets for EC2"
-  type = list(string)
+variable "cloudflare_zone_ids" {
+  type = map(string)
+  description = "Mapping of domain names to Cloudflare zone IDs"
+  default = {
+    "astromanga.com" = "b240f1f918bbc994dc53a9a9940ba321"
+    "auramanga.com" = "af9e01fbe3661f4df40b7d29aeb9aa9a"
+    // Add more domains as needed
+  }
 }
 
-variable "ec2_names" {
-    description = "EC2 names"
-    type = list(string)
-    default = ["svelte-manga1"] # e.g ["svelte-manga1", "svelte-manga2"]
-}
 
-variable "key_name" {
-  description = "Key name for svelte-manga EC2"
-  type = string
-}
-
-variable "private_key_path" {
-  description = "Key full path"
-  type = string
-}

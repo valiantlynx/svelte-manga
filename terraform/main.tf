@@ -22,6 +22,11 @@ module "ec2" {
   private_key_path = module.pk.private_key_path
 }
 
+module "cloudflare-ddns" {
+  source      = "./modules/cloudflare-ddns"
+  public_ip = module.ec2.public_ip
+}
+
 # module "eip" {
 #   source      = "./modules/eip"
 #   instance_id = module.ec2.instances

@@ -50,6 +50,11 @@ go to https://hub.docker.com/settings/security and create and copy the token. to
 - DOCKER_HUB_USERNAME = your username
 - DOCKER_HUB_PASSWORD = your docker access token
 
+# cloudflare
+also i use cloudflare as my dns. this is cause they allow me to edit dns records dynamicly for free. so for that you would also need to add these two en variables. if you dont you can comment the relevant parts of the code:
+- CLOUDFLARE_EMAIL = your cloudflare email
+- CLOUDFLARE_API_TOKEN = your cloudflare api token
+
 # azure
 its just a github action that uses your dockerfile. 
 got to [azure](https://portal.azure.com/#home) and search for `web app for containers`
