@@ -1,24 +1,28 @@
 ---
-- name: Copy Docker Compose file to the Ubuntu user's home
-  ansible.builtin.copy:
-    dest: "{{ ansible_env.HOME }}/docker-compose.yml"
-    src: "docker/docker-compose.yml"
-    mode: "0644"
-    force: true
+- name: Include Cloudflare domain and zone IDs variables
+  ansible.builtin.include_vars:
+    file: "vars/cloudflare_vars.yml"
+    name: "cloudflare_zone_ids"
 
-- name: Copy initial NGINX HTTP configuration to the EC2 instance
+
+- name: Generate Docker Compose file with dynamic domain names
+  ansible.builtin.template:
+    src: "docker/docker-compose.yml.j2"
+    dest: "{{ ansible_env.HOME }}/docker-compose.yml"
+    mode: "0644"
+
+{# - name: Copy initial NGINX HTTP configuration to the EC2 instance
   ansible.builtin.copy:
     dest: "{{ ansible_env.HOME }}/"
     src: "nginx"
     mode: "0644"
-    force: true
-
-- name: Copy initial NGINX HTTP configuration to the EC2 instance
-  ansible.builtin.copy:
+    force: true #}
+    
+- name: Generate http NGINX configuration with dynamic domain names
+  ansible.builtin.template:
+    src: "nginx/http.conf.j2"
     dest: "{{ ansible_env.HOME }}/nginx/nginx.conf"
-    src: "nginx/http.conf"
     mode: "0644"
-    force: true
 
 - name: Pull the latest images with Docker Compose
   command: docker-compose pull
@@ -38,12 +42,11 @@
   args:
     chdir: "{{ ansible_env.HOME }}/"
 
-- name: Copy NGINX HTTPS configuration to the EC2 instance (switch to HTTPS)
-  ansible.builtin.copy:
+- name: Generate https NGINX configuration with dynamic domain names
+  ansible.builtin.template:
+    src: "nginx/https.conf.j2"
     dest: "{{ ansible_env.HOME }}/nginx/nginx.conf"
-    src: "nginx/https.conf"
     mode: "0644"
-    force: true
 
 - name: Stop existing Docker Compose services
   command: docker-compose down --remove-orphans

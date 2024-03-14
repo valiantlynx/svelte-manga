@@ -23,3 +23,9 @@ variable "private_key_path" {
   description = "Key full path"
   type = string
 }
+
+variable "cloudflare_zone_ids" {
+  type = map(string)
+  description = "Mapping of domain names to Cloudflare zone IDs"
+}
+
