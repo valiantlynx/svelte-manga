@@ -80,6 +80,9 @@ resource "null_resource" "run_ansible" {
     command = <<EOF
       sleep 30;
       sudo apt update -y;
+      cd ../../../ansible/;
+      ls -a;
+      ls deploy-app.yml;
       env ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ${self.triggers.inventory_file} deploy-app.yml -vvv
     EOF
 
