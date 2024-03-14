@@ -33,6 +33,12 @@
     dest: "{{ ansible_env.HOME }}/nginx/nginx.conf"
     mode: "0644"
 
+- name: Create 'monitoring' network if it does not exist
+  ansible.builtin.command: docker network create monitoring
+  register: network_creation
+  failed_when: network_creation.rc != 0 and 'already exists' not in network_creation.stderr
+  ignore_errors: yes
+
 - name: Pull the latest images with Docker Compose
   command: docker-compose pull
   become: true # Escalate if necessary for Docker commands
