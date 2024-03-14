@@ -35,12 +35,7 @@ services:
       - ./certbot/www:/var/www/certbot
     networks:
       - monitoring
-    command: >
-      certonly --webroot -w /var/www/certbot --force-renewal --email valiantlynxz@gmail.com
-      {% for domain in cloudflare_zone_ids.keys() %}
-      -d {{ domain }} -d www.{{ domain }}
-      {% endfor %}
-      --agree-tos --non-interactive
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email valiantlynxz@gmail.com {% for domain in cloudflare_zone_ids.keys() %} -d {{ domain }} -d www.{{ domain }} {% endfor %} --agree-tos --non-interactive
 
   node-exporter:
     image: quay.io/prometheus/node-exporter:latest
