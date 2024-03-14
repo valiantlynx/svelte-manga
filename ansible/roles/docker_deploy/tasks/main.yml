@@ -45,13 +45,6 @@
   args:
     chdir: "{{ ansible_env.HOME }}/" # Ensure this points to where docker-compose.yml is located
 
-- name: Check if SSL certificate needs renewal
-  ansible.builtin.command: >
-    openssl x509 -checkend 864000 -noout -in {{ ansible_env.HOME }}/certbot/conf/live/YOURDOMAIN/fullchain.pem
-  register: cert_check
-  failed_when: cert_check.rc > 1
-  ignore_errors: yes
-
 - name: Determine the primary domain
   set_fact:
     primary_domain: "{{ cloudflare_zone_ids.keys() | list | first }}"
@@ -62,6 +55,13 @@
   register: cert_check
   failed_when: cert_check.rc > 1
   ignore_errors: yes
+
+- name: Obtain SSL certificates with Certbot if needed
+  command: docker-compose -f docker-compose.certbot.yml run --rm certbot
+  become: true
+  args:
+    chdir: "{{ ansible_env.HOME }}/"
+  when: cert_check.rc == 1
 
 - name: Generate https NGINX configuration with dynamic domain names
   ansible.builtin.template:
