@@ -1,9 +1,11 @@
 import adapterAuto from '@sveltejs/adapter-auto';
 import adapterNode from '@sveltejs/adapter-node';
-
 import { vitePreprocess } from '@sveltejs/kit/vite';
+import dotenv from 'dotenv'
+dotenv.config()
 
-const deployTarget = process.env.DEPLOY_TARGET || 'node'; // Default to 'auto'
+let {PUBLIC_DEPLOY_TARGET} = process.env
+const deployTarget = PUBLIC_DEPLOY_TARGET || 'auto'; // Default to 'auto'
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {

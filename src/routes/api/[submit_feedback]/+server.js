@@ -1,14 +1,17 @@
 // src/routes/api/submit-feedback.js
 import { json } from '@sveltejs/kit';
+import dotenv from 'dotenv'
+dotenv.config()
 
+let {PUBLIC_GH_P, PUBLIC_GH_URL} = process.env
 export async function POST({ request }) {
 	const { emotion, note, url } = await request.json();
 
 	// GitHub API endpoint to create an issue
-	const apiUrl = import.meta.env.VITE_GH_URL;
+	const apiUrl = PUBLIC_GH_URL;
 
 	// Replace 'your-username' and 'your-repo' with your GitHub username and repository name
-	const accessToken = import.meta.env.VITE_GH_P;
+	const accessToken = PUBLIC_GH_P;
 
 	let emotionEmoji = '';
 	switch (emotion) {

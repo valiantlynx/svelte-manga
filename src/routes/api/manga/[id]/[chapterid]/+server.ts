@@ -1,6 +1,10 @@
 import type { RequestHandler } from './$types';
 import axios from 'axios';
 import cheerio from 'cheerio';
+import dotenv from 'dotenv'
+dotenv.config()
+
+let {PUBLIC_IMAGE_URL} = process.env
 
 export const GET: RequestHandler = async ({ url, setHeaders }) => {
 	const souceUrl: any = url.searchParams.get('url');
@@ -13,7 +17,7 @@ export const GET: RequestHandler = async ({ url, setHeaders }) => {
 	const trimmedPathname = souceUrl.substring(souceUrl.indexOf('/', 1));
 
 	try {
-		const urlLink = `${import.meta.env.VITE_IMAGE_URL}/chapter${trimmedPathname}`;
+		const urlLink = `${PUBLIC_IMAGE_URL}/chapter${trimmedPathname}`;
 
 		const response = await axios.get(urlLink);
 		const $ = cheerio.load(response.data);
