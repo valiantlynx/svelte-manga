@@ -1,8 +1,11 @@
 import sharp from 'sharp';
 import type { RequestHandler } from './$types';
 
-export const GET: RequestHandler = async ({ url }) => {
-	const imageUrl: any = url.searchParams.get('url');
+export const GET: RequestHandler = async ({ url, params }) => {
+	const imageUrl =
+		import.meta.env.VITE_IMAGE_URL + '/' + params.get_image + '/' + params.image || '';
+	const width = Number(url.searchParams.get('width')) || 200;
+	const height = Number(url.searchParams.get('height')) || 300;
 	const quality = Number(url.searchParams.get('quality')) || 100;
 
 	try {
@@ -24,6 +27,7 @@ export const GET: RequestHandler = async ({ url }) => {
 
 		// Process the image using sharp
 		const compressedImageBuffer = await sharp(imageArrayBuffer)
+			.resize(width, height)
 			.rotate()
 			.webp({ quality })
 			.toBuffer();

@@ -17,11 +17,10 @@
 
 	<div class="mx-auto container gap-y-6 gap-x-4 px-4">
 		{#each ( $page.form?.popularMangas ? $page.form?.popularMangas : $page.data.popularMangas) as manga}
-			<!-- TODO definetley fix this. i just hardcoded the img it cause i have a more annoying bug -->
+
 			<ContentCardImage 
 			link={'/manga/' + manga.sourceid}
-		
-			img={"https://ww7.manganelo.tv" + manga.img.split('.com/api').slice(-1)[0]}
+			img={manga.img}
 			alt={manga.title}
 			label1={manga.title}
 			label2={manga.latestChapter}

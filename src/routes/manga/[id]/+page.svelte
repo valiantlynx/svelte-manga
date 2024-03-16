@@ -73,13 +73,13 @@
 	<meta name="keywords" content={data.author + ',' + data.title + ',' + descriptionArray} />
 	<meta property="og:title" content={data.title} />
 	<meta property="og:description" content={data.description} />
-	<meta property="og:image" content={data.img} />
+	<meta property="og:image" content={$page.url.origin + '/api' + data.img} />
 	<meta property="og:url" content={$page.url.origin + '/manga/' + $page.params.id} />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="@animevariant" />
 	<meta name="twitter:title" content={data.title} />
 	<meta name="twitter:description" content={data.description} />
-	<meta name="twitter:image" content={data.img} />
+	<meta name="twitter:image" content={$page.url.origin + '/api' + data.img} />
 	<meta name="twitter:url" content={$page.url.origin + '/manga/' + $page.params.id} />
 	<meta name="twitter:domain" content={$page.url.origin + '/manga/' + $page.params.id} />
 	<meta name="twitter:creator" content="@animevariant" />
