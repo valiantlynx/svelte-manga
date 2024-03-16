@@ -1,6 +1,10 @@
 import type { RequestHandler } from './$types';
 import axios from 'axios';
 import cheerio from 'cheerio';
+import dotenv from 'dotenv'
+dotenv.config()
+
+let {PUBLIC_IMAGE_URL} = process.env
 
 export const GET: RequestHandler = async ({ url }) => {
 	const results: any = [];
@@ -17,7 +21,7 @@ export const GET: RequestHandler = async ({ url }) => {
 		return new Response(JSON.stringify({ results }), { headers });
 	}
 
-	const urlApi = `${import.meta.env.VITE_IMAGE_URL}/search/${word}?page=${page}`;
+	const urlApi = `${PUBLIC_IMAGE_URL}/search/${word}?page=${page}`;
 
 	try {
 		const { data: html } = await axios.get(urlApi);
