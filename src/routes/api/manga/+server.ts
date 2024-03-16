@@ -10,8 +10,10 @@ export const GET: RequestHandler = async ({ url }) => {
 		'Access-Control-Allow-Origin': '*',
 		'Content-Type': 'application/json'
 	};
-	const apiUrl = `${import.meta.env.VITE_IMAGE_URL_MANGANELO}/genre-45`;
+
 	try {
+		const apiUrl = `${import.meta.env.VITE_IMAGE_URL}/genre/Isekai?type=topview&page=${page}`;
+
 		const response: any = await axios
 			.get(apiUrl, {
 				headers: {
@@ -46,12 +48,9 @@ export const GET: RequestHandler = async ({ url }) => {
 			const src = srcElement.attr('href');
 			const id = src ? src.split('/').slice(-1)[0] : null;
 			const titleId = titleElement.text();
-
-			// extract the image path
-			const parsedImg = imgElement.attr('src').split('.com').slice(-1)[0]
 			const content = {
 				title: titleElement.text(),
-				img: url.origin + '/api' + parsedImg,
+				img: url.origin + '/api' + imgElement.attr('src') + '?width=200&height=300',
 				latestChapter: chaptersElement.text(),
 				rating: ratingElement.text(),
 				src,
@@ -62,10 +61,10 @@ export const GET: RequestHandler = async ({ url }) => {
 					? [authorElement.text(), authorElement.find('a').attr('href')]
 					: null
 			};
-			
 
 			scrapedData.push(content);
 		});
+
 		return new Response(
 			JSON.stringify({
 				page: page,
@@ -77,7 +76,7 @@ export const GET: RequestHandler = async ({ url }) => {
 		return new Response(
 			JSON.stringify({
 				error: error.message,
-				failure: apiUrl
+				failure: error
 			}),
 			{ headers }
 		);

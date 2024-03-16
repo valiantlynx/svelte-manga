@@ -17,7 +17,7 @@ export const GET: RequestHandler = async ({ url }) => {
 		return new Response(JSON.stringify({ results }), { headers });
 	}
 
-	const urlApi = `${import.meta.env.VITE_IMAGE_URL_MANGANELO}/search/${word}?page=${page}`;
+	const urlApi = `${import.meta.env.VITE_IMAGE_URL}/search/${word}?page=${page}`;
 
 	try {
 		const { data: html } = await axios.get(urlApi);

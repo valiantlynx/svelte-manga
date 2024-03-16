@@ -4,7 +4,7 @@ import { serializeNonPOJOs } from '$lib/utils/api';
 export const load = async (event) => {
 	const { id } = event.params;
 
-	const url = `/${id}`;
+	const url = `/manga/${id}`;
 
 	const response = await fetch(event.url.origin + `/api/manga/${id}?url=${url}`);
 	const manga = await response.json();
@@ -12,7 +12,6 @@ export const load = async (event) => {
 	const pageNumbers = generatePageNumbers(manga);
 	const chaptersToShow = updateChaptersToShow(1, manga);
 	const similarManga = await getSimilarManga(event);
-
 
 	return {
 		manga,
@@ -29,26 +28,25 @@ export const actions = {
 		const page = data.get('page');
 		try {
 			const { id } = event.params;
-			const url = `/${id}`;
+			const url = `/manga/${id}`;
 			const response = await fetch(event.url.origin + `/api/manga/${id}?url=${url}`);
 			const manga = await response.json();
-			console.log("manga", manga)
 			const chaptersToShow = updateChaptersToShow(page, manga);
 			return {
 				chaptersToShow
 			};
 		} catch (err) {
+			console.log('err', err);
 			throw error(err.status, err.message);
 		}
 	}
 };
 
-let chaptersPerPage = 10;
+let chaptersPerPage = 12;
 function updateChaptersToShow(currentPage, manga) {
 	const startIndex = (currentPage - 1) * chaptersPerPage;
 	const endIndex = startIndex + chaptersPerPage;
 	const chaptersToShow = manga.episodes.slice(startIndex, endIndex);
-	console.log(chaptersToShow)
 	return chaptersToShow;
 }
 // Generate an array of page numbers for pagination buttons

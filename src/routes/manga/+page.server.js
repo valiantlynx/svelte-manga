@@ -21,6 +21,7 @@ export const actions = {
 				popularMangas
 			};
 		} catch (err) {
+			console.log('err', err);
 			throw error(err.status, err.message);
 		}
 	},
@@ -34,6 +35,7 @@ export const actions = {
 				latestMangas
 			};
 		} catch (err) {
+			console.log('err', err);
 			throw error(err.status, err.message);
 		}
 	}

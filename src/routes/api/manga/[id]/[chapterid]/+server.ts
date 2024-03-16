@@ -2,47 +2,31 @@ import type { RequestHandler } from './$types';
 import axios from 'axios';
 import cheerio from 'cheerio';
 
-export const GET: RequestHandler = async ({ url: requestUrl, setHeaders }) => {
-    const sourceUrl: string | null = requestUrl.searchParams.get('url');
-    if (!sourceUrl) {
-        return new Response(JSON.stringify({ error: "URL parameter is missing" }), { status: 400 });
-    }
+export const GET: RequestHandler = async ({ url, setHeaders }) => {
+	const souceUrl: any = url.searchParams.get('url');
 
-    setHeaders({
-        'Access-Control-Allow-Origin': '*',
-        'Cache-Control': `public, s-maxage=${60 * 60 * 24 * 365}`,
-    });
+	setHeaders({
+		'Access-Control-Allow-Origin': '*',
+		'Cache-Control': `public, s-maxage=${60 * 60 * 24 * 365}`
+	});
+	// Your logic for handling the page parameter and generating the response
+	const trimmedPathname = souceUrl.substring(souceUrl.indexOf('/', 1));
 
-    const trimmedPathname = sourceUrl.substring(sourceUrl.indexOf('/', 1));
-    const urls = [
-        `${import.meta.env.VITE_IMAGE_URL_MANGANELO}/${trimmedPathname}`,
-        `${import.meta.env.VITE_IMAGE_URL_CHAPMANGANELO}/${trimmedPathname}`,
-    ];
+	try {
+		const urlLink = `${import.meta.env.VITE_IMAGE_URL}/chapter${trimmedPathname}`;
 
-    for (let urlLink of urls) {
-        try {
-            const response = await axios.get(urlLink);
-            const $ = cheerio.load(response.data);
+		const response = await axios.get(urlLink);
+		const $ = cheerio.load(response.data);
 
-            // Check for "404 NOT FOUND" content in the response
-            if ($('div.panel-not-found').length > 0 || $('p').text().includes("404 - PAGE NOT FOUND")) {
-                console.log(`404 Page Detected at ${urlLink}`);
-                continue; // Try the next URL if "404 NOT FOUND" content is detected
-            }
-
-           
 		const titleElement = $('.panel-chapter-info-top h1');
-		const elements = $('.reader-content');
+		const elements = $('.container-chapter-reader img');
 		const data = elements
 			.map((index, element) => {
-				const imageUrlExternal = $(element).attr('src');
-				console.log(imageUrlExternal)
-				// fetch the image url from the src attribute through our origin
-				const imageUrl = `${requestUrl.origin}/api/getimage?url=${imageUrlExternal}`;
+				const imageUrlExternal = $(element).attr('data-src');
+				// fetch the image url from the data-src attribute through our origin
+				const imageUrl = `${url.origin}/api/getimage?url=${imageUrlExternal}`;
 				const pageNumber = index + 1;
 				const totalPages = elements.length;
-
-				
 
 				return {
 					imageUrl,
@@ -95,20 +79,12 @@ export const GET: RequestHandler = async ({ url: requestUrl, setHeaders }) => {
 				images: data
 			})
 		);
-
-        } catch (error) {
-            console.error(`Error fetching from ${urlLink}:`, error.message);
-			return new Response(
-				JSON.stringify({
-					error: error.message,
-					failure: `Error fetching from ${urlLink}:`
-				})
-			);
-        }
-    }
-
-    // If all URLs fail
-    return new Response(JSON.stringify({
-        error: "Failed to fetch valid data from both sources.",
-    }), { status: 502 });
+	} catch (error: any) {
+		return new Response(
+			JSON.stringify({
+				images: error.message,
+				failure: error
+			})
+		);
+	}
 };
