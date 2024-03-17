@@ -6,28 +6,8 @@
 	let data = $page.data.manga;
 
 	const imageSrc = `${$page.url.origin}/api${data.img}?width=200&height=300`;
-
-	// turn the views into a number by removing the commas and the last character, if the last character is a k  then multiply the number by 1000, if the last character is an m then multiply the number by 1000000
+	console.log("data", data)
 	let views = data.views;
-
-	// remove the commas
-	views = views?.replace(/,/g, '');
-
-	// check if the last character is a k or m
-	const lastChar = views[views?.length - 1];
-
-	// if the last character is a k then multiply the number by 1000
-	if (lastChar === 'K') {
-		views = views.slice(0, views.length - 1);
-		views = Number(views) * 1000;
-	}
-
-	// if the last character is an m then multiply the number by 1000000
-	if (lastChar === 'M') {
-		views = views.slice(0, views.length - 1);
-		views = Number(views) * 1000000;
-	}
-
 	// get the genreList from pocketbase and return the id every genre that has the same name as the genre in the manga data.author array
 	let genreIds: any = [];
 	let authorIds: any = [];
@@ -73,14 +53,14 @@
 
 			if (existingMangaList.items.length === 0) {
 				// Manga doesn't exist, create it
-				for (let i = 0; i < data.author.length; i++) {
+				for (let i = 0; i < data.authors.length; i++) {
 					const genreList = await getPocketbase('genres', {
-						filter: `name="${data.author[i]}"`
+						filter: `name="${data.authors[i]}"`
 					});
 
 					if (genreList.items.length === 0) {
 						const createdAuthor = await postPocketbase('author', {
-							name: `${data.author[i]}`
+							name: `${data.authors[i]}`
 						});
 
 						authorIds.push(createdAuthor.id);
@@ -272,11 +252,11 @@
 			<div class="flex flex-col">
 				<span class="font-bold">Author:</span>
 
-				<span>{data.author[0]}</span>
+				<span>{data.authors[0]}</span>
 			</div>
 			<div class="flex flex-col">
 				<span class="font-bold">Genres:</span>
-				{#each data.author.slice(1) as genre}
+				{#each data.authors.slice(1) as genre}
 					<span>{genre}</span>
 				{/each}
 			</div>

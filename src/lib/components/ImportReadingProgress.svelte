@@ -2,7 +2,7 @@
 	import { pb, getPocketbase, postPocketbase } from '$lib/utils/api'; // Update the import for posting reading progress
 	import { addedReadingProgress } from '$lib/utils/stores'; // Import your writable store
 	import { page } from '$app/stores';
-
+	let {VITE_PUBLIC_API} = import.meta.env
 	let uploaded: boolean;
 	let jsonData: string | null = null; // Store the JSON data from the file
 
@@ -92,7 +92,7 @@
 		async function search(entry: any) {
 			try {
 				const response = await fetch(
-					`${$page.url.origin}/api/manga/search?word=${entry.name}&page=${1}`
+					`${VITE_PUBLIC_API}/api/manga/search?word=${entry.name}&page=${1}`
 				);
 
 				const data = await response.json();
@@ -108,7 +108,7 @@
 
 			try {
 				const response = await fetch(
-					$page.url.origin + `/api/manga/${id}/${chapterid}?url=${url}`
+					VITE_PUBLIC_API + `/api/manga/${id}/${chapterid}?url=${url}`
 				);
 				const data = await response.json();
 
@@ -142,7 +142,7 @@
 						const urlmanga = `/manga/${manga?.mangaParkId}`;
 
 						const responsemanga = await fetch(
-							$page.url.origin + `/api/manga/${manga?.mangaParkId}?url=${urlmanga}`
+							VITE_PUBLIC_API + `/api/manga/${manga?.mangaParkId}?url=${urlmanga}`
 						);
 						const datamanga = await responsemanga.json();
 

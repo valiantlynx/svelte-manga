@@ -1,17 +1,21 @@
 import { error } from '@sveltejs/kit';
 import { serializeNonPOJOs } from '$lib/utils/api';
+let {VITE_PUBLIC_API} = import.meta.env
 
 export const load = async (event) => {
 	const { id } = event.params;
-
-	const url = `/manga/${id}`;
-
-	const response = await fetch(event.url.origin + `/api/manga/${id}?url=${url}`);
+	const response = await fetch(VITE_PUBLIC_API + `/api/manga/${id}`);
 	const manga = await response.json();
 
 	const pageNumbers = generatePageNumbers(manga);
 	const chaptersToShow = updateChaptersToShow(1, manga);
 	const similarManga = await getSimilarManga(event);
+
+	console.log({
+		manga,
+		chaptersToShow,
+		pageNumbers
+	})
 
 	return {
 		manga,
@@ -28,8 +32,7 @@ export const actions = {
 		const page = data.get('page');
 		try {
 			const { id } = event.params;
-			const url = `/manga/${id}`;
-			const response = await fetch(event.url.origin + `/api/manga/${id}?url=${url}`);
+			const response = await fetch(VITE_PUBLIC_API + `/api/manga/${id}`);
 			const manga = await response.json();
 			const chaptersToShow = updateChaptersToShow(page, manga);
 			return {

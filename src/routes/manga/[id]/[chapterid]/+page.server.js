@@ -1,12 +1,12 @@
 import { serializeNonPOJOs } from '$lib/utils/api';
-
+let {VITE_PUBLIC_API} = import.meta.env
 let currentChapterIndex;
 let manga;
 export const load = async (event) => {
 	const { id, chapterid } = event.params;
 	const url = `/manga/${id}/${chapterid}`;
 
-	const response = await event.fetch(event.url.origin + `/api/manga/${id}/${chapterid}?url=${url}`);
+	const response = await event.fetch(VITE_PUBLIC_API + `/api/manga/${id}/${chapterid}?url=${url}`);
 	manga = await response.json();
 	// filter  all the manga.chapters.value that starts with '\n
 	manga.chapters = manga.chapters?.filter((chapter) => chapter.value.startsWith('/'));
@@ -80,7 +80,7 @@ async function createRecord(event) {
 			if (existingMangaList.items.length === 0) {
 				const urlmanga = `/manga/${params.id}`;
 
-				const responsemanga = await fetch(url.origin + `/api/manga/${params.id}?url=${urlmanga}`);
+				const responsemanga = await fetch(VITE_PUBLIC_API + `/api/manga/${params.id}?url=${urlmanga}`);
 				const datamanga = await responsemanga.json();
 
 				// Manga doesn't exist, create it

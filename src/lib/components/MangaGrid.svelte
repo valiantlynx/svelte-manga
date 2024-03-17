@@ -3,6 +3,7 @@
 	import { page } from '$app/stores';
 	import AnimevariantGridAds from './AnimevariantGridAds.svelte';
 	import PaginationSimple from './PaginationSimple.svelte';
+	let {VITE_PUBLIC_API} = import.meta.env
 </script>
 
 <main class="bg-base-200 mb-4 border border-primary">
@@ -18,9 +19,9 @@
 		
 			<ContentCardImage 
 			link={$page.url.origin + '/manga/' + manga.id}
-			img={manga.img}
+			img={VITE_PUBLIC_API + '/api/' + manga.img}
 			alt={manga.title}
-			label1={manga.author[0]}
+			label1={manga.authors[0]}
 			label2={manga.latestChapter}
 			title={manga.title}
 			 >
