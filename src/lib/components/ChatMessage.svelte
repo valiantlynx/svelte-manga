@@ -1,5 +1,6 @@
 <script>
 	import { site } from '@valiantlynx/general-config';
+
 	/**
 	 * @type {{ expand: { sender: { username: any; avatar: any; id: any; }; }; created: string | number | Date; message: any; }}
 	 */
@@ -25,13 +26,13 @@
 		</div>
 	</div>
 	<div class="chat-header">
-		{message.expand?.sender.username}
+		{message.expand?.sender.username ?? 'anonymous'}
 		<time class="text-xs opacity-50">{ts.toLocaleTimeString()}</time>
 	</div>
 	<div class="chat-bubble">{@html message.message}</div>
 	{#if messageClass === 'chat-end'}
-		<div class="chat-footer opacity-50">comment sent</div>
+		<div class="chat-footer opacity-50">send</div>
 	{:else}
-		<div class="chat-footer opacity-50">comment delivered</div>
+		<div class="chat-footer opacity-50">delivered</div>
 	{/if}
 </div>
