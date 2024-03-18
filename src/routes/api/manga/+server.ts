@@ -1,6 +1,10 @@
 import type { RequestHandler } from './$types';
 import axios from 'axios';
 import cheerio from 'cheerio';
+import dotenv from 'dotenv'
+dotenv.config()
+
+let {PUBLIC_IMAGE_URL} = process.env
 
 export const GET: RequestHandler = async ({ url }) => {
 	const page = url.searchParams.get('page');
@@ -12,7 +16,7 @@ export const GET: RequestHandler = async ({ url }) => {
 	};
 
 	try {
-		const apiUrl = `${import.meta.env.VITE_IMAGE_URL}/genre/Isekai?type=topview&page=${page}`;
+		const apiUrl = `${PUBLIC_IMAGE_URL}/genre/Isekai?type=topview&page=${page}`;
 
 		const response: any = await axios
 			.get(apiUrl, {

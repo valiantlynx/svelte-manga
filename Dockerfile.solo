@@ -42,9 +42,15 @@ USER svelte
 
 # Copy the necessary files from the installer stage
 COPY --from=installer /app/package.json .
+COPY --from=installer /app/.env .
 COPY --from=installer /app/build /app/build
 
 EXPOSE 3000
+
+# Set environment variables
+ENV PUBLIC_IMAGE_URL="https://ww6.manganelo.tv"
+ENV PUBLIC_GH_P="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"
+ENV PUBLIC_GH_URL="https://api.github.com/repos/valiantlynx/valiantlynx-turborepo/issues"
 
 # Modify this line to start your SvelteKit application, e.g., run your server.js or the appropriate script.
 CMD [ "node", "build" ]

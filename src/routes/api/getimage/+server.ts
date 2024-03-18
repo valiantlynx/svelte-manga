@@ -1,43 +1,48 @@
-import sharp from 'sharp';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ url }) => {
-	const imageUrl: any = url.searchParams.get('url');
-	const quality = Number(url.searchParams.get('quality')) || 100;
+    const imageUrl = url.searchParams.get('url');
 
-	try {
-		// Fetch the image
-		const response = await fetch(imageUrl, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'image/jpeg',
-				'Access-Control-Allow-Origin': '*'
-			}
-		});
+    if (!imageUrl) {
+        return new Response(JSON.stringify({ message: 'No image URL provided' }), {
+            status: 400,
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            }
+        });
+    }
 
-		if (!response.ok) {
-			throw new Error('Failed to fetch image');
-		}
+    try {
+        // Fetch the image
+        const response = await fetch(imageUrl, {
+            method: 'GET',
+            // You might not need to set 'Content-Type' here since it will be determined by the response
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
+        });
 
-		// Read the image data as ArrayBuffer
-		const imageArrayBuffer = await response.arrayBuffer();
+        if (!response.ok) {
+            throw new Error('Failed to fetch image');
+        }
 
-		// Process the image using sharp
-		const compressedImageBuffer = await sharp(imageArrayBuffer)
-			.rotate()
-			.webp({ quality })
-			.toBuffer();
+        // Clone the response to modify its headers
+        const imageResponse = new Response(response.body, response);
+        // Ensure the Content-Type header is set correctly based on the fetched image
+        imageResponse.headers.set('Content-Type', response.headers.get('Content-Type') || 'image/jpeg');
+        imageResponse.headers.set('Access-Control-Allow-Origin', '*');
+        // You might want to customize the Cache-Control header based on your needs
+        imageResponse.headers.set('Cache-Control', `public, s-maxage=${60 * 60 * 24 * 365}`);
 
-		return new Response(compressedImageBuffer, {
-			headers: {
-				'Content-Type': 'image/webp',
-				'Access-Control-Allow-Origin': '*',
-				'Cache-Control': `public, s-maxage=${60 * 60 * 24 * 365}`
-			}
-		});
-	} catch (error) {
-		return new Response(JSON.stringify({ message: 'Failed to compress image', error }), {
-			status: 500
-		});
-	}
+        return imageResponse;
+    } catch (error) {
+        return new Response(JSON.stringify({ message: 'Failed to serve image', error: error.message }), {
+            status: 500,
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            }
+        });
+    }
 };
