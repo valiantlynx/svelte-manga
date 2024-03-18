@@ -93,7 +93,7 @@
 			message: newMessage,
 			chapterid: $page.params.chapterid,
 			mangaid: $page.params.id,
-			receiver: $page.data.user?.id ? $page.data.user?.id : 'vjqw7rzlxvxkr16',
+			receiver: $page.data.user?.id ? $page.data.user?.id : 'cl1wlk9epnlmdsg',
 		};
 		await pb.collection('chat_animevariant').create(data);
 		newMessage = '';
