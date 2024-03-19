@@ -3,9 +3,12 @@
 	import { postPocketbase, pb, getPocketbase } from '$lib/utils/api';
 	import PersonalRating from '$lib/components/PersonalRating.svelte';
 	import Share from '$lib/components/share/Share.svelte';
+	import { patchPocketbase } from '$lib/utils/api';
+	let {VITE_PUBLIC_API} = import.meta.env
+
 	let data = $page.data.manga;
 
-	const imageSrc = `${$page.url.origin}/api${data.img}?width=200&height=300`;
+	const imageSrc = `${VITE_PUBLIC_API}/api${data.img}?`;
 	let views = data.views;
 	// get the genreList from pocketbase and return the id every genre that has the same name as the genre in the manga data.author array
 	let genreIds: any = [];
@@ -72,7 +75,7 @@
 				const pbData = {
 					title: data.title,
 					description: data.description,
-					img: $page.url.origin + '/api' + data.img,
+					img: data.img,
 					updated: data.lastUpdated,
 					views,
 					latestChapter: data.episodes[0].chapterTitle,
@@ -128,6 +131,22 @@
 	}
 
 	continueReading();
+
+		// Function to handle radio button change
+	async function handleRatingChange(event: any) {
+		const selectedValue = parseFloat(event.target.value);
+		progress.rating = selectedValue;
+
+		const pbData = {
+			rating: progress.rating
+		};
+		await patchPocketbase('reading_progress', progress.id, pbData);
+	}
+
+			// Function to handle radio button change
+		async function handleRatingChangeGlobal(event: any) {
+			console.log("comming soon")
+	}
 </script>
 
 <div class="w-full flex flex-col md:flex-row gap-4">
@@ -187,9 +206,10 @@
 
 							<span>{progress.expand?.currentChapter.chapterId}</span>
 						</div>
-
 						<div class="flex flex-col">
-							<PersonalRating bind:progress />
+							<PersonalRating bind:progress {handleRatingChange}>
+								<span class="font-bold" slot="title">Personal rating:</span>
+							</PersonalRating>
 						</div>
 						<div class="flex flex-col">
 							<span class="font-bold">Status:</span>
@@ -208,7 +228,7 @@
 			{:else}
 				<!-- logged out stats -->
 				<div
-					class="mt-4 p-4 border border-primary rounded-lg shadow-md text-success bg-opacity-50 blur-sm"
+					class="mt-4 p-4 border border-primary rounded-lg shadow-md text-success bg-opacity-90 blur-sm"
 				>
 					<h2 class="text-xl font-bold mb-2">Logged in as {$page.data.user?.username}</h2>
 					<div class="grid grid-cols-2 gap-4">
@@ -224,7 +244,9 @@
 						</div>
 
 						<div class="flex flex-col">
-							<PersonalRating progress />
+							<PersonalRating bind:progress={data} handleRatingChange={handleRatingChangeGlobal}>
+								<span class="font-bold" slot="title">Rating:</span>
+							</PersonalRating>
 						</div>
 						<div class="flex flex-col">
 							<span class="font-bold">Status:</span>
@@ -267,11 +289,19 @@
 				<span class="font-bold">Views:</span>
 				<span>{data.views}</span>
 			</div>
+			
+			<div class="flex flex-col">
+				<PersonalRating bind:progress={data} handleRatingChange={handleRatingChangeGlobal}>
+					<span class="font-bold" slot="title">Rating:</span>
+				</PersonalRating>
+			</div>
 
 			<div class="flex flex-col">
 				<span class="font-bold">Last Updated:</span>
 				<span>{data.lastUpdated}</span>
 			</div>
+
+
 
 			<div class="flex flex-col">
 				<span class="font-bold">Share this manga:</span>
