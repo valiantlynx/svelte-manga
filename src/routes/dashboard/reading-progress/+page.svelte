@@ -4,6 +4,7 @@
 	import { page } from '$app/stores';
 	import ImportReadingProgress from '$lib/components/ImportReadingProgress.svelte';
 	import PaginationSimple from '$lib/components/PaginationSimple.svelte';
+	import PersonalRating from '$lib/components/PersonalRating.svelte';
 	
 	let pageNo = 1;
 	const itemsPerPage = 20;
@@ -90,16 +91,9 @@
 													<p class="text-sm">
 														{chapter.expand?.manga?.title}
 													</p>
-													<h4 class="font-bold">personal rating</h4>
-													<div class="relative rating rating-lg rating-half">
-														<input
-															type="radio"
-															name="rating-10"
-															value="0.5"
-															class="bg-accent mask mask-star-2"
-															checked
-														/>{chapter.rating} stars
-													</div>
+													<PersonalRating bind:progress={chapter}>
+														<span class="font-bold" slot="title">Personal rating:</span>
+													</PersonalRating>
 
 													<span class="text-sm font-semibold text-accent">
 														{calculateProgressPercentage(chapter).toFixed(2)}% read

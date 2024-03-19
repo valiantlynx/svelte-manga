@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import { postPocketbase, pb, getPocketbase } from '$lib/utils/api';
 	import PersonalRating from '$lib/components/PersonalRating.svelte';
+	import HowToRate from '$lib/components/HowToRate.svelte';
 	import Share from '$lib/components/share/Share.svelte';
 	import { patchPocketbase } from '$lib/utils/api';
 	let {VITE_PUBLIC_API} = import.meta.env
@@ -210,6 +211,7 @@
 						<div class="flex flex-col">
 							<PersonalRating bind:progress {handleRatingChange}>
 								<span class="font-bold" slot="title">Personal rating:</span>
+								<HowToRate />
 							</PersonalRating>
 						</div>
 						<div class="flex flex-col">
@@ -260,6 +262,7 @@
 						<div class="flex flex-col">
 							<PersonalRating bind:progress={data} handleRatingChange={handleRatingChangeGlobal}>
 								<span class="font-bold" slot="title">Rating:</span>
+								HowToRate
 							</PersonalRating>
 						</div>
 					</div>
@@ -286,6 +289,7 @@
 			<div class="flex flex-col w-11">
 				<PersonalRating bind:progress={data} handleRatingChange={handleRatingChangeGlobal}>
 					<span class="font-bold" slot="title">Rating:</span>
+					HowToRate
 				</PersonalRating>
 			</div>
 
