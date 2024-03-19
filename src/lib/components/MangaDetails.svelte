@@ -145,7 +145,8 @@
 
 			// Function to handle radio button change
 		async function handleRatingChangeGlobal(event: any) {
-			console.log("comming soon")
+			const selectedValue = parseFloat(event.target.value);
+			console.log("comming soon", selectedValue)
 	}
 </script>
 
@@ -171,18 +172,18 @@
 		>
 			<button on:click={createRecord}>Read First</button>
 		</a>
-		<a class="btn btn-primary" href={`${$page.url.pathname}/${data.episodes[0].chapterId}`}>
+		<a class="btn " href={`${$page.url.pathname}/${data.episodes[0].chapterId}`}>
 			<button on:click={createRecord}>Read Latest</button>
 		</a>
 		<div class="relative">
 			{#if !$page.data.user}
 				<!-- Not logged in overlay -->
-				<div class="absolute inset-0 flex items-center justify-center bg-primary">
-					<div class="bg-base-100 z-10 p-4 rounded-lg shadow-md text-center">
+				<div class="absolute inset-0 flex items-center justify-center ">
+					<div class="bg-base-300 text-base-content z-10 p-4 rounded-lg shadow-md text-center">
 						<p class="text-lg font-bold mb-4">
 							Login for free to unlock auto reading-progress tracker feature:
 						</p>
-						<a href="/login" class="btn btn-primary">Login</a>
+						<a href="/login" class="btn btn-secondary">Login</a>
 					</div>
 				</div>
 			{/if}
@@ -243,11 +244,7 @@
 							<span>{progress.expand?.currentChapter.chapterId}</span>
 						</div>
 
-						<div class="flex flex-col">
-							<PersonalRating bind:progress={data} handleRatingChange={handleRatingChangeGlobal}>
-								<span class="font-bold" slot="title">Rating:</span>
-							</PersonalRating>
-						</div>
+
 						<div class="flex flex-col">
 							<span class="font-bold">Status:</span>
 							<span>{progress.status}</span>
@@ -259,6 +256,11 @@
 						<div class="flex flex-col">
 							<span class="font-bold">Started:</span>
 							<span>{progress.started}</span>
+						</div>
+						<div class="flex flex-col">
+							<PersonalRating bind:progress={data} handleRatingChange={handleRatingChangeGlobal}>
+								<span class="font-bold" slot="title">Rating:</span>
+							</PersonalRating>
 						</div>
 					</div>
 				</div>
@@ -277,24 +279,27 @@
 			</div>
 			<div class="flex flex-col">
 				<span class="font-bold">Genres:</span>
-				{#each data.authors.slice(1) as genre}
+				{#each data.genres as genre}
 					<span>{genre}</span>
 				{/each}
 			</div>
+			<div class="flex flex-col w-11">
+				<PersonalRating bind:progress={data} handleRatingChange={handleRatingChangeGlobal}>
+					<span class="font-bold" slot="title">Rating:</span>
+				</PersonalRating>
+			</div>
+
 			<div class="flex flex-col">
 				<span class="font-bold">Artist:</span>
-				<span>{data.artist}</span>
+		
 			</div>
+
 			<div class="flex flex-col">
 				<span class="font-bold">Views:</span>
 				<span>{data.views}</span>
 			</div>
 			
-			<div class="flex flex-col">
-				<PersonalRating bind:progress={data} handleRatingChange={handleRatingChangeGlobal}>
-					<span class="font-bold" slot="title">Rating:</span>
-				</PersonalRating>
-			</div>
+
 
 			<div class="flex flex-col">
 				<span class="font-bold">Last Updated:</span>
