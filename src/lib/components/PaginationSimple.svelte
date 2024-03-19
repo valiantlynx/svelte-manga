@@ -32,10 +32,41 @@
 	let pageNo = 1;
 	let servers = [
 		"MANGANELO",
-		"CHAPMANGANELO",
-		"MANGACLASH"
+		// "CHAPMANGANELO",
+		// "MANGACLASH"
 	];
 	let selectedServer;
+	const submitFormWithServer = async (server) => {
+        loading = true;
+
+        // Construct form data
+        const formData = new FormData();
+        formData.append('server', server);
+        formData.append('page', pageNo.toString());
+
+        try {
+            const response = await fetch(action, {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                // Handle successful response
+                // Update your component state/data as necessary
+                toast.success('Data loaded successfully');
+            } else {
+                // Handle server errors or invalid responses
+                toast.error('Failed to load data');
+            }
+        } catch (error) {
+            // Handle network errors
+            toast.error(error.message);
+        } finally {
+            loading = false;
+        }
+    };
+
 </script>
 
 <form
@@ -56,6 +87,7 @@
         <select 
             class="btn btn-primary border-secondary"
             bind:value={selectedServer}
+			on:change={submitFormWithServer}
             name="server">
             {#each servers as server}
                 <option value={server}>
