@@ -6,9 +6,6 @@
 	export let message;
 	export let sender;
 
-
-	//console.log('message: ', message, 'sender: ', message.expand?.sender.username);
-
 	const messageClass = message.expand?.sender.username === sender ? 'chat-end' : 'chat-start';
 	const avatar = message.expand?.sender?.avatar
 		? `${site.site.pocketbase}/api/files/${message.expand?.sender?.collectionId}/${message.expand?.sender?.id}/${message.expand?.sender?.avatar}`

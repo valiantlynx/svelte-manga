@@ -11,12 +11,6 @@ export const load = async (event) => {
 	const chaptersToShow = updateChaptersToShow(1, manga);
 	const similarManga = await getSimilarManga(event);
 
-	console.log({
-		manga,
-		chaptersToShow,
-		pageNumbers
-	})
-
 	return {
 		manga,
 		chaptersToShow,

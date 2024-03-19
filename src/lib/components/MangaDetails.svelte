@@ -6,7 +6,6 @@
 	let data = $page.data.manga;
 
 	const imageSrc = `${$page.url.origin}/api${data.img}?width=200&height=300`;
-	console.log("data", data)
 	let views = data.views;
 	// get the genreList from pocketbase and return the id every genre that has the same name as the genre in the manga data.author array
 	let genreIds: any = [];

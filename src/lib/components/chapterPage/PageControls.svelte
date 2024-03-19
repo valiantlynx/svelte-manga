@@ -7,7 +7,6 @@
     export let readingMode;
 
     const readingModeSelect = ['longstrip', 'grid', 'paginated'];
-    console.log($page.data)
 </script>
 
 <div class="flex flex-wrap">
