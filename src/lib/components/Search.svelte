@@ -25,8 +25,6 @@
 			});
 
 			const { mangas } = response.data;
-
-
 			searchResults = mangas;
 		} catch (error) {
 			console.error(error);

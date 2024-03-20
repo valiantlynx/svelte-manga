@@ -63,8 +63,6 @@
             loading = false;
         }
     };
-
-    let selectedChapter;
 </script>
 
 <div class="flex flex-wrap">
@@ -100,8 +98,11 @@
   
             <select 
             class="btn btn-primary border-secondary"
-            bind:value={selectedChapter}
-			on:change={() => goto(`/manga/${$page.params.id}/${selectedChapter}`)}
+            bind:value={$page.params.chapterid}
+			on:change={() => goto(`/manga/${$page.params.id}/${$page.params.chapterid}`,{
+                replaceState: true,
+                invalidateAll: true
+            })}
             name="chapters">
             {#each data.manga.chapters as chapter}
                 <option value={chapter.chapterId}>
