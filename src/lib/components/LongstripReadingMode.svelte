@@ -24,14 +24,14 @@
 		<!-- Images width selection between full or 3/5 -->
 		<div class="mb-4 flex justify-center space-x-4">
 			<button
-				class="px-4 py-2 rounded-lg btn btn-primary"
+				class="px-4 py-2 rounded-lg btn btn-secondary"
 				on:click={() => setImageWidth('full')}
 			>
 				Full
 			</button>
 
 			<button
-				class="px-4 py-2 rounded-lg btn btn-primary"
+				class="px-4 py-2 rounded-lg btn btn-secondary"
 				on:click={() => setImageWidth('3/5')}
 			>
 				Medium

@@ -8,7 +8,7 @@
 
 <div class="flex items-center justify-center mb-4">
 	<button
-		class="px-4 py-2 rounded-lg btn btn-primary"
+		class="px-4 py-2 rounded-lg btn btn-secondary"
 		class:disabled={$currentPage === 0}
 		on:click={() => ($currentPage -= 1)}
 	>
@@ -18,7 +18,7 @@
 		{$currentPage + 1} / {data?.images.length}
 	</h2>
 	<button
-		class="px-4 py-2 rounded-lg btn btn-primary"
+		class="px-4 py-2 rounded-lg btn btn-secondary"
 		class:disabled={$currentPage === data?.images.length - 1}
 		on:click={() => ($currentPage += 1)}
 	>
