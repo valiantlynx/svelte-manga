@@ -21,23 +21,30 @@ export const load = async (event) => {
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-	chapters: async (event) => {
-		const data = await event.request.formData();
-		const page = data.get('page');
-		try {
-			const { id } = event.params;
-			const response = await fetch(VITE_PUBLIC_API + `/api/manga/${id}`);
-			const manga = await response.json();
-			const chaptersToShow = updateChaptersToShow(page, manga);
-			return {
-				chaptersToShow
-			};
-		} catch (err) {
-			console.log('err', err);
-			throw error(err.status, err.message);
-		}
-	}
+    chapters: async (event) => {
+        const data = await event.request.formData();
+        const page = parseInt(data.get('page'), 10); // Convert to integer
+        if (isNaN(page)) {
+            throw error(400, "Invalid page number");
+        }
+        try {
+            const { id } = event.params;
+            const response = await fetch(`${VITE_PUBLIC_API}/api/manga/${id}`);
+            const manga = await response.json();
+
+			if (!manga || !Array.isArray(manga.chapters)) {
+				throw error(404, "Manga not found or chapters are unavailable.");
+			}			
+            const chaptersToShow = updateChaptersToShow(page, manga);
+            return {
+                chaptersToShow
+            };
+        } catch (err) {
+            throw error(err.status || 500, err.message || "An error occurred while fetching chapters.");
+        }
+    }
 };
+
 
 let chaptersPerPage = 12;
 function updateChaptersToShow(currentPage, manga) {

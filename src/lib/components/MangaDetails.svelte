@@ -317,7 +317,7 @@
 				<Share
 		title={data.title}
 		url={$page.url.href}
-		text={data.description}
+		text={`${data.description.slice(0, 200)}${data.description.length > 240 ? '...' : ''}`}
 		image={imageSrc}
 		hashtags="manga"
 

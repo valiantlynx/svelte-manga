@@ -19,7 +19,7 @@
 		
 			<ContentCardImage 
 			link={$page.url.origin + '/manga/' + manga.id}
-			img={VITE_PUBLIC_API + '/api/' + manga.img}
+			img={VITE_PUBLIC_API + '/api' + manga.img}
 			alt={manga.title}
 			label1={manga.authors[0]}
 			label2={manga.latestChapter}
