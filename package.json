@@ -53,6 +53,5 @@
 		"typescript": "^5.2.2",
 		"vite": "^4.3.6"
 	},
-	"type": "module",
-	"dependencies": {}
+	"type": "module"
 }
