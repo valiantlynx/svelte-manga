@@ -20,11 +20,12 @@
 		}
 
 		try {
-			const response = await axios.get(`${VITE_PUBLIC_API}/api/manga/search`, {
+			const response = await axios.get(`${VITE_PUBLIC_API}/api/search`, {
 				params: { word: searchTerm, page: 1 }
 			});
 
 			const { mangas } = response.data;
+
 
 			searchResults = mangas;
 		} catch (error) {
@@ -52,7 +53,7 @@
 	}
 
 	function handleClick(url: any) {
-		goto(url);
+		window.location = url
 		searchTerm = '';
 	}
 	if ($searchQuery) {
