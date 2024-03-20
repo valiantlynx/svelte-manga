@@ -1,32 +1,48 @@
+
 <script>
+
     import { page } from "$app/stores";
+    import { goto } from '$app/navigation';
+
+    let currentChapterIndex;
+
+    const readingModeSelect = ['longstrip', 'grid', 'paginated'];
 
     let data = $page.data.manga;
-    let currentChapterIndex;
     $: currentChapterIndex = $page.data.currentChapterIndex
     export let readingMode;
 
-    const readingModeSelect = ['longstrip', 'grid', 'paginated'];
+    // Adjusted to ensure we're not accessing an undefined index
+    function navigateChapter(offset) {
+        const newIndex = currentChapterIndex + offset;
+        // Ensure newIndex is within the bounds of the chapters array
+        if (newIndex >= 0 && newIndex < data.manga.chapters.length) {
+            const newChapterId = data.manga.chapters[newIndex].chapterId;
+            goto(`/manga/${$page.params.id}/${newChapterId}`);
+        }
+    }
 </script>
 
 <div class="flex flex-wrap">
     <div class="left-content order-1 ml-auto md:order-2">
-    <!-- Previous and Next Chapter Buttons -->
-    <form class="space-x-4 m-4">
-        <a href={`/manga${data.chapters[currentChapterIndex]?.value}`} class="px-4 py-2 rounded-lg btn btn-primary" on:click={() => currentChapterIndex++}>
-            Previous Chapter
-        </a>
-        {#if currentChapterIndex === 0}
-        <a href={`/manga/${$page.params.id}`} class="px-4 py-2 rounded-lg btn btn-secondary">
-            Manga Details
-        </a>
+        <!-- Previous and Next Chapter Buttons -->
+        <div class="space-x-4 m-4">
+            {#if currentChapterIndex === 0}
+            <button class="px-4 py-2 rounded-lg btn btn-primary" on:click={() => navigateChapter(-1)}>
+                Previous Chapter
+            </button>
+            {/if}
+
+            {#if currentChapterIndex === 0}
+            <button class="px-4 py-2 rounded-lg btn btn-secondary" on:click={() => goto(`/manga/${$page.params.id}`)}>
+                Manga Details
+            </button>
         {:else}
-        <a href={`/manga${data.chapters[currentChapterIndex]?.value}`} class="px-4 py-2 rounded-lg btn btn-primary" on:click={() => currentChapterIndex--}>
+        <button class="px-4 py-2 rounded-lg btn btn-primary" on:click={() => navigateChapter(1)}>
             Next Chapter
-        </a>
+        </button>
         {/if}
-    </form>
-        
+        </div>
     </div>
 
     <div class="right-content order-2   md:order-1">

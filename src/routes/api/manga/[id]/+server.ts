@@ -69,7 +69,7 @@ export const GET: RequestHandler = async ({ url, setHeaders }) => {
 
 		return new Response(
 			JSON.stringify({
-				episodes: data,
+				chapters: data,
 				title: titleElement.text(),
 				img: imgElement.attr('src'),
 				description: descriptionElement.text(),
@@ -83,7 +83,7 @@ export const GET: RequestHandler = async ({ url, setHeaders }) => {
 	} catch (error: any) {
 		return new Response(
 			JSON.stringify({
-				episodes: error.message,
+				chapters: error.message,
 				failure: error
 			})
 		);

@@ -86,7 +86,7 @@
 	<meta name="twitter:label4" content="Total Pages" />
 	<meta name="twitter:data4" content={data.images.length} />
 	<meta name="twitter:label5" content="Total Chapters" />
-	<meta name="twitter:data5" content={data.chapters?.length} />
+	<meta name="twitter:data5" content={data.manga.chapters?.length} />
 </svelte:head>
 
 <main class="bg-base-100">

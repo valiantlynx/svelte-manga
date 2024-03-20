@@ -170,7 +170,7 @@
 							img: $page.url.origin + '/api' + datamanga.img,
 							updated: datamanga.lastUpdated,
 							views: datamanga.views,
-							latestChapter: datamanga.episodes[0]?.chapterTitle,
+							latestChapter: datamanga.chapters[0]?.chapterTitle,
 							sourceid: manga?.mangaParkId,
 							genres: genreIds,
 							authors: authorIds,

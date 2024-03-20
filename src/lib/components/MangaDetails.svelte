@@ -79,7 +79,7 @@
 					img: data.img,
 					updated: data.lastUpdated,
 					views,
-					latestChapter: data.episodes[0].chapterTitle,
+					latestChapter: data.chapters[0].chapterTitle,
 					sourceid: $page.params.id,
 					genres: genreIds,
 					authors: authorIds,
@@ -89,12 +89,12 @@
 				pbMangaData = mangaRes;
 
 				// Call the function to create or update the reading progress
-				await createOrUpdateReadingProgress(mangaRes.id, data.episodes[0].chapterId);
+				await createOrUpdateReadingProgress(mangaRes.id, data.chapters[0].chapterId);
 			} else {
 				// Call the function to create or update the reading progress
 				await createOrUpdateReadingProgress(
 					existingMangaList.items[0].id,
-					data.episodes[0].chapterId
+					data.chapters[0].chapterId
 				);
 			}
 		}
@@ -154,7 +154,7 @@
 <div class="w-full flex flex-col md:flex-row gap-4">
 	<!-- manga image -->
 	<div class="w-full md:w-1/5 h-full">
-		<a href={`${$page.url.pathname}/${data.episodes[data.episodes.length - 1].chapterId}`}>
+		<a href={`${$page.url.pathname}/${data.chapters[data.chapters.length - 1].chapterId}`}>
 			<img
 				class="w-full h-auto object-cover rounded-lg border border-primary"
 				src={imageSrc}
@@ -169,11 +169,11 @@
 		<p class="mb-4">{data.description}</p>
 		<a
 			class="btn btn-primary"
-			href={`${$page.url.pathname}/${data.episodes[data.episodes.length - 1].chapterId}`}
+			href={`${$page.url.pathname}/${data.chapters[data.chapters.length - 1].chapterId}`}
 		>
 			<button on:click={createRecord}>Read First</button>
 		</a>
-		<a class="btn " href={`${$page.url.pathname}/${data.episodes[0].chapterId}`}>
+		<a class="btn " href={`${$page.url.pathname}/${data.chapters[0].chapterId}`}>
 			<button on:click={createRecord}>Read Latest</button>
 		</a>
 		<div class="relative">
