@@ -1,9 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 
 export const POST = async (event) => {
-	console.log(event.locals.user.id)
-
-
 	// Clear server-side auth state
 	await event.locals.pb.authStore.clear();
 
