@@ -262,7 +262,7 @@
 						<div class="flex flex-col">
 							<PersonalRating bind:progress={data} handleRatingChange={handleRatingChangeGlobal}>
 								<span class="font-bold" slot="title">Rating:</span>
-								HowToRate
+								<HowToRate />
 							</PersonalRating>
 						</div>
 					</div>
@@ -289,7 +289,7 @@
 			<div class="flex flex-col w-11">
 				<PersonalRating bind:progress={data} handleRatingChange={handleRatingChangeGlobal}>
 					<span class="font-bold" slot="title">Rating:</span>
-					HowToRate
+					<HowToRate />
 				</PersonalRating>
 			</div>
 

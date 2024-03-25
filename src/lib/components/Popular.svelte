@@ -3,6 +3,7 @@
 	import PaginationSimple from './PaginationSimple.svelte';
 	import { page } from '$app/stores';
 	import {ContentCardImage} from '@valiantlynx/svelte-ui';
+	let {VITE_PUBLIC_API} = import.meta.env
 </script>
 
 <main class="bg-base-200 mb-4 border border-primary ">
@@ -17,10 +18,9 @@
 
 	<div class="mx-auto container gap-y-6 gap-x-4 px-4">
 		{#each ( $page.form?.popularMangas ? $page.form?.popularMangas : $page.data.popularMangas) as manga}
-
 			<ContentCardImage 
 			link={'/manga/' + manga.sourceid}
-			img={manga.img}
+			img={VITE_PUBLIC_API + manga.img}
 			alt={manga.title}
 			label1={manga.title}
 			label2={manga.latestChapter}
