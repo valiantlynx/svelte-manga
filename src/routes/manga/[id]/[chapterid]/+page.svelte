@@ -86,7 +86,7 @@
 	<meta name="twitter:label4" content="Total Pages" />
 	<meta name="twitter:data4" content={data.images.length} />
 	<meta name="twitter:label5" content="Total Chapters" />
-	<meta name="twitter:data5" content={data.chapters?.length} />
+	<meta name="twitter:data5" content={data.manga.chapters?.length} />
 </svelte:head>
 
 <main class="bg-base-100">
@@ -121,7 +121,7 @@
 	url={$page.url.href}
 	image={data?.images[1].imageUrl}
 	text={`${data.title} ${$page.params.chapterid}free online, high quality, manga scans, manga scan`}
-	hashtags="manga, anime, art, manga online, manga free online, manga free online, manga high quality, manga scans, manga scan"
+	hashtags="manga, anime, art, manga online, manga free online, manga free online, manga high quality, manga scans"
 
 />	
 	<Chat />

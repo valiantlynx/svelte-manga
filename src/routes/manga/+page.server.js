@@ -1,5 +1,6 @@
 import { error } from '@sveltejs/kit';
 import { serializeNonPOJOs } from '$lib/utils/api';
+let {VITE_PUBLIC_API} = import.meta.env
 
 export const load = async (event) => {
 	const popularMangas = await Popular(event.locals, 1);
@@ -58,7 +59,7 @@ const Popular = async (locals, pageNo) => {
 };
 
 const Latest = async (event, pageNo) => {
-	const url = event.url.origin + '/api/manga?page=' + pageNo;
+	const url = VITE_PUBLIC_API + '/api/manga?page=' + pageNo;
 	const res = await event.fetch(url);
 	const data = await res.json();
 

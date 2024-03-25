@@ -81,8 +81,8 @@ export const actions = {
 		const state = googleAuthProvider.state;
 		const verifier = googleAuthProvider.codeVerifier;
 
-		event.cookies.set('state', state);
-		event.cookies.set('verifier', verifier);
+		event.cookies.set('state', state, { path: '/' });
+		event.cookies.set('verifier', verifier, { path: '/' });
 
 		throw redirect(302, authProviderRedirect);
 	}

@@ -2,32 +2,15 @@
 	import { page } from '$app/stores';
 	import { postPocketbase, pb, getPocketbase } from '$lib/utils/api';
 	import PersonalRating from '$lib/components/PersonalRating.svelte';
+	import HowToRate from '$lib/components/HowToRate.svelte';
 	import Share from '$lib/components/share/Share.svelte';
+	import { patchPocketbase } from '$lib/utils/api';
+	let {VITE_PUBLIC_API} = import.meta.env
+
 	let data = $page.data.manga;
 
-	const imageSrc = `${$page.url.origin}/api${data.img}?width=200&height=300`;
-
-	// turn the views into a number by removing the commas and the last character, if the last character is a k  then multiply the number by 1000, if the last character is an m then multiply the number by 1000000
+	const imageSrc = `${VITE_PUBLIC_API}/api${data.img}?`;
 	let views = data.views;
-
-	// remove the commas
-	views = views?.replace(/,/g, '');
-
-	// check if the last character is a k or m
-	const lastChar = views[views?.length - 1];
-
-	// if the last character is a k then multiply the number by 1000
-	if (lastChar === 'K') {
-		views = views.slice(0, views.length - 1);
-		views = Number(views) * 1000;
-	}
-
-	// if the last character is an m then multiply the number by 1000000
-	if (lastChar === 'M') {
-		views = views.slice(0, views.length - 1);
-		views = Number(views) * 1000000;
-	}
-
 	// get the genreList from pocketbase and return the id every genre that has the same name as the genre in the manga data.author array
 	let genreIds: any = [];
 	let authorIds: any = [];
@@ -73,14 +56,14 @@
 
 			if (existingMangaList.items.length === 0) {
 				// Manga doesn't exist, create it
-				for (let i = 0; i < data.author.length; i++) {
+				for (let i = 0; i < data.authors.length; i++) {
 					const genreList = await getPocketbase('genres', {
-						filter: `name="${data.author[i]}"`
+						filter: `name="${data.authors[i]}"`
 					});
 
 					if (genreList.items.length === 0) {
 						const createdAuthor = await postPocketbase('author', {
-							name: `${data.author[i]}`
+							name: `${data.authors[i]}`
 						});
 
 						authorIds.push(createdAuthor.id);
@@ -93,10 +76,10 @@
 				const pbData = {
 					title: data.title,
 					description: data.description,
-					img: $page.url.origin + '/api' + data.img,
+					img: data.img,
 					updated: data.lastUpdated,
 					views,
-					latestChapter: data.episodes[0].chapterTitle,
+					latestChapter: data.chapters[0].chapterTitle,
 					sourceid: $page.params.id,
 					genres: genreIds,
 					authors: authorIds,
@@ -106,12 +89,12 @@
 				pbMangaData = mangaRes;
 
 				// Call the function to create or update the reading progress
-				await createOrUpdateReadingProgress(mangaRes.id, data.episodes[0].chapterId);
+				await createOrUpdateReadingProgress(mangaRes.id, data.chapters[0].chapterId);
 			} else {
 				// Call the function to create or update the reading progress
 				await createOrUpdateReadingProgress(
 					existingMangaList.items[0].id,
-					data.episodes[0].chapterId
+					data.chapters[0].chapterId
 				);
 			}
 		}
@@ -149,12 +132,29 @@
 	}
 
 	continueReading();
+
+		// Function to handle radio button change
+	async function handleRatingChange(event: any) {
+		const selectedValue = parseFloat(event.target.value);
+		progress.rating = selectedValue;
+
+		const pbData = {
+			rating: progress.rating
+		};
+		await patchPocketbase('reading_progress', progress.id, pbData);
+	}
+
+			// Function to handle radio button change
+		async function handleRatingChangeGlobal(event: any) {
+			const selectedValue = parseFloat(event.target.value);
+			console.log("comming soon", selectedValue)
+	}
 </script>
 
 <div class="w-full flex flex-col md:flex-row gap-4">
 	<!-- manga image -->
 	<div class="w-full md:w-1/5 h-full">
-		<a href={`${$page.url.pathname}/${data.episodes[data.episodes.length - 1].chapterId}`}>
+		<a href={`${$page.url.pathname}/${data.chapters[data.chapters.length - 1].chapterId}`}>
 			<img
 				class="w-full h-auto object-cover rounded-lg border border-primary"
 				src={imageSrc}
@@ -169,22 +169,22 @@
 		<p class="mb-4">{data.description}</p>
 		<a
 			class="btn btn-primary"
-			href={`${$page.url.pathname}/${data.episodes[data.episodes.length - 1].chapterId}`}
+			href={`${$page.url.pathname}/${data.chapters[data.chapters.length - 1].chapterId}`}
 		>
 			<button on:click={createRecord}>Read First</button>
 		</a>
-		<a class="btn btn-primary" href={`${$page.url.pathname}/${data.episodes[0].chapterId}`}>
+		<a class="btn " href={`${$page.url.pathname}/${data.chapters[0].chapterId}`}>
 			<button on:click={createRecord}>Read Latest</button>
 		</a>
 		<div class="relative">
 			{#if !$page.data.user}
 				<!-- Not logged in overlay -->
-				<div class="absolute inset-0 flex items-center justify-center bg-primary">
-					<div class="bg-base-100 z-10 p-4 rounded-lg shadow-md text-center">
+				<div class="absolute inset-0 flex items-center justify-center ">
+					<div class="bg-base-300 text-base-content z-10 p-4 rounded-lg shadow-md text-center">
 						<p class="text-lg font-bold mb-4">
 							Login for free to unlock auto reading-progress tracker feature:
 						</p>
-						<a href="/login" class="btn btn-primary">Login</a>
+						<a href="/login" class="btn btn-secondary">Login</a>
 					</div>
 				</div>
 			{/if}
@@ -208,9 +208,11 @@
 
 							<span>{progress.expand?.currentChapter.chapterId}</span>
 						</div>
-
 						<div class="flex flex-col">
-							<PersonalRating bind:progress />
+							<PersonalRating bind:progress {handleRatingChange}>
+								<span class="font-bold" slot="title">Personal rating:</span>
+								<HowToRate />
+							</PersonalRating>
 						</div>
 						<div class="flex flex-col">
 							<span class="font-bold">Status:</span>
@@ -229,7 +231,7 @@
 			{:else}
 				<!-- logged out stats -->
 				<div
-					class="mt-4 p-4 border border-primary rounded-lg shadow-md text-success bg-opacity-50 blur-sm"
+					class="mt-4 p-4 border border-primary rounded-lg shadow-md text-success bg-opacity-90 blur-sm"
 				>
 					<h2 class="text-xl font-bold mb-2">Logged in as {$page.data.user?.username}</h2>
 					<div class="grid grid-cols-2 gap-4">
@@ -244,9 +246,7 @@
 							<span>{progress.expand?.currentChapter.chapterId}</span>
 						</div>
 
-						<div class="flex flex-col">
-							<PersonalRating progress />
-						</div>
+
 						<div class="flex flex-col">
 							<span class="font-bold">Status:</span>
 							<span>{progress.status}</span>
@@ -258,6 +258,12 @@
 						<div class="flex flex-col">
 							<span class="font-bold">Started:</span>
 							<span>{progress.started}</span>
+						</div>
+						<div class="flex flex-col">
+							<PersonalRating bind:progress={data} handleRatingChange={handleRatingChangeGlobal}>
+								<span class="font-bold" slot="title">Rating:</span>
+								HowToRate
+							</PersonalRating>
 						</div>
 					</div>
 				</div>
@@ -272,34 +278,46 @@
 			<div class="flex flex-col">
 				<span class="font-bold">Author:</span>
 
-				<span>{data.author[0]}</span>
+				<span>{data.authors[0]}</span>
 			</div>
 			<div class="flex flex-col">
 				<span class="font-bold">Genres:</span>
-				{#each data.author.slice(1) as genre}
+				{#each data.genres as genre}
 					<span>{genre}</span>
 				{/each}
 			</div>
+			<div class="flex flex-col w-11">
+				<PersonalRating bind:progress={data} handleRatingChange={handleRatingChangeGlobal}>
+					<span class="font-bold" slot="title">Rating:</span>
+					HowToRate
+				</PersonalRating>
+			</div>
+
 			<div class="flex flex-col">
 				<span class="font-bold">Artist:</span>
-				<span>{data.artist}</span>
+		
 			</div>
+
 			<div class="flex flex-col">
 				<span class="font-bold">Views:</span>
 				<span>{data.views}</span>
 			</div>
+			
+
 
 			<div class="flex flex-col">
 				<span class="font-bold">Last Updated:</span>
 				<span>{data.lastUpdated}</span>
 			</div>
 
+
+
 			<div class="flex flex-col">
 				<span class="font-bold">Share this manga:</span>
 				<Share
 		title={data.title}
 		url={$page.url.href}
-		text={data.description}
+		text={`${data.description.slice(0, 200)}${data.description.length > 240 ? '...' : ''}`}
 		image={imageSrc}
 		hashtags="manga"
 

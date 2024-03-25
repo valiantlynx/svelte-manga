@@ -1,9 +1,10 @@
 import { error } from '@sveltejs/kit';
 import { serializeNonPOJOs } from '$lib/utils/api';
+let {VITE_PUBLIC_API} = import.meta.env
 
 export const load = async (event) => {
 	const popularMangas = await Popular(event.locals, 1);
-	const latestMangas = await Latest(event, 1);
+	const latestMangas = await Latest(event, 1, "MANGANELO");
 
 	return {
 		popularMangas,
@@ -16,10 +17,8 @@ export const actions = {
 	popular: async (event) => {
 		const data = await event.request.formData();
 		const page = data.get('page');
-		console.log('page', page);
 		try {
 			const popularMangas = await Popular(event.locals, page);
-			console.log('popularMangas', popularMangas);
 			return {
 				popularMangas
 			};
@@ -31,8 +30,9 @@ export const actions = {
 	latest: async (event) => {
 		const data = await event.request.formData();
 		const page = data.get('page');
+		const server = data.get("server");
 		try {
-			const latestMangas = await Latest(event, page);
+			const latestMangas = await Latest(event, page, server);
 			return {
 				latestMangas
 			};
@@ -59,8 +59,8 @@ const Popular = async (locals, pageNo) => {
 	return mangas;
 };
 
-const Latest = async (event, pageNo) => {
-	const url = event.url.origin + '/api/manga?page=' + pageNo;
+const Latest = async (event, pageNo, server) => {
+	const url = `${VITE_PUBLIC_API}/api/manga?server=${server}&page=${pageNo}`;
 	const res = await event.fetch(url);
 	const data = await res.json();
 

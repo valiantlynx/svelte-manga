@@ -35,7 +35,7 @@ export const actions = {
 				authProviders: ''
 			};
 		}
-
+	
 		const redirectUrl = `${event.url.origin}/api/oauth/google`;
 		const googleAuthProvider = authMethods.authProviders.find(
 			(provider) => provider.name === 'google'
@@ -44,10 +44,12 @@ export const actions = {
 		// Save the state and verifier in a cookie
 		const state = googleAuthProvider.state;
 		const verifier = googleAuthProvider.codeVerifier;
-
-		event.cookies.set('state', state);
-		event.cookies.set('verifier', verifier);
-
+	
+		// Specify the path when setting cookies
+		event.cookies.set('state', state, { path: '/' });
+		event.cookies.set('verifier', verifier, { path: '/' });
+	
 		throw redirect(302, authProviderRedirect);
 	}
+	
 };

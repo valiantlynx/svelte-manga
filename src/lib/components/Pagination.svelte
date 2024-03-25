@@ -5,8 +5,7 @@
 
 	let loading = false;
 
-	const submitPageNo = () => {
-		console.log('submitPageNo');
+	const submitPageNo = async () => {
 		loading = true;
 		return async ({ result, update }) => {
 			switch (result.type) {
@@ -26,7 +25,8 @@
 			loading = false;
 		};
 	};
-	let pageNo = 1;
+	let pageNo: any;
+
 </script>
 
 <form
@@ -46,16 +46,17 @@
 			on:click={() => pageNo--}
 			disabled={pageNo === 1}>«</button
 		>
-
-		<select
-        class="select select-primary w-full max-w-xs"
-        bind:value={pageNo}
-        on:change={submitPageNo}
-      >
-        {#each $page.data.pageNumbers as pageNumber}
-          <option value={pageNumber} >{pageNumber}</option>
-        {/each}
-      </select>
+	  <select 
+	  class="btn btn-primary border-secondary"
+	  bind:value={pageNo}
+	  on:change={submitPageNo}
+	  name="server">
+	  {#each $page.data.pageNumbers as pageNumber}
+		  <option value={pageNumber}>
+			  {pageNumber}
+		  </option>
+	  {/each}
+  </select>
 
 		<button
 			type="submit"

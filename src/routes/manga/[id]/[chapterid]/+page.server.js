@@ -1,25 +1,28 @@
 import { serializeNonPOJOs } from '$lib/utils/api';
-
+let {VITE_PUBLIC_API} = import.meta.env
 let currentChapterIndex;
-let manga;
+let data;
+
 export const load = async (event) => {
 	const { id, chapterid } = event.params;
-	const url = `/manga/${id}/${chapterid}`;
 
-	const response = await event.fetch(event.url.origin + `/api/manga/${id}/${chapterid}?url=${url}`);
-	manga = await response.json();
-	// filter  all the manga.chapters.value that starts with '\n
-	manga.chapters = manga.chapters?.filter((chapter) => chapter.value.startsWith('/'));
+	const response = await event.fetch(`${VITE_PUBLIC_API}/api/manga/${id}/${chapterid}`);
+	data = await response.json();
+	
 
-	currentChapterIndex = manga.chapters?.findIndex((chapter) => {
-		return chapter.value === event.url.pathname?.replace('/manga', '');
+	currentChapterIndex = data.manga.chapters?.findIndex((chapter) => {
+		return chapter.chapterId === chapterid;
 	});
+
+	console.log(currentChapterIndex)
+
+
 
 	await createRecord(event);
 	const similarManga = await getSimilarManga(event);
 
 	return {
-		manga,
+		manga: data,
 		currentChapterIndex,
 		similarManga
 	};
@@ -46,7 +49,7 @@ async function createOrUpdateReadingProgress(event, mangaId, chapterId) {
 				manga: `${mangaId}`, // This is the manga id, not the manga title
 				currentChapter: `${chapterId}`,
 				currentChapterIndex: currentChapterIndex,
-				totalChapters: manga.chapters.length - 1
+				totalChapters: data.manga.chapters.length - 1
 			};
 			await locals.pb.collection('reading_progress').create(pbData);
 		} else {
@@ -55,7 +58,7 @@ async function createOrUpdateReadingProgress(event, mangaId, chapterId) {
 			const pbdata = {
 				currentChapter: `${chapterId}`,
 				currentChapterIndex: currentChapterIndex,
-				totalChapters: manga.chapters.length - 1
+				totalChapters: data.manga.chapters.length - 1
 			};
 			await locals.pb.collection('reading_progress').update(readingProgressId, pbdata);
 		}
@@ -78,20 +81,15 @@ async function createRecord(event) {
 			});
 			// If a manga record doesn't exist, create it
 			if (existingMangaList.items.length === 0) {
-				const urlmanga = `/manga/${params.id}`;
-
-				const responsemanga = await fetch(url.origin + `/api/manga/${params.id}?url=${urlmanga}`);
-				const datamanga = await responsemanga.json();
-
 				// Manga doesn't exist, create it
-				for (let i = 0; i < datamanga.author.length; i++) {
+				for (let i = 0; i < data.manga.author.length; i++) {
 					const genreList = await locals.pb.collection('genres').getList(1, 8, {
-						filter: `name="${datamanga.author[i]}"`
+						filter: `name="${data.manga.author[i]}"`
 					});
 
 					if (genreList.items.length === 0) {
 						const createdAuthor = await pb.collection(collection).create('author', {
-							name: `${datamanga.author[i]}`
+							name: `${data.manga.author[i]}`
 						});
 
 						authorIds.push(createdAuthor.id);
@@ -102,12 +100,12 @@ async function createRecord(event) {
 
 				// create the manga datamanga to send to pocketbase
 				const pbDataManga = {
-					title: datamanga.title,
-					description: datamanga.description,
-					img: url.origin + '/api' + datamanga.img,
-					updated: datamanga.lastUpdated,
-					views: datamanga.views,
-					latestChapter: datamanga.episodes[0].chapterTitle,
+					title: data.manga.title,
+					description: data.manga.description,
+					img: url.origin + '/api' + data.manga.img,
+					updated: data.manga.lastUpdated,
+					views: data.manga.views,
+					latestChapter: data.manga.chapters[0].chapterTitle,
 					sourceid: params.id,
 					genres: genreIds,
 					authors: authorIds,
@@ -117,7 +115,7 @@ async function createRecord(event) {
 
 				// create the chapter data to send to pocketbase
 				const pbData = {
-					title: manga.title,
+					title: data.manga.title,
 					chapterId: params.chapterid,
 					src: url.href,
 					manga: mangaRes.id
@@ -129,7 +127,7 @@ async function createRecord(event) {
 			} else {
 				// create the chapter data to send to pocketbase
 				const pbData = {
-					title: manga.title,
+					title: data.manga.title,
 					chapterId: params.chapterid,
 					src: url.href,
 					manga: existingMangaList.items[0].id
