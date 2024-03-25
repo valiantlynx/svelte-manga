@@ -538,10 +538,10 @@
   resolved "https://registry.yarnpkg.com/@valiantlynx/general-config/-/general-config-0.0.14.tgz#18450f26bb0c8e98d5c9b538fa969508b5efb9ea"
   integrity sha512-N1+t+nQnO2JEkdjZjyooUrsG15GL/dHxYyDBYiezskDsN6znFa1cozbf7bBFadQBPBTRanBzb//sv7xBqj5pHw==
 
-"@valiantlynx/general-config@^0.0.20":
-  version "0.0.20"
-  resolved "https://registry.yarnpkg.com/@valiantlynx/general-config/-/general-config-0.0.20.tgz#992eafc724fcbfa476b2f42d15716b0fa43b3249"
-  integrity sha512-peVAkip+oFyQ0ArlCOFRzwamUSWLU6gu0W1I44Zq/Ju6R7Vnw6J7K0fhXn76U3U1XbOzDtjyIRW+AIV8l/AzYA==
+"@valiantlynx/general-config@^0.0.22":
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/@valiantlynx/general-config/-/general-config-0.0.22.tgz#46e37aebd276ea542ba6cb8221f73184026184c2"
+  integrity sha512-Z2mHnd5Qw7A5JUiUc6rHDJt0wiFXHdPb2cfbdNCxbczFQlymYrzou/opFUIHw94rYPc+kYpgfndk8eqPsHbvmQ==
 
 "@valiantlynx/image@^0.0.2":
   version "0.0.2"

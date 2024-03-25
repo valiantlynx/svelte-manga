@@ -26,7 +26,7 @@
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"@valiantlynx/eslint-config-custom": "0.0.1",
-		"@valiantlynx/general-config": "^0.0.20",
+		"@valiantlynx/general-config": "^0.0.22",
 		"@valiantlynx/image": "^0.0.2",
 		"@valiantlynx/svelte-ui": "^0.0.20",
 		"@valiantlynx/tailwind-config": "0.0.9",
