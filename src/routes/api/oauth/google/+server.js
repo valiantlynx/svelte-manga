@@ -1,7 +1,6 @@
 // +server.js
 /* eslint-disable no-console */
 import { redirect } from '@sveltejs/kit';
-import { authStore } from '$lib/utils/stores';
 
 export const GET = async ({ locals, url, cookies }) => {
 	const redirectUrl = `${url.origin}/api/oauth/google`;
@@ -38,17 +37,20 @@ export const GET = async ({ locals, url, cookies }) => {
 			.authWithOAuth2Code(googleAuthProvider.name, code, expectedVerifier, redirectUrl, {
 				role: ['user']
 			}); // the object will reset the properties on that user when they are created on pocketbase
+
 		await locals.pb.collection('users').authRefresh();
 		locals.pb.authStore = locals.pb.authStore;
 		// export the cookie to the client
 		// TODO: the cookie is not being set on the client
-		await cookies.set('pb_auth', locals.pb.authStore);
+		await cookies.set('pb_auth', locals.pb.authStore, { path: '/', httpOnly: true, secure: true });
 		await locals.pb.authStore.exportToCookie(cookies);
 
-		// set store for now until we can get the cookie to work
-		authStore.set(locals.pb.authStore);
+
+        // Optionally, you can directly manipulate the cookie header of the response if needed
+        // response.headers.set('Set-Cookie', `pb_auth=${cookieValue}; Path=/; HttpOnly; Secure`);
 	} catch (e) {
 		console.log('Error Signing up with google auth', e, e.message);
+		throw redirect(302, '/signup');
 	}
 	// redirect to dashboard
 	throw redirect(303, '/dashboard');
