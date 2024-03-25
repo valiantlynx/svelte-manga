@@ -3,29 +3,46 @@
   ansible.builtin.include_vars:
     file: "vars/cloudflare_vars.yml"
 
-
 - name: Debug cloudflare_zone_ids variable content
   ansible.builtin.debug:
     var: cloudflare_zone_ids
+
+- name: Initialize detailed domain list
+  set_fact:
+    detailed_domain_list: []
+
+# Ensure directories exist
+- name: Ensure nginx directory exists
+  become: true 
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/nginx"
+    state: directory
+    owner: ubuntu
+    group: ubuntu
+    mode: '0755'
+
 
 - name: Generate Docker Compose file
   ansible.builtin.template:
     src: "docker/docker-compose.yaml.j2"
     dest: "{{ ansible_env.HOME }}/docker-compose.yml"
     mode: "0644"
-    
+
 - name: Generate Docker Compose file for certbot with dynamic domain names
   ansible.builtin.template:
     src: "docker/docker-compose.certbot.yml.j2"
     dest: "{{ ansible_env.HOME }}/docker-compose.certbot.yml"
     mode: "0644"
 
-- name: Ensure nginx directory exists
+- name: Ensure ubuntu owns the home directory subfolders
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/nginx"
+    path: "{{ item }}"
     state: directory
+    owner: ubuntu
+    group: ubuntu
     mode: '0755'
-
+  loop:
+    - "{{ ansible_env.HOME }}/nginx"
 
 - name: Generate http NGINX configuration with dynamic domain names
   ansible.builtin.template:
@@ -52,6 +69,14 @@
   args:
     chdir: "{{ ansible_env.HOME }}/" # Ensure this points to where docker-compose.yml is located
 
+
+- name: Build detailed domain list from cloudflare_zone_ids
+  ansible.builtin.set_fact:
+    detailed_domain_list: "{{ detailed_domain_list | default([]) + [{'domain': item.key} | combine(item.value)] }}"
+  loop: "{{ lookup('dict', cloudflare_zone_ids) }}"
+  loop_control:
+    loop_var: item
+
 - name: Determine the primary domain
   set_fact:
     primary_domain: "{{ cloudflare_zone_ids.keys() | list | first }}"
@@ -63,6 +88,14 @@
   failed_when: cert_check.rc > 1
   ignore_errors: yes
 
+- name: Debug primary_domain variable content
+  ansible.builtin.debug:
+    var: primary_domain
+
+- name: Debug detailed_domain_list variable content
+  ansible.builtin.debug:
+    var: detailed_domain_list
+
 - name: Obtain SSL certificates with Certbot if needed
   command: docker-compose -f docker-compose.certbot.yml run --rm certbot
   become: true
@@ -70,7 +103,7 @@
     chdir: "{{ ansible_env.HOME }}/"
   when: cert_check.rc == 1
 
-- name: Generate https NGINX configuration with dynamic domain names
+- name: Generate https NGINX configuration with dynamic domain names (switch to HTTPS)
   ansible.builtin.template:
     src: "nginx/https.conf.j2"
     dest: "{{ ansible_env.HOME }}/nginx/nginx.conf"
@@ -89,7 +122,7 @@
     chdir: "{{ ansible_env.HOME }}/"
 
 - name: Delete all hanging stuff
-  command: docker system prune -a -f --volumes
+  command: docker system prune -a -f
   become: true
   args:
     chdir: "{{ ansible_env.HOME }}/"
@@ -103,4 +136,3 @@
     minute: "0"
     job: "cd {{ ansible_env.HOME }} && docker-compose run --rm certbot renew && docker-compose exec nginx nginx -s reload"
     user: ubuntu
-
