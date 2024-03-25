@@ -5,6 +5,7 @@
 	import { onMount } from 'svelte';
 	import Icon from '@iconify/svelte';
 	import { page } from '$app/stores';
+	let {VITE_PUBLIC_API} = import.meta.env
 
 	let readingProgress: any = [];
 
@@ -48,7 +49,7 @@
 							<div class="card1 bg-base-300">
 								<div class="card__info w-full">
 									<img
-										src={chapter.expand?.manga?.img}
+										src={VITE_PUBLIC_API + chapter.expand?.manga?.img}
 										alt={chapter.expand?.manga?.title}
 										class=" hover:underline"
 									/>

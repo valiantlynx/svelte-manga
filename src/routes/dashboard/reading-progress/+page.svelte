@@ -5,7 +5,8 @@
 	import ImportReadingProgress from '$lib/components/ImportReadingProgress.svelte';
 	import PaginationSimple from '$lib/components/PaginationSimple.svelte';
 	import PersonalRating from '$lib/components/PersonalRating.svelte';
-	
+	let {VITE_PUBLIC_API} = import.meta.env
+
 	let pageNo = 1;
 	const itemsPerPage = 20;
 
@@ -42,7 +43,7 @@
 								<a href={`/manga/${chapter.expand?.manga?.sourceid}`} class="hover:underline">
 									<!-- Manga Cover Image -->
 									<img
-										src={chapter.expand?.manga?.img}
+										src={VITE_PUBLIC_API + chapter.expand?.manga?.img}
 										alt={chapter.expand?.manga?.title}
 										class="w-full h-48 object-cover"
 									/>

@@ -3,7 +3,7 @@
 	import { ContentCardImage } from '@valiantlynx/svelte-ui';
     import { Splide, SplideSlide } from '@splidejs/svelte-splide';
     import '@splidejs/svelte-splide/css';
-
+    let {VITE_PUBLIC_API} = import.meta.env
     const similarManga = $page.data.similarManga;
 </script>
 
@@ -27,7 +27,7 @@
         <SplideSlide>
             <ContentCardImage
                 link={'/manga/' + manga.sourceid}
-                img={manga.img}
+                img={VITE_PUBLIC_API + manga.img}
                 alt={manga.title}
                 label1={manga.title}
                 label2={manga.latestChapter}
