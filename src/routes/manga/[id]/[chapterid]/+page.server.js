@@ -66,6 +66,7 @@ async function createOrUpdateReadingProgress(event, mangaId, chapterId) {
 }
 
 async function createRecord(event) {
+
 	const { locals, url, params } = event;
 	// if the user is logged in, send the chapter data to pocketbase
 	if (locals.user) {
@@ -82,19 +83,40 @@ async function createRecord(event) {
 			// If a manga record doesn't exist, create it
 			if (existingMangaList.items.length === 0) {
 				// Manga doesn't exist, create it
-				for (let i = 0; i < data.manga.author.length; i++) {
-					const genreList = await locals.pb.collection('genres').getList(1, 8, {
-						filter: `name="${data.manga.author[i]}"`
-					});
 
-					if (genreList.items.length === 0) {
-						const createdAuthor = await pb.collection(collection).create('author', {
-							name: `${data.manga.author[i]}`
+				//but first do genres and author
+				for (let i = 0; i < data.manga.authors.length; i++) {
+	
+					const authorList = await locals.pb.collection('authors').getFullList({
+						filter: `name="${data.manga.authors[i]}"`
+					});
+					console.log(authorList)
+
+					if (authorList.length === 0) {
+						const createdAuthor = await pb.collection(collection).create('authors', {
+							name: `${data.manga.authors[i]}`
 						});
 
 						authorIds.push(createdAuthor.id);
 					} else {
-						genreIds.push(genreList.items[0].id);
+						authorIds.push(authorList[i].id);
+					}
+				}
+
+				for (let i = 0; i < data.manga.genres.length; i++) {
+	
+					const genreList = await locals.pb.collection('genres').getFullList({
+						filter: `name="${data.manga.genres[i]}"`
+					});
+
+					if (genreList.length === 0) {
+						const createdGenre = await pb.collection(collection).create('genres', {
+							name: `${data.manga.genres[i]}`
+						});
+
+						genreIds.push(createdGenre.id);
+					} else {
+						genreIds.push(genreList[i].id);
 					}
 				}
 
@@ -102,7 +124,7 @@ async function createRecord(event) {
 				const pbDataManga = {
 					title: data.manga.title,
 					description: data.manga.description,
-					img: url.origin + '/api' + data.manga.img,
+					img: data.manga.img,
 					updated: data.manga.lastUpdated,
 					views: data.manga.views,
 					latestChapter: data.manga.chapters[0].chapterTitle,

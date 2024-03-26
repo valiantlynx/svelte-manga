@@ -19,8 +19,8 @@
 	<div class="mx-auto container gap-y-6 gap-x-4 px-4">
 		{#each ( $page.form?.popularMangas ? $page.form?.popularMangas : $page.data.popularMangas) as manga}
 			<ContentCardImage 
-			link={'/manga/' + manga.sourceid}
-			img={VITE_PUBLIC_API + manga.img}
+			link={`/manga/${manga.sourceid}`}
+			img={`${VITE_PUBLIC_API}/api/mangaimage/${manga.img}`}
 			alt={manga.title}
 			label1={manga.title}
 			label2={manga.latestChapter}
