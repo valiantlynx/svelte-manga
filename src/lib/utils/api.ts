@@ -231,9 +231,9 @@ export async function processVippsPayment() {
 }
 
 // function that generates the manga pages for the sitemap
-export const genMangaPosts = async (page: number, origin: string) => {
+export const genMangaPosts = async (page: number, origin: string, imgsrc: string) => {
 	const mangaPosts: any = [];
-	const url = origin + `/api/manga?page=${page}`;
+	const url = imgsrc + `/api/manga?page=${page}`;
 
 	const response = await fetch(url, {
 		headers: {
@@ -246,9 +246,12 @@ export const genMangaPosts = async (page: number, origin: string) => {
 
 	const mangas = data.mangas;
 
+
+
 	if (mangas) {
 		mangas.forEach((manga: any) => {
-			const imageUrl = removeQueryParameters(manga.img, ['width', 'height']);
+			const imageUrl = `${imgsrc}/api${manga.img}`
+			console.log(imageUrl)
 			mangaPosts.push({
 				url: manga.src,
 				image: imageUrl,
@@ -262,17 +265,6 @@ export const genMangaPosts = async (page: number, origin: string) => {
 	return mangaPosts;
 };
 
-// Function to remove specified query parameters from a URL
-const removeQueryParameters = (url, paramsToRemove) => {
-	const parsedUrl = new URL(url);
-
-	paramsToRemove.forEach((param) => {
-		parsedUrl.searchParams.delete(param);
-	});
-
-	return parsedUrl.toString();
-};
-
 export const serializeNonPOJOs = (obj: any) => {
 	// // if the object is not a POJO, then serialize it
 	// if (obj && typeof obj === 'object' && obj.constructor !== Object) {
@@ -284,7 +276,7 @@ export const serializeNonPOJOs = (obj: any) => {
 	return structuredClone(obj);
 };
 
-export const render = async (page: number, url: string): Promise<string> =>
+export const render = async (page: number, url: string, imgsrc: string): Promise<string> =>
 	`<?xml version='1.0' encoding='utf-8'?>
   <urlset
     xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"
@@ -295,7 +287,7 @@ export const render = async (page: number, url: string): Promise<string> =>
     <url>
       <loc>${url}</loc>
     </url>
-    ${await genMangaPosts(page, url).then((mangas) =>
+    ${await genMangaPosts(page, url, imgsrc).then((mangas) =>
 			mangas
 				.map(
 					(manga: { url: string; image: string; title: string; description: string }) =>
@@ -352,6 +344,7 @@ const pingGoogle = async (page: number, url: string) => {
 	const images: any[] = [];
 
 	await genMangaPosts(page, url).then((mangas) => {
+		
 		mangas.map((manga: { url: string; image: string; title: string; description: string }) => {
 			links.push(url + manga.url);
 			images.push(url + manga.image);
