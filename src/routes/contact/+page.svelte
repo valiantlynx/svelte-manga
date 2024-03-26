@@ -11,7 +11,7 @@
 
 	function send() {
 		// Send the data to the server
-		postPocketbase('contact_valiantlynx', contactData);
+		postPocketbase('contact_animevariant', contactData);
 
 		// Clear the form fields
 		contactData.name = '';

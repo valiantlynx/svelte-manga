@@ -7,7 +7,7 @@
                 : `https://api.dicebear.com/7.x/adventurer-neutral/svg?seed=${$page.data.sites?.siteName}`;
 </script>
 
-<footer class="footer footer-center p-10 bg-base-300 text-base-content rounded mt-auto">
+<div class="footer footer-center p-10 bg-base-300 text-base-content rounded mt-auto">
 	<a href="/" class="p-1">
 		{#if !$page.url.isSmallDevice}
 				<img src={logo} alt="{$page.data.siteName} logo"  class="w-80" />
@@ -16,6 +16,7 @@
 	<div class="grid grid-flow-col gap-4">
 		<a href="/about" class="link link-hover">About us</a>
 		<a href="/contact" class="link link-hover">Contact</a>
+		<a href="/dmca-notice" class="link link-hover">DCMA</a>
 		<a href="/privacy-policy" class="link link-hover">Privacy</a>
 		<a href="/sitemap.xml" class="link link-hover">Sitemap</a>
 	</div>
@@ -35,4 +36,4 @@
 	<div>
 		<p>Copyright © {new Date().getFullYear()} - All right reserved by {$page.data.siteName}</p>
 	</div>
-</footer>
+</div>
