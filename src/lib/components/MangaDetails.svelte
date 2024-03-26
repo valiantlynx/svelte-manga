@@ -64,7 +64,7 @@
 					const authorList = await pb.collection('author').getFullList({
 						filter: `name="${data.authors[i]}"`
 					});
-					console.log(authorList)
+				
 
 					if (authorList.length === 0) {
 						const createdAuthor = await pb.collection('author').create({

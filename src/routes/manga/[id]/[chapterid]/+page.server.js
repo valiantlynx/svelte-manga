@@ -90,7 +90,7 @@ async function createRecord(event) {
 					const authorList = await locals.pb.collection('author').getFullList({
 						filter: `name="${data.manga.authors[i]}"`
 					});
-					console.log(authorList)
+		
 
 					if (authorList.length === 0) {
 						const createdAuthor = await locals.pb.collection('author').create({
@@ -121,7 +121,7 @@ async function createRecord(event) {
 				}
 
 				const image = data.manga.img.split("/mangaimage/")
-				
+
 				// create the manga datamanga to send to pocketbase
 				const pbDataManga = {
 					title: data.manga.title,
