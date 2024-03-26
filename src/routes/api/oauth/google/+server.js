@@ -41,7 +41,6 @@ export const GET = async ({ locals, url, cookies }) => {
 		await locals.pb.collection('users').authRefresh();
 		locals.pb.authStore = locals.pb.authStore;
 		// export the cookie to the client
-		// TODO: the cookie is not being set on the client
 		await cookies.set('pb_auth', locals.pb.authStore, { path: '/', httpOnly: true, secure: true });
 		await locals.pb.authStore.exportToCookie(cookies);
 
@@ -53,5 +52,5 @@ export const GET = async ({ locals, url, cookies }) => {
 		throw redirect(302, '/signup');
 	}
 	// redirect to dashboard
-	throw redirect(303, '/dashboard');
+	throw redirect(303, '/dashboard/profile/edit');
 };

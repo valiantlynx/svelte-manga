@@ -1,5 +1,9 @@
 import { error, redirect } from '@sveltejs/kit';
-
+export const load = ({ locals }) => {
+	if (locals.pb.authStore.isValid) {
+		throw redirect(303, '/dashboard/profile/edit');
+	}
+};
 /** @type {import('./$types').Actions} */
 export const actions = {
 	signup: async (event) => {
