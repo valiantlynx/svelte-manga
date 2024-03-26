@@ -424,6 +424,11 @@ variable "cloudflare_zone_ids" {
           name    = "www",
           service = "svelte-manga",
           port    = 3000
+        },
+        {
+          name    = "ass",
+          service = "svelte-manga",
+          port    = 3000
         }
       ],
       include_root = true,
