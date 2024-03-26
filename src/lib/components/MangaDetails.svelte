@@ -57,20 +57,40 @@
 
 			if (existingMangaList.items.length === 0) {
 				// Manga doesn't exist, create it
+			
+				//but first do genres and author
 				for (let i = 0; i < data.authors.length; i++) {
-					const genreList = await pb.collection('genres').getList(1, 8, {
+
+					const authorList = await pb.collection('author').getFullList({
 						filter: `name="${data.authors[i]}"`
 					});
-		
-	
-					if (genreList.items.length === 0) {
+					console.log(authorList)
+
+					if (authorList.length === 0) {
 						const createdAuthor = await pb.collection('author').create({
 							name: `${data.authors[i]}`
 						});
-			
+
 						authorIds.push(createdAuthor.id);
 					} else {
-						genreIds.push(genreList.items[0].id);
+						authorIds.push(authorList[0].id);
+					}
+					}
+
+					for (let i = 0; i < data.genres.length; i++) {
+
+					const genreList = await pb.collection('genres').getFullList({
+						filter: `name="${data.genres[i]}"`
+					});
+
+					if (genreList.length === 0) {
+						const createdGenre = await pb.collection('genres').create({
+							name: `${data.genres[i]}`
+						});
+
+						genreIds.push(createdGenre.id);
+					} else {
+						genreIds.push(genreList[0].id);
 					}
 				}
 				const image = data.img.split("/mangaimage/")

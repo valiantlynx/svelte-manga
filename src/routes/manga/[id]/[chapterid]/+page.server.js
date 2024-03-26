@@ -87,19 +87,19 @@ async function createRecord(event) {
 				//but first do genres and author
 				for (let i = 0; i < data.manga.authors.length; i++) {
 	
-					const authorList = await locals.pb.collection('authors').getFullList({
+					const authorList = await locals.pb.collection('author').getFullList({
 						filter: `name="${data.manga.authors[i]}"`
 					});
 					console.log(authorList)
 
 					if (authorList.length === 0) {
-						const createdAuthor = await pb.collection(collection).create('authors', {
+						const createdAuthor = await locals.pb.collection('author').create({
 							name: `${data.manga.authors[i]}`
 						});
 
 						authorIds.push(createdAuthor.id);
 					} else {
-						authorIds.push(authorList[i].id);
+						authorIds.push(authorList[0].id);
 					}
 				}
 
@@ -110,21 +110,23 @@ async function createRecord(event) {
 					});
 
 					if (genreList.length === 0) {
-						const createdGenre = await pb.collection(collection).create('genres', {
+						const createdGenre = await locals.pb.collection('genres').create({
 							name: `${data.manga.genres[i]}`
 						});
 
 						genreIds.push(createdGenre.id);
 					} else {
-						genreIds.push(genreList[i].id);
+						genreIds.push(genreList[0].id);
 					}
 				}
 
+				const image = data.manga.img.split("/mangaimage/")
+				
 				// create the manga datamanga to send to pocketbase
 				const pbDataManga = {
 					title: data.manga.title,
 					description: data.manga.description,
-					img: data.manga.img,
+					img: image[1],
 					updated: data.manga.lastUpdated,
 					views: data.manga.views,
 					latestChapter: data.manga.chapters[0].chapterTitle,
