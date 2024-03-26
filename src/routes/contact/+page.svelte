@@ -1,7 +1,10 @@
 <script>
 	import Social from '$lib/components/press/Social.svelte';
-	import { postPocketbase } from '$lib/utils/api';
+	import { pb } from '$lib/utils/api';
+	import { Input } from '@valiantlynx/svelte-ui';
+	import toast from 'svelte-french-toast';
 
+	let loading = false;
 	const contactData = {
 		name: '',
 		email: '',
@@ -9,14 +12,28 @@
 		handled: false
 	};
 
-	function send() {
-		// Send the data to the server
-		postPocketbase('contact_valiantlynx', contactData);
-
-		// Clear the form fields
-		contactData.name = '';
-		contactData.email = '';
-		contactData.message = '';
+	async function send() {
+		loading = true;
+		try {
+			await pb.collection('contact_animevariant').create(contactData);
+			
+			// Clear the form fields
+			contactData.name = '';
+			contactData.email = '';
+			contactData.message = '';
+			toast.success('message sent!');
+		} catch (err) {
+			if (err.data?.data?.name?.message) {
+				toast.error(`${err.data?.data?.name?.message}: email`);
+			} else if (err.data?.data?.email?.message) {
+				toast.error(`${err.data?.data?.email?.message}: email`);
+			} else if (err.data?.data?.message?.message) {
+				toast.error(`${err.data?.data?.message?.message}: email`);
+			} else {
+				toast.error(err.message);
+			}
+		}
+		loading = false;
 	}
 </script>
 
@@ -40,13 +57,16 @@
 							<form
 								class="bg-base-300 rounded-b-lg border-x-8 border-b-8 border-t-2 border-primary"
 							>
-								<div class="relative mb-6" data-te-input-wrapper-init>
+									<div class="relative m-6" data-te-input-wrapper-init>
 									<input
-										type="text"
-										class="peer block w-full rounded-none border-0 bg-transparent py-2 px-3 outline-none"
-										id="exampleInput90"
-										bind:value={contactData.name}
-										placeholder="Name"
+									label={contactData.name ? contactData.name : 'Name'}
+									type="text"
+									class="peer block w-full rounded-none border-0 bg-transparent py-2 px-3 outline-none"
+									id="exampleInput90"
+									bind:value={contactData.name}
+									placeholder="Name"
+									minlength=1
+									loading
 									/>
 									<label
 										class="pointer-events-none absolute top-0 left-3 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none"
@@ -54,13 +74,17 @@
 										>{contactData.name ? contactData.name : 'Name'}
 									</label>
 								</div>
-								<div class="relative mb-6" data-te-input-wrapper-init>
+								<div class="relative m-6" data-te-input-wrapper-init>
 									<input
-										type="email"
-										class="peer block w-full rounded-none border-0 bg-transparent py-2 px-3 outline-none"
-										id="exampleInput91"
-										bind:value={contactData.email}
-										placeholder="Email address"
+									label={contactData.email ? contactData.email : 'Email address'}
+									type="email"
+									class="peer block w-full rounded-none border-0 bg-transparent py-2 px-3 outline-none"
+									id="exampleInput91"
+									bind:value={contactData.email}
+									placeholder="Email address"
+									required
+									minlength=4
+									loading
 									/>
 									<label
 										class="pointer-events-none absolute top-0 left-3 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none"
@@ -68,9 +92,9 @@
 										>{contactData.email ? contactData.email : 'Email address'}
 									</label>
 								</div>
-								<div class="relative mb-6" data-te-input-wrapper-init>
+								<div class="relative m-6" data-te-input-wrapper-init>
 									<textarea
-										class="peer block w-full rounded-none border-0 bg-transparent py-2 px-3 outline-none"
+										class="peer block w-full rounded-none border-0  bg-transparent py-2 px-3 outline-none"
 										id="exampleFormControlTextarea1"
 										rows="3"
 										bind:value={contactData.message}

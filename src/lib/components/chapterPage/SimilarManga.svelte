@@ -27,7 +27,7 @@
         <SplideSlide>
             <ContentCardImage
                 link={'/manga/' + manga.sourceid}
-                img={VITE_PUBLIC_API + manga.img}
+                img={`${VITE_PUBLIC_API}/api/mangaimage/${manga?.img}`}
                 alt={manga.title}
                 label1={manga.title}
                 label2={manga.latestChapter}

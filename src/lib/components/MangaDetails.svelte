@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { postPocketbase, pb, getPocketbase } from '$lib/utils/api';
+	import { pb } from '$lib/utils/api';
 	import PersonalRating from '$lib/components/PersonalRating.svelte';
 	import HowToRate from '$lib/components/HowToRate.svelte';
 	import Share from '$lib/components/share/Share.svelte';
@@ -22,7 +22,7 @@
 			const userId = $page.data.user?.id;
 
 			// First, check if a reading progress record already exists for this manga and user
-			const existingProgressList = await getPocketbase('reading_progress', {
+			const existingProgressList = await pb.collection('reading_progress').getList(1, 8, {
 				filter: `user="${userId}" && manga="${mangaId}"`
 			});
 
@@ -33,7 +33,7 @@
 					manga: `${mangaId}`, // This is the manga id, not the manga title
 					currentChapter: `${chapterId}`
 				};
-				await postPocketbase('reading_progress', pbData);
+				await pb.collection('reading_progress').create(pbData);
 			} else {
 				// If a reading progress record exists, update the current chapter
 				const readingProgressId = existingProgressList.items[0].id;
@@ -49,34 +49,57 @@
 		// if the user is logged in, send the manga data to pocketbase
 		if ($page.data.user) {
 			// Check if the manga already exists using some unique identifier, for example, the title
-			const existingMangaList = await getPocketbase('mangas', {
+			const existingMangaList = await pb.collection('mangas').getList(1, 8, {
 				filter: `title="${data.title}"`
 			});
+		
 			pbMangaData = existingMangaList.items[0];
 
 			if (existingMangaList.items.length === 0) {
 				// Manga doesn't exist, create it
+			
+				//but first do genres and author
 				for (let i = 0; i < data.authors.length; i++) {
-					const genreList = await getPocketbase('genres', {
+
+					const authorList = await pb.collection('author').getFullList({
 						filter: `name="${data.authors[i]}"`
 					});
+				
 
-					if (genreList.items.length === 0) {
-						const createdAuthor = await postPocketbase('author', {
+					if (authorList.length === 0) {
+						const createdAuthor = await pb.collection('author').create({
 							name: `${data.authors[i]}`
 						});
 
 						authorIds.push(createdAuthor.id);
 					} else {
-						genreIds.push(genreList.items[0].id);
+						authorIds.push(authorList[0].id);
+					}
+					}
+
+					for (let i = 0; i < data.genres.length; i++) {
+
+					const genreList = await pb.collection('genres').getFullList({
+						filter: `name="${data.genres[i]}"`
+					});
+
+					if (genreList.length === 0) {
+						const createdGenre = await pb.collection('genres').create({
+							name: `${data.genres[i]}`
+						});
+
+						genreIds.push(createdGenre.id);
+					} else {
+						genreIds.push(genreList[0].id);
 					}
 				}
+				const image = data.img.split("/mangaimage/")
 
 				// create the manga data to send to pocketbase
 				const pbData = {
 					title: data.title,
 					description: data.description,
-					img: data.img,
+					img: image[1],
 					updated: data.lastUpdated,
 					views,
 					latestChapter: data.chapters[0].chapterTitle,
@@ -85,7 +108,7 @@
 					authors: authorIds,
 					src: $page.url.href
 				};
-				const mangaRes = await postPocketbase('mangas', pbData);
+				const mangaRes = await pb.collection('mangas').create(pbData);
 				pbMangaData = mangaRes;
 
 				// Call the function to create or update the reading progress
@@ -105,8 +128,8 @@
 	let progress: any = {};
 	// if the user is logged in, check if the reading progress record exists, if it does make a continue reading button
 	async function continueReading() {
-		const existingMangaList = await getPocketbase('mangas', {
-			filter: `title="${data.title}"`
+		const existingMangaList = await pb.collection('mangas').getList(1, 8, {
+				filter: `title="${data.title}"`
 		});
 		pbMangaData = existingMangaList.items[0];
 
@@ -114,7 +137,7 @@
 			const userId = $page.data.user?.id;
 
 			// First, check if a reading progress record already exists for this manga and user
-			const existingProgressList: any = await getPocketbase('reading_progress', {
+			const existingProgressList: any = await pb.collection('reading_progress').getList(1, 8, {
 				filter: `user="${userId}" && manga="${pbMangaData?.id}"`,
 				expand: 'currentChapter'
 			});

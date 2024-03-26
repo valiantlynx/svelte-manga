@@ -43,7 +43,7 @@
 								<a href={`/manga/${chapter.expand?.manga?.sourceid}`} class="hover:underline">
 									<!-- Manga Cover Image -->
 									<img
-										src={VITE_PUBLIC_API + chapter.expand?.manga?.img}
+										src={`${VITE_PUBLIC_API}/api/mangaimage/${chapter.expand?.manga?.img}`}
 										alt={chapter.expand?.manga?.title}
 										class="w-full h-48 object-cover"
 									/>

@@ -49,7 +49,7 @@
 							<div class="card1 bg-base-300">
 								<div class="card__info w-full">
 									<img
-										src={VITE_PUBLIC_API + chapter.expand?.manga?.img}
+										src={`${VITE_PUBLIC_API}/api/mangaimage/${chapter.expand?.manga?.img}`}
 										alt={chapter.expand?.manga?.title}
 										class=" hover:underline"
 									/>

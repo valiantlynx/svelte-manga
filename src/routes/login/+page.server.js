@@ -2,7 +2,7 @@ import { error, redirect } from '@sveltejs/kit';
 
 export const load = ({ locals }) => {
 	if (locals.pb.authStore.isValid) {
-		throw redirect(303, '/dashboard/profile/preview');
+		throw redirect(303, '/dashboard/profile/edit');
 	}
 };
 
@@ -26,7 +26,7 @@ export const actions = {
 				throw error(err.status, err.message);
 			}
 		}
-		throw redirect(303, '/dashboard');
+		throw redirect(303, '/dashboard/profile/edit');
 	},
 	oauth2google: async (event) => {
 		const authMethods = await event.locals.pb?.collection('users').listAuthMethods(); // generates a state and a verifier

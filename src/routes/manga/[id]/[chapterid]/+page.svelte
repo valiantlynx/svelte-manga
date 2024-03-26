@@ -8,7 +8,8 @@
 	import Share from '$lib/components/share/Share.svelte';
 	import PageControls from '$lib/components/chapterPage/PageControls.svelte';
 	import SimilarManga from '$lib/components/chapterPage/SimilarManga.svelte';
-
+	//! check the image im chosing to share and as og image. something doesnt feel right. i think it could error
+	
 	let data = $page.data.manga;
 	let readingMode = 'longstrip'; // Default reading mode
 
@@ -63,7 +64,7 @@
 		property="og:description"
 		content={`read ${data.title} ${$page.params.chapterid}free online, high quality, manga scans, manga scan`}
 	/>
-	<meta property="og:image" content={data?.images[1].imageUrl} />
+	<meta property="og:image" content={data?.images[1] ? data?.images[1].imageUrl : data?.images[0].imageUrl} />
 	<meta property="og:url" content={$page.url.href} />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="@animevariant" />
@@ -75,7 +76,7 @@
 		name="twitter:description"
 		content={`${data.title} ${$page.params.chapterid}free online, high quality, manga scans, manga scan`}
 	/>
-	<meta name="twitter:image" content={data?.images[1].imageUrl} />
+	<meta name="twitter:image" content={data?.images[1] ? data?.images[1].imageUrl : data?.images[0].imageUrl} />
 	<meta name="twitter:url" content={$page.url.href} />
 	<meta name="twitter:domain" content={$page.url.href} />
 	<meta name="twitter:creator" content="@animevariant" />
@@ -116,10 +117,11 @@
 	<p class="break-normal w-full text-center font-semibold">
 		Please share it with your friends:
 	</p>
+
 	<Share
 	title={data.title + ' ' + $page.params.chapterid + ' ' + $page.url.hostname}
 	url={$page.url.href}
-	image={data?.images[1].imageUrl}
+	image={data?.images[1] ? data?.images[1].imageUrl : data?.images[0].imageUrl}
 	text={`${data.title} ${$page.params.chapterid}free online, high quality, manga scans, manga scan`}
 	hashtags="manga, anime, art, manga online, manga free online, manga free online, manga high quality, manga scans"
 
