@@ -1191,10 +1191,10 @@ fastq@^1.6.0:
   dependencies:
     reusify "^1.0.4"
 
-fff-flavored-frontmatter@1.1.0-alpha.0:
-  version "1.1.0-alpha.0"
-  resolved "https://registry.yarnpkg.com/fff-flavored-frontmatter/-/fff-flavored-frontmatter-1.1.0-alpha.0.tgz#a6fba6211361ea90b435b78e5326816e1d897bc9"
-  integrity sha512-SR7nJ5UZoVtFVXHA5tYzSAswwwGGU1cuXeQ12HDl5VsexHSmD1LFB3yV2XolLdM/kCwAj1Hz7msGgNf3WQW0hA==
+fff-flavored-frontmatter@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/fff-flavored-frontmatter/-/fff-flavored-frontmatter-1.2.1.tgz#8315a93ac143e31c4b49ba3d4415e9efa3463883"
+  integrity sha512-2BpFmLRykSi3c2Ka0nuB46/XsJd+S0xTLXKpbwOIseh6zp7g+k919QS759vsinz3AYLYs7eLF3G4pk2OMSv0iw==
 
 fflate@~0.6.9:
   version "0.6.10"
