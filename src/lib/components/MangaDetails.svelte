@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { pb } from '$lib/utils/api';
-	import PersonalRating from '$lib/components/PersonalRating.svelte';
 	import HowToRate from '$lib/components/HowToRate.svelte';
 	import Share from '$lib/components/share/Share.svelte';
-	import { patchPocketbase } from '$lib/utils/api';
+	import Stars from "$lib/components/stars/Stars.svelte";
 	let {VITE_PUBLIC_API} = import.meta.env
 
 	let data = $page.data.manga;
@@ -15,7 +14,6 @@
 	let genreIds: any = [];
 	let authorIds: any = [];
 	let pbMangaData: any = {};
-
 	async function createOrUpdateReadingProgress(mangaId: string, chapterId: string) {
 		// Check if the user is logged in
 		if ($page.data.user) {
@@ -156,22 +154,92 @@
 
 	continueReading();
 
-		// Function to handle radio button change
-	async function handleRatingChange(event: any) {
+
+	async function handleRatingChangeGlobal(event: any) {
 		const selectedValue = parseFloat(event.target.value);
-		progress.rating = selectedValue;
 
-		const pbData = {
-			rating: progress.rating
-		};
-		await patchPocketbase('reading_progress', progress.id, pbData);
+		// Assuming pbMangaData.id is the identifier for the current manga
+		const mangaId = pbMangaData.id;
+
+		try {
+			// Step 1: Fetch current global rating and number of ratings for the manga
+			const response = await pb.collection('mangas').getOne(mangaId, {});
+			const { globalRating, ratingCount } = response;
+
+			// Step 2: Calculate the new global rating
+			// This is a simple average calculation, adjust according to your needs
+			const newGlobalRating = ((globalRating * ratingCount) + selectedValue) / (ratingCount + 1);
+
+			// Step 3: Update the manga with the new global rating and increment the rating count
+			await pb.collection('mangas').update(mangaId, {
+				globalRating: newGlobalRating,
+				ratingCount: ratingCount + 1
+			});
+
+			console.log("Global rating updated successfully to", newGlobalRating);
+		} catch (error) {
+			console.error("Failed to update global rating:", error);
+		}
 	}
 
-			// Function to handle radio button change
-		async function handleRatingChangeGlobal(event: any) {
-			const selectedValue = parseFloat(event.target.value);
-			console.log("comming soon", selectedValue)
+
+	let config: any = {
+		readOnly: false,
+		countStars: 5,
+		range: {min: 0, max: 5, step: 0.001},
+		score: 0, 
+		showScore: true,
+		scoreFormat: function(){ return `(${this.score.toFixed(2)}/${this.countStars})` },
+		starConfig: {
+		size: 30,
+		fillColor: '#F9ED4F',
+		strokeColor: "#000000",
+		unfilledColor: '#FFFFFF',
+		strokeUnfilledColor: '#000000F'
+		}
 	}
+	$: config.score = parseFloat(data.rating);
+
+	let pconfig: any = {
+        readOnly: false,
+        countStars: 5,
+        range: {min: 0, max: 5, step: 0.001},
+        score: 0, // Initialized but will be updated dynamically
+        showScore: true,
+        scoreFormat: function(){ return `(${this.score.toFixed(2)}/${this.countStars})` },
+        starConfig: {
+            size: 30,
+            fillColor: '#F9ED4F',
+            strokeColor: "#000000",
+            unfilledColor: '#FFFFFF',
+            strokeUnfilledColor: '#000000F'
+        }
+    };
+
+    // Adjusted function to handle rating changes
+    async function handleRatingChangePersonal(event: any) {
+        const selectedValue = parseFloat(event.target.value);
+        progress = {...progress, rating: selectedValue}; // Immutable update
+        
+        const pbData = { rating: progress.rating };
+        await pb.collection('reading_progress').update(progress.id, pbData);
+        // You can log or handle success/error as needed
+    }
+
+    // Instead of a reactive statement, use a function to update pconfig.score
+    function updatePconfigScore() {
+        if(progress.rating) {
+            pconfig = {...pconfig, score: parseFloat(progress.rating)};
+        }
+    }
+
+    // Call this function whenever you know 'progress' has been updated
+    // For example, after 'continueReading' or any operation that fetches or updates 'progress'
+    $: if (progress) {
+		updatePconfigScore();
+	}
+
+
 </script>
 
 <div class="w-full flex flex-col md:flex-row gap-4">
@@ -232,10 +300,9 @@
 							<span>{progress.expand?.currentChapter.chapterId}</span>
 						</div>
 						<div class="flex flex-col">
-							<PersonalRating bind:progress {handleRatingChange}>
-								<span class="font-bold" slot="title">Personal rating:</span>
-								<HowToRate />
-							</PersonalRating>
+							<span class="font-bold" >Personal rating:</span>
+							<Stars bind:config={pconfig} on:change={handleRatingChangePersonal}/>
+							<HowToRate />
 						</div>
 						<div class="flex flex-col">
 							<span class="font-bold">Status:</span>
@@ -282,11 +349,10 @@
 							<span class="font-bold">Started:</span>
 							<span>{progress.started}</span>
 						</div>
-						<div class="flex flex-col">
-							<PersonalRating bind:progress={data} handleRatingChange={handleRatingChangeGlobal}>
-								<span class="font-bold" slot="title">Rating:</span>
-								<HowToRate />
-							</PersonalRating>
+						<div class="flex">
+							<span class="font-bold" >Rating:</span>
+							<Stars bind:config on:change={handleRatingChangeGlobal}/>
+							<HowToRate />
 						</div>
 					</div>
 				</div>
@@ -309,11 +375,10 @@
 					<span>{genre}</span>
 				{/each}
 			</div>
-			<div class="flex flex-col w-11">
-				<PersonalRating bind:progress={data} handleRatingChange={handleRatingChangeGlobal}>
-					<span class="font-bold" slot="title">Rating:</span>
-					<HowToRate />
-				</PersonalRating>
+			<div class="flex">
+				<span class="font-bold" >Rating:</span>
+				<Stars bind:config on:change={handleRatingChangeGlobal}/>
+				<HowToRate />
 			</div>
 
 			<div class="flex flex-col">
