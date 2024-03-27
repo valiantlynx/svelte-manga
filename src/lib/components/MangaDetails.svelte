@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { pb } from '$lib/utils/api';
-	import PersonalRating from '$lib/components/PersonalRating.svelte';
 	import HowToRate from '$lib/components/HowToRate.svelte';
 	import Share from '$lib/components/share/Share.svelte';
-	import { patchPocketbase } from '$lib/utils/api';
 	import Stars from "$lib/components/stars/Stars.svelte";
 	let {VITE_PUBLIC_API} = import.meta.env
 
@@ -16,7 +14,6 @@
 	let genreIds: any = [];
 	let authorIds: any = [];
 	let pbMangaData: any = {};
-
 	async function createOrUpdateReadingProgress(mangaId: string, chapterId: string) {
 		// Check if the user is logged in
 		if ($page.data.user) {
@@ -129,6 +126,7 @@
 	let progress: any = {};
 	// if the user is logged in, check if the reading progress record exists, if it does make a continue reading button
 	async function continueReading() {
+		console.log("continue reading was trigures")
 		const existingMangaList = await pb.collection('mangas').getList(1, 8, {
 				filter: `title="${data.title}"`
 		});
@@ -153,20 +151,12 @@
 				continueFromLastReading = true;
 			}
 		}
+
+		console.log(progress)
 	}
 
 	continueReading();
 
-	async function handleRatingChangePersonal(event: any) {
-		console.log(progress)
-		const selectedValue = parseFloat(event.target.value);
-		progress.rating = selectedValue;
-
-		const pbData = {
-			rating: progress.rating
-		};
-		await pb.collection('reading_progress').update(progress.id, pbData);
-	}
 
 		// Function to handle radio button change
 	async function handleRatingChangeGlobal(event: any) {
@@ -174,16 +164,14 @@
 		console.log("comming soon", selectedValue)
 	}
 
-
-	
 	let config: any = {
 		readOnly: false,
 		countStars: 5,
 		range: {min: 0, max: 5, step: 0.001},
 		score: 0, 
-			showScore: true,
+		showScore: true,
 		scoreFormat: function(){ return `(${this.score.toFixed(2)}/${this.countStars})` },
-			starConfig: {
+		starConfig: {
 		size: 30,
 		fillColor: '#F9ED4F',
 		strokeColor: "#000000",
@@ -192,24 +180,46 @@
 		}
 	}
 	$: config.score = parseFloat(data.rating);
+
 	let pconfig: any = {
-		readOnly: false,
-		countStars: 5,
-		range: {min: 0, max: 5, step: 0.001},
-		score: 0, 
-			showScore: true,
-		scoreFormat: function(){ return `(${this.score.toFixed(2)}/${this.countStars})` },
-			starConfig: {
-		size: 30,
-		fillColor: '#F9ED4F',
-		strokeColor: "#000000",
-		unfilledColor: '#FFFFFF',
-		strokeUnfilledColor: '#000000F'
-		}
+        readOnly: false,
+        countStars: 5,
+        range: {min: 0, max: 5, step: 0.001},
+        score: 0, // Initialized but will be updated dynamically
+        showScore: true,
+        scoreFormat: function(){ return `(${this.score.toFixed(2)}/${this.countStars})` },
+        starConfig: {
+            size: 30,
+            fillColor: '#F9ED4F',
+            strokeColor: "#000000",
+            unfilledColor: '#FFFFFF',
+            strokeUnfilledColor: '#000000F'
+        }
+    };
+
+    // Adjusted function to handle rating changes
+    async function handleRatingChangePersonal(event: any) {
+        const selectedValue = parseFloat(event.target.value);
+        progress = {...progress, rating: selectedValue}; // Immutable update
+        
+        const pbData = { rating: progress.rating };
+        await pb.collection('reading_progress').update(progress.id, pbData);
+        // You can log or handle success/error as needed
+    }
+
+    // Instead of a reactive statement, use a function to update pconfig.score
+    function updatePconfigScore() {
+        if(progress.rating) {
+            pconfig = {...pconfig, score: parseFloat(progress.rating)};
+        }
+    }
+
+    // Call this function whenever you know 'progress' has been updated
+    // For example, after 'continueReading' or any operation that fetches or updates 'progress'
+    $: if (progress) {
+		updatePconfigScore();
 	}
 
-	console.log(progress, "--", data)
-	// Reactive statement to update score based on progress
 
 </script>
 
