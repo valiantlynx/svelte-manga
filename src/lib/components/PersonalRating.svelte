@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Stars from "$lib/components/stars/Stars.svelte";
-	import { patchPocketbase } from '$lib/utils/api';
+	import { pb } from '$lib/utils/api';
 
 	export let progress: any;
 	export let handleRatingChange = async function (event: any) {
@@ -10,8 +10,11 @@
 		const pbData = {
 			rating: progress.rating
 		};
-		await patchPocketbase('reading_progress', progress.id, pbData);
+		await pb.collection('reading_progress').update(progress.id, pbData);
 	}
+
+
+	console.log(progress)
 
 	let config: any = {
 		readOnly: false,
@@ -37,7 +40,5 @@
 <slot name="title"/>
 <div class="flex">
 	<Stars bind:config on:change={handleRatingChange}/>
-
-
 	<slot />
 </div>

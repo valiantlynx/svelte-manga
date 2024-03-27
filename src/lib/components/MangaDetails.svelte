@@ -5,6 +5,7 @@
 	import HowToRate from '$lib/components/HowToRate.svelte';
 	import Share from '$lib/components/share/Share.svelte';
 	import { patchPocketbase } from '$lib/utils/api';
+	import Stars from "$lib/components/stars/Stars.svelte";
 	let {VITE_PUBLIC_API} = import.meta.env
 
 	let data = $page.data.manga;
@@ -167,11 +168,32 @@
 		await patchPocketbase('reading_progress', progress.id, pbData);
 	}
 
-			// Function to handle radio button change
-		async function handleRatingChangeGlobal(event: any) {
-			const selectedValue = parseFloat(event.target.value);
-			console.log("comming soon", selectedValue)
+		// Function to handle radio button change
+	async function handleRatingChangeGlobal(event: any) {
+		const selectedValue = parseFloat(event.target.value);
+		console.log("comming soon", selectedValue)
 	}
+
+
+	
+	let config: any = {
+		readOnly: false,
+		countStars: 5,
+		range: {min: 0, max: 5, step: 0.001},
+		score: 0, 
+			showScore: true,
+		scoreFormat: function(){ return `(${this.score.toFixed(2)}/${this.countStars})` },
+			starConfig: {
+		size: 30,
+		fillColor: '#F9ED4F',
+		strokeColor: "#000000",
+		unfilledColor: '#FFFFFF',
+		strokeUnfilledColor: '#000000F'
+		}
+	}
+
+	// Reactive statement to update score based on progress
+	$: config.score = parseFloat(data.rating);
 </script>
 
 <div class="w-full flex flex-col md:flex-row gap-4">
@@ -232,10 +254,9 @@
 							<span>{progress.expand?.currentChapter.chapterId}</span>
 						</div>
 						<div class="flex flex-col">
-							<PersonalRating bind:progress {handleRatingChange}>
-								<span class="font-bold" slot="title">Personal rating:</span>
-								<HowToRate />
-							</PersonalRating>
+							<span class="font-bold" >Personal rating:</span>
+							<Stars bind:config on:change={handleRatingChange}/>
+							<HowToRate />
 						</div>
 						<div class="flex flex-col">
 							<span class="font-bold">Status:</span>
@@ -282,11 +303,10 @@
 							<span class="font-bold">Started:</span>
 							<span>{progress.started}</span>
 						</div>
-						<div class="flex flex-col">
-							<PersonalRating bind:progress={data} handleRatingChange={handleRatingChangeGlobal}>
-								<span class="font-bold" slot="title">Rating:</span>
-								<HowToRate />
-							</PersonalRating>
+						<div class="flex">
+							<span class="font-bold" >Rating:</span>
+							<Stars bind:config on:change={handleRatingChangeGlobal}/>
+							<HowToRate />
 						</div>
 					</div>
 				</div>
@@ -309,11 +329,10 @@
 					<span>{genre}</span>
 				{/each}
 			</div>
-			<div class="flex flex-col w-11">
-				<PersonalRating bind:progress={data} handleRatingChange={handleRatingChangeGlobal}>
-					<span class="font-bold" slot="title">Rating:</span>
-					<HowToRate />
-				</PersonalRating>
+			<div class="flex">
+				<span class="font-bold" >Rating:</span>
+				<Stars bind:config on:change={handleRatingChangeGlobal}/>
+				<HowToRate />
 			</div>
 
 			<div class="flex flex-col">
