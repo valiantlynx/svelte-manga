@@ -157,15 +157,15 @@
 
 	continueReading();
 
-		// Function to handle radio button change
-	async function handleRatingChange(event: any) {
+	async function handleRatingChangePersonal(event: any) {
+		console.log(progress)
 		const selectedValue = parseFloat(event.target.value);
 		progress.rating = selectedValue;
 
 		const pbData = {
 			rating: progress.rating
 		};
-		await patchPocketbase('reading_progress', progress.id, pbData);
+		await pb.collection('reading_progress').update(progress.id, pbData);
 	}
 
 		// Function to handle radio button change
@@ -191,9 +191,26 @@
 		strokeUnfilledColor: '#000000F'
 		}
 	}
-
-	// Reactive statement to update score based on progress
 	$: config.score = parseFloat(data.rating);
+	let pconfig: any = {
+		readOnly: false,
+		countStars: 5,
+		range: {min: 0, max: 5, step: 0.001},
+		score: 0, 
+			showScore: true,
+		scoreFormat: function(){ return `(${this.score.toFixed(2)}/${this.countStars})` },
+			starConfig: {
+		size: 30,
+		fillColor: '#F9ED4F',
+		strokeColor: "#000000",
+		unfilledColor: '#FFFFFF',
+		strokeUnfilledColor: '#000000F'
+		}
+	}
+
+	console.log(progress, "--", data)
+	// Reactive statement to update score based on progress
+
 </script>
 
 <div class="w-full flex flex-col md:flex-row gap-4">
@@ -255,7 +272,7 @@
 						</div>
 						<div class="flex flex-col">
 							<span class="font-bold" >Personal rating:</span>
-							<Stars bind:config on:change={handleRatingChange}/>
+							<Stars bind:config={pconfig} on:change={handleRatingChangePersonal}/>
 							<HowToRate />
 						</div>
 						<div class="flex flex-col">
