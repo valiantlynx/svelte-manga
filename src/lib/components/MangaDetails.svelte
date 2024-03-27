@@ -126,7 +126,6 @@
 	let progress: any = {};
 	// if the user is logged in, check if the reading progress record exists, if it does make a continue reading button
 	async function continueReading() {
-		console.log("continue reading was trigures")
 		const existingMangaList = await pb.collection('mangas').getList(1, 8, {
 				filter: `title="${data.title}"`
 		});
@@ -151,18 +150,38 @@
 				continueFromLastReading = true;
 			}
 		}
-
-		console.log(progress)
 	}
 
 	continueReading();
 
 
-		// Function to handle radio button change
 	async function handleRatingChangeGlobal(event: any) {
 		const selectedValue = parseFloat(event.target.value);
-		console.log("comming soon", selectedValue)
+
+		// Assuming pbMangaData.id is the identifier for the current manga
+		const mangaId = pbMangaData.id;
+
+		try {
+			// Step 1: Fetch current global rating and number of ratings for the manga
+			const response = await pb.collection('mangas').getOne(mangaId, {});
+			const { globalRating, ratingCount } = response;
+
+			// Step 2: Calculate the new global rating
+			// This is a simple average calculation, adjust according to your needs
+			const newGlobalRating = ((globalRating * ratingCount) + selectedValue) / (ratingCount + 1);
+
+			// Step 3: Update the manga with the new global rating and increment the rating count
+			await pb.collection('mangas').update(mangaId, {
+				globalRating: newGlobalRating,
+				ratingCount: ratingCount + 1
+			});
+
+			console.log("Global rating updated successfully to", newGlobalRating);
+		} catch (error) {
+			console.error("Failed to update global rating:", error);
+		}
 	}
+
 
 	let config: any = {
 		readOnly: false,
