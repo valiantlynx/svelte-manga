@@ -8,6 +8,7 @@
 
   <!-- [![Minfuel Svelte](https://github.com/minfuel/minfuel-turborepo/actions/workflows/minfuel-svelte.yaml/badge.svg)](https://github.com/minfuel/minfuel-turborepo/actions/workflows/minfuel-svelte.yaml) -->
 
+
 # AnimeVariant
 
 ## Welcome to the AnimeVariant project
