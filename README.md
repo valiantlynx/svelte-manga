@@ -97,4 +97,4 @@ terraform destroy
 ```
 https://www.youtube.com/watch?v=alAZl5udvAI
 
-Copyright 2022 AnimeVariant AS (www.AnimeVariant.com)
+Copyright 2024 AnimeVariant AS (www.AnimeVariant.com)
