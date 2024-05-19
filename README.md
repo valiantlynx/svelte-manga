@@ -1,13 +1,6 @@
 [![Lint Code Base](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/linter.yaml/badge.svg)](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/linter.yaml)
 [![Animevariant](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/svelte-manga.yaml/badge.svg)](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/svelte-manga.yaml)
-[![breath-first-search](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/breath-first-search%20copy.yaml/badge.svg)](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/breath-first-search%20copy.yaml)
-[![chatbot-ai](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/chatbot-ai.yaml/badge.svg)](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/chatbot-ai.yaml)
 [![issues](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/issues.yaml/badge.svg)](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/issues.yaml)
-[![logger](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/logger.yaml/badge.svg)](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/logger.yaml)
-[![weather](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/weather.yml/badge.svg?branch=main)](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/weather.yml)
-
-  <!-- [![Minfuel Svelte](https://github.com/minfuel/minfuel-turborepo/actions/workflows/minfuel-svelte.yaml/badge.svg)](https://github.com/minfuel/minfuel-turborepo/actions/workflows/minfuel-svelte.yaml) -->
-
 
 # AnimeVariant
 
