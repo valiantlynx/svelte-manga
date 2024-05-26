@@ -3,7 +3,15 @@
 	import { page } from '$app/stores';
 	import AnimevariantGridAds from './AnimevariantGridAds.svelte';
 	import PaginationSimple from './PaginationSimple.svelte';
+	import { onMount } from 'svelte';
 	let {VITE_PUBLIC_API} = import.meta.env
+
+	let server: string;
+
+	onMount(()=>{
+		server = localStorage.getItem('selectedServer') || '';
+		
+	})
 </script>
 
 <main class="bg-base-200 mb-4 border border-primary">
@@ -18,12 +26,12 @@
 		{#each ($page.form?.latestMangas ? $page.form?.latestMangas : $page.data.latestMangas) as manga}
 		
 			<ContentCardImage 
-			link={$page.url.origin + '/manga/' + manga.id}
-			img={VITE_PUBLIC_API + '/api' + manga.img}
-			alt={manga.title}
-			label1={manga.authors[0]}
-			label2={manga.latestChapter}
-			title={manga.title}
+				link={$page.url.origin + '/manga/' + (manga.id ? manga.id : '') + '?server=' + (server ? server : '')}
+				img={manga.img ? VITE_PUBLIC_API + '/api' + manga.img : ''}
+				alt={manga.title ? manga.title : ''}
+				label1={(manga.authors && manga.authors[0]) ? manga.authors[0] : "No author"}
+				label2={manga.latestChapter ? manga.latestChapter : ''}
+				title={manga.title ? manga.title : ''}
 			 >
 				<div class="rating rating-sm">
 					<label class="cursor-auto text-secondary" for="rating-8">{manga.rating}</label>

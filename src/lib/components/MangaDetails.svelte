@@ -4,6 +4,7 @@
 	import HowToRate from '$lib/components/HowToRate.svelte';
 	import Share from '$lib/components/share/Share.svelte';
 	import Stars from "$lib/components/stars/Stars.svelte";
+	import { onMount } from 'svelte';
 	let {VITE_PUBLIC_API} = import.meta.env
 
 	let data = $page.data.manga;
@@ -240,12 +241,17 @@
 	}
 
 
+	let server;
+	onMount(()=>{
+		server = localStorage.getItem('selectedServer') || '';
+		
+	})
 </script>
 
 <div class="w-full flex flex-col md:flex-row gap-4">
 	<!-- manga image -->
 	<div class="w-full md:w-1/5 h-full">
-		<a href={`${$page.url.pathname}/${data.chapters[data.chapters.length - 1].chapterId}`}>
+		<a href={`${$page.url.pathname}/${data.chapters?.[data.chapters?.length - 1]?.chapterId}`}>
 			<img
 				class="w-full h-auto object-cover rounded-lg border border-primary"
 				src={imageSrc}
@@ -260,11 +266,11 @@
 		<p class="mb-4">{data.description}</p>
 		<a
 			class="btn btn-primary"
-			href={`${$page.url.pathname}/${data.chapters[data.chapters.length - 1].chapterId}`}
+			href={`${$page.url.pathname}/${data.chapters?.[data.chapters?.length - 1]?.chapterId}?server=${server}`}
 		>
 			<button on:click={createRecord}>Read First</button>
 		</a>
-		<a class="btn " href={`${$page.url.pathname}/${data.chapters[0].chapterId}`}>
+		<a class="btn " href={`${$page.url.pathname}/${data.chapters?.[0]?.chapterId}?server=${server}`}>
 			<button on:click={createRecord}>Read Latest</button>
 		</a>
 		<div class="relative">
@@ -367,7 +373,7 @@
 			<div class="flex flex-col">
 				<span class="font-bold">Author:</span>
 
-				<span>{data.authors[0]}</span>
+				<span>{Array.isArray(data.authors) && data.authors.length > 0 ? data.authors[0] : "No Author"}</span>
 			</div>
 			<div class="flex flex-col">
 				<span class="font-bold">Genres:</span>

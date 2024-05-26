@@ -66,3 +66,4 @@ export const state = writable(null);
 export const verifier = writable(null);
 
 export const authStore = writable(null);
+export const images = writable({});
