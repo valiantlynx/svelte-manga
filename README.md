@@ -10,7 +10,6 @@
 - AnimeVariant is Decentralised app Written in React and motoko.
 
 ## Desentralised Urls
-
 - animeVariant - https://animevariant.com -main website.
 - animeVariant dapp - https://52nbc-syaaa-aaaak-acxcq-cai.ic0.app/#/ -main dapp.
 - variant - https://5ilw3-6iaaa-aaaak-acxbq-cai.ic0.app/ -wallet for variant tokens.
