@@ -4,7 +4,7 @@
 # AnimeVariant
 ## Welcome to the AnimeVariant project
 
-- Watch Anime and read Manga online.
+- Watch Anime* and read Manga online.
 - Earn money by reading and watching anime.
 - We never ask for personal infomation
 - AnimeVariant is Decentralised app Written in React and motoko.
