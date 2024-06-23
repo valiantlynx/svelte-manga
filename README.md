@@ -3,7 +3,6 @@
 
 # AnimeVariant
 ## Welcome to the AnimeVariant project
-
 - Watch Anime* and read Manga online.
 - Earn money by reading and watching anime.
 - We never ask for personal infomation
