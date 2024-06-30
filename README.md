@@ -25,7 +25,6 @@ AnimeVariant offers everyone the opportunity to truly own the art they wish. Cre
   Value of an art work i divided into percenteges and revenue is delivered as shown below.
 
 ### Users
-
 - They can buy what they like and get unconditional acces to it.
 - if bought they will own the nft and are entitled to revieve 70% of all revenue.
 - They can choose to sell the owned artworks as well.
