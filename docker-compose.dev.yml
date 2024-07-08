@@ -1,4 +1,5 @@
 version: "3.8"
+
 services:
   svelte-manga-dev:
     build:
@@ -10,6 +11,6 @@ services:
       - "5174:5174"
       - "4173:4173" # Optional: Include if your dev setup uses this port
     volumes:
-      - .:/app # Mount the project directory inside the container for live reloading
-      - /app/node_modules # Use a volume for node_modules to avoid overwriting the container's copy
+      - .:/workspace # Mount the project directory inside the container for live reloading
+      - /workspace/node_modules # Use a volume for node_modules to avoid overwriting the container's copy
     restart: always
