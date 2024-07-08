@@ -1,24 +1,18 @@
-
 [![Animevariant](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/svelte-manga.yaml/badge.svg)](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/svelte-manga.yaml)
 [![issues](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/issues.yaml/badge.svg)](https://github.com/valiantlynx/valiantlynx-turborepo/actions/workflows/issues.yaml)
-
 # AnimeVariant
-
 ## Welcome to the AnimeVariant project
-
-- Watch Anime and read Manga online.
+- Watch Anime* and read Manga online.
 - Earn money by reading and watching anime.
 - We never ask for personal infomation
 - AnimeVariant is Decentralised app Written in React and motoko.
 
 ## Desentralised Urls
-
 - animeVariant - https://animevariant.com -main website.
 - animeVariant dapp - https://52nbc-syaaa-aaaak-acxcq-cai.ic0.app/#/ -main dapp.
 - variant - https://5ilw3-6iaaa-aaaak-acxbq-cai.ic0.app/ -wallet for variant tokens.
 
 ## Own Your Art.
-
 AnimeVariant offers everyone the opportunity to truly own the art they wish. Creators can mint their work as non fungible tokens and sell it to the whole world. In the web AnimeVariant offers all user the opportunity to buy the works they like and sell if they wish. A trading place for all art.
 
 ## How it works - How to earn money
@@ -30,7 +24,6 @@ AnimeVariant offers everyone the opportunity to truly own the art they wish. Cre
   Value of an art work i divided into percenteges and revenue is delivered as shown below.
 
 ### Users
-
 - They can buy what they like and get unconditional acces to it.
 - if bought they will own the nft and are entitled to revieve 70% of all revenue.
 - They can choose to sell the owned artworks as well.
