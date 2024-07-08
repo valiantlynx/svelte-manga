@@ -26,8 +26,6 @@ services:
       target: runner-mono
     ports:
       - "3000:3000"
-    networks:
-      - valiantlynx-turborepo
     restart: always
     profiles:
       - prod
@@ -40,12 +38,7 @@ services:
       target: runner-solo
     ports:
       - "3000:3000"
-    networks:
-      - valiantlynx-turborepo
     restart: always
     profiles:
       - solo
 
-networks:
-  valiantlynx-turborepo:
-    external: false
