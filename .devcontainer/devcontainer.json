@@ -2,7 +2,7 @@
   "name": "svelte-manga-dev",
   "dockerComposeFile": ["../docker-compose.dev.yml"],
   "service": "svelte-manga-dev",
-  "workspaceFolder": "/app",
+  "workspaceFolder": "/workspace",
   "customizations": {
     "vscode": {
       "extensions": [
