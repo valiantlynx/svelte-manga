@@ -87,7 +87,8 @@ jobs:
         cache-from: type=local,src=/tmp/.buildx-cache
         cache-to: type=local,dest=/tmp/.buildx-cache
         context: .
-        file: ./Dockerfile.solo
+        file: ./Dockerfile
+        target: runner-solo
 
     - name: Show image digest
       run: |
