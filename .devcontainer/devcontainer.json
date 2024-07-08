@@ -1,7 +1,7 @@
 {
   "name": "svelte-manga-dev",
-  "dockerComposeFile": ["../docker-compose.dev.yml"],
-  "service": "svelte-manga-dev",
+  "dockerComposeFile": ["../docker-compose.yml"],
+  "service": "dev",
   "workspaceFolder": "/workspace",
   "customizations": {
     "vscode": {
@@ -21,7 +21,6 @@
         "visualstudioexptteam.vscodeintellicode",
         "vscode-icons-team.vscode-icons",
         "esbenp.prettier-vscode",
-        "jpotterm.simple-vim",
         "wakatime.vscode-wakatime",
         "svelte.svelte-vscode",
         "ardenivanov.svelte-intellisense",

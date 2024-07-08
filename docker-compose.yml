@@ -1,19 +1,51 @@
-version: "3"
+version: '3.8'
 
 services:
+  # Development service
+  dev:
+    build:
+      context: .
+      target: dev
+    ports:
+      - "3000:3000"
+      - "5173:5173"
+      - "5174:5174"
+      - "4173:4173"
+    volumes:
+      - .:/workspace
+      - /workspace/node_modules
+    restart: always
+    profiles:
+      - dev
+
+  # Production monorepo service
   svelte-manga:
     container_name: svelte-manga
     build:
       context: .
-      dockerfile: Dockerfile
-    restart: always
+      target: runner-mono
     ports:
-      - 3000:3000
+      - "3000:3000"
     networks:
       - valiantlynx-turborepo
+    restart: always
+    profiles:
+      - prod
 
-# Define a network, which allows containers to communicate
-# with each other, by using their container name as a hostname
+  # Solo deployment service
+  svelte-solo:
+    container_name: svelte-solo
+    build:
+      context: .
+      target: runner-solo
+    ports:
+      - "3000:3000"
+    networks:
+      - valiantlynx-turborepo
+    restart: always
+    profiles:
+      - solo
+
 networks:
   valiantlynx-turborepo:
     external: false
