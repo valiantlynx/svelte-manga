@@ -1,5 +1,5 @@
 {
-  "name": "svelte-manga-dev",
+  "name": "dev",
   "dockerComposeFile": ["../docker-compose.yml"],
   "service": "dev",
   "workspaceFolder": "/workspace",
