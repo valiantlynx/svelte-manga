@@ -14,7 +14,6 @@
 AnimeVariant offers everyone the opportunity to truly own the art they wish. Creators can mint their work as non fungible tokens and sell it to the whole world. In the web AnimeVariant offers all user the opportunity to buy the works they like and sell if they wish. A trading place for all art.
 
 ## How it works - How to earn money
-
 - All revenue from views and ads get turned into tokens
 - Popularity of an artwork or creator increases value.
 - Verfied Original artwork increases value.
