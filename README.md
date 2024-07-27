@@ -46,7 +46,6 @@ The "anchor is stored in your device and only that device. it is never in the bl
 still not convinced?
 For a more detailed explanation go here (https://internetcomputer.org/docs/current/tokenomics/identity-auth/what-is-ic-identity/)
 
-
 # deploy-nodeapp-terraform-ansible
 
 ## Steps to deploy
