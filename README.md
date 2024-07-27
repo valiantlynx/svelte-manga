@@ -34,7 +34,6 @@ AnimeVariant offers everyone the opportunity to truly own the art they wish. Cre
 - Verified(as Original) creator are entitled to 20% of each if their artwork revenue.
 
 The rest of the percentages are divided as follows:
-
 - 9%(19% from unverified creators) of each sale goes to the animeVariant pool.
   The pool stores real money such that the artwork that are being traded actually have value
 - 1% of each sale goes to animeVariant.
