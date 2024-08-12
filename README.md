@@ -6,6 +6,7 @@
 - Earn money by reading and watching anime.
 - We never ask for personal infomation
 - AnimeVariant is Decentralised app Written in React and motoko.
+  
 ## Desentralised Urls
 - animeVariant - https://animevariant.com -main website.
 - animeVariant dapp - https://52nbc-syaaa-aaaak-acxcq-cai.ic0.app/#/ -main dapp. old react
