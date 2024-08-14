@@ -6,7 +6,7 @@ let data;
 export const load = async (event) => {
 	const { id, chapterid } = event.params;
 
-	const response = await event.fetch(`${VITE_PUBLIC_API}/api/manga/${id}/${chapterid}`);
+	const response = await event.fetch(`${VITE_PUBLIC_API}/api/manga/${id}/${chapterid}/${event.url.search}`);
 	data = await response.json();
 	
 

@@ -4,7 +4,7 @@ let {VITE_PUBLIC_API} = import.meta.env
 
 export const load = async (event) => {
 	const { id } = event.params;
-	const response = await fetch(VITE_PUBLIC_API + `/api/manga/${id}`);
+	const response = await fetch(VITE_PUBLIC_API + `/api/manga/${id}/${event.url.search}`);
 	const manga = await response.json();
 
 	const pageNumbers = generatePageNumbers(manga);
@@ -50,12 +50,12 @@ let chaptersPerPage = 12;
 function updateChaptersToShow(currentPage, manga) {
 	const startIndex = (currentPage - 1) * chaptersPerPage;
 	const endIndex = startIndex + chaptersPerPage;
-	const chaptersToShow = manga.chapters.slice(startIndex, endIndex);
+	const chaptersToShow = manga.chapters?.slice(startIndex, endIndex);
 	return chaptersToShow;
 }
 // Generate an array of page numbers for pagination buttons
 function generatePageNumbers(manga) {
-	const totalChapters = manga.chapters.length;
+	const totalChapters = manga.chapters?.length;
 	const totalPages = Math.ceil(totalChapters / chaptersPerPage);
 	const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
 	return pageNumbers;

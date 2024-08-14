@@ -85,7 +85,7 @@
 	<meta name="twitter:creator" content="@animevariant" />
 	<meta name="twitter:image:alt" content={data.title} />
 	<meta name="twitter:label5" content="Total Chapters" />
-	<meta name="twitter:data5" content={data.chapters.length} />
+	<meta name="twitter:data5" content={data.chapters?.length} />
 </svelte:head>
 
 <main class="">

@@ -3,6 +3,7 @@
     import { page } from '$app/stores';
     import toast from 'svelte-french-toast';
     import { ButtonWithIcon } from '@valiantlynx/svelte-ui';
+	import { onMount } from 'svelte';
 
     export let action = "?/popular";
     export let disabled = !$page.data.popularMangas;
@@ -10,6 +11,17 @@
 
     $: loading = false;
 
+    // Function to set the selected server to local storage
+    const setSelectedServerToLocalStorage = (server) => {
+        localStorage.setItem('selectedServer', server);
+    };
+
+    // Retrieve the selected server from local storage
+    let selectedServer;
+    onMount(()=>{
+        selectedServer = localStorage.getItem('selectedServer') || '';
+    })
+    
     const submitPageNo = () => {
         loading = true;
         return async ({ result, update }) => {
@@ -45,7 +57,6 @@
         { name: "READMANGA", active: false }
     ];
     
-    let selectedServer;
     const submitFormWithServer = async () => {
         const server = servers.find(s => s.name === selectedServer && s.active);
         if (server) {
@@ -93,7 +104,10 @@
             <select 
                 class="btn btn-primary border-secondary"
                 bind:value={selectedServer}
-                on:change={submitFormWithServer}
+                on:change={() => {
+                    submitFormWithServer();
+                    setSelectedServerToLocalStorage(selectedServer);
+                }}
                 name="server">
                 {#each servers as { name, active }}
                     <option 
