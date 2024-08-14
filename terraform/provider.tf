@@ -7,7 +7,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "valiant-kasm"
+    bucket = "whalescanapi"
     key    = "dev/terraform.tfstate"
     region = "eu-north-1"
   }

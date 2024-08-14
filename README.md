@@ -6,17 +6,14 @@
 - Earn money by reading and watching anime.
 - We never ask for personal infomation
 - AnimeVariant is Decentralised app Written in React and motoko.
-
+  
 ## Desentralised Urls
 - animeVariant - https://animevariant.com -main website.
-- animeVariant dapp - https://52nbc-syaaa-aaaak-acxcq-cai.ic0.app/#/ -main dapp.
+- animeVariant dapp - https://52nbc-syaaa-aaaak-acxcq-cai.ic0.app/#/ -main dapp. old react
 - variant - https://5ilw3-6iaaa-aaaak-acxbq-cai.ic0.app/ -wallet for variant tokens.
-
 ## Own Your Art.
 AnimeVariant offers everyone the opportunity to truly own the art they wish. Creators can mint their work as non fungible tokens and sell it to the whole world. In the web AnimeVariant offers all user the opportunity to buy the works they like and sell if they wish. A trading place for all art.
-
 ## How it works - How to earn money
-
 - All revenue from views and ads get turned into tokens
 - Popularity of an artwork or creator increases value.
 - Verfied Original artwork increases value.
@@ -36,7 +33,6 @@ AnimeVariant offers everyone the opportunity to truly own the art they wish. Cre
 - Verified(as Original) creator are entitled to 20% of each if their artwork revenue.
 
 The rest of the percentages are divided as follows:
-
 - 9%(19% from unverified creators) of each sale goes to the animeVariant pool.
   The pool stores real money such that the artwork that are being traded actually have value
 - 1% of each sale goes to animeVariant.
@@ -48,7 +44,6 @@ Internet Identity is an authentication framework. It installs an "anchor" into y
 The "anchor is stored in your device and only that device. it is never in the blockchain nor can it be moved to a new device. This means you have to use the same device to log in with the same identity(account).
 still not convinced?
 For a more detailed explanation go here (https://internetcomputer.org/docs/current/tokenomics/identity-auth/what-is-ic-identity/)
-
 
 # deploy-nodeapp-terraform-ansible
 
