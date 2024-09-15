@@ -28,7 +28,6 @@ AnimeVariant offers everyone the opportunity to truly own the art they wish. Cre
 - They can choose to sell the owned artworks as well.
 
 ### creators
-
 - The initial sum for selling it the first time.
 - They can also buy and sell,thus also ahave all privileges of a user.
 - They are entitled to 10% of each if their artwork revenue.
