@@ -11,8 +11,10 @@
 - animeVariant - https://animevariant.com -main website.
 - animeVariant dapp - https://52nbc-syaaa-aaaak-acxcq-cai.ic0.app/#/ -main dapp. old react
 - variant - https://5ilw3-6iaaa-aaaak-acxbq-cai.ic0.app/ -wallet for variant tokens.
+  
 ## Own Your Art.
 AnimeVariant offers everyone the opportunity to truly own the art they wish. Creators can mint their work as non fungible tokens and sell it to the whole world. In the web AnimeVariant offers all user the opportunity to buy the works they like and sell if they wish. A trading place for all art.
+
 ## How it works - How to earn money
 - All revenue from views and ads get turned into tokens
 - Popularity of an artwork or creator increases value.
@@ -26,7 +28,6 @@ AnimeVariant offers everyone the opportunity to truly own the art they wish. Cre
 - They can choose to sell the owned artworks as well.
 
 ### creators
-
 - The initial sum for selling it the first time.
 - They can also buy and sell,thus also ahave all privileges of a user.
 - They are entitled to 10% of each if their artwork revenue.
