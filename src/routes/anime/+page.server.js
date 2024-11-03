@@ -1,67 +1,34 @@
 import { error } from '@sveltejs/kit';
-import { serializeNonPOJOs } from '$lib/utils/api';
 let {VITE_PUBLIC_API} = import.meta.env
 
-export const load = async (event) => {
-	const popularMangas = await Popular(event.locals, 1);
-	const latestMangas = await Latest(event, 1);
-	return {
-		popularMangas,
-		latestMangas
-	};
+export const load = async ({ url, fetch }) => {
+  const pageNo = parseInt(url.searchParams.get('page') || '1');
+
+  try {
+    const popularAnimeList = await getPopularAnime(fetch, pageNo);
+    return {
+      pageNo,
+	  popularAnimeList
+    };
+  } catch (err) {
+    console.error('Failed to load genre list:', err);
+    throw error(500, 'Failed to load genre list');
+  }
 };
 
-/** @type {import('./$types').Actions} */
-export const actions = {
-	popular: async (event) => {
-		const data = await event.request.formData();
-		const page = data.get('page');
-		try {
-			const popularMangas = await Popular(event.locals, page);
-			return {
-				popularMangas
-			};
-		} catch (err) {
-			console.log('err', err);
-			throw error(err.status, err.message);
-		}
-	},
-	latest: async (event) => {
-		const data = await event.request.formData();
-		const page = data.get('page');
-
-		try {
-			const latestMangas = await Latest(event, page);
-			return {
-				latestMangas
-			};
-		} catch (err) {
-			console.log('err', err);
-			throw error(err.status, err.message);
-		}
-	}
-};
-
-// function to get the data from the url
-const Popular = async (locals, pageNo) => {
-	const resultList = serializeNonPOJOs(
-		await locals.pb.collection('reading_progress').getList(1, 20, {
-			filter: 'user = "77760erf1db6qql"',
-			expand: ['manga', 'currentChapter'],
-			perPage: 20,
-			sort: '-rating',
-			page: pageNo
-		})
-	);
-
-	const mangas = resultList.items.map((manga) => manga.expand?.manga);
-	return mangas;
-};
-
-const Latest = async (event, pageNo) => {
-	const url = VITE_PUBLIC_API + '/api/manga?page=' + pageNo;
-	const res = await event.fetch(url);
-	const data = await res.json();
-
-	return data.mangas;
-};
+async function getPopularAnime(fetch, pageNo) {
+  const url = `${VITE_PUBLIC_API}/api/popular/${pageNo}`;
+  try {
+    const response = await fetch(url, {
+      headers: { 'Access-Control-Allow-Origin': '*' }
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch popular anime');
+    }
+    const results = await response.json();
+    return results.results;
+  } catch (error) {
+    console.error(error);
+    throw error(500, 'Failed to fetch popular anime');
+  }
+}

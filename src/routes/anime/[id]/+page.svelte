@@ -10,7 +10,8 @@
 	import Feedback from '$lib/components/feedback/Feedback.svelte';
 	import SimilarManga from '$lib/components/chapterPage/SimilarManga.svelte';
 
-	let data = $page.data.manga;
+	let data = $page.data.anime;
+	console.log($page.data)
 
 	let { id } = $page.params;
 
@@ -20,12 +21,12 @@
 			url: '/'
 		},
 		{
-			name: 'Manga',
-			url: '/manga'
+			name: 'Anime',
+			url: '/anime'
 		},
 		{
 			name: data.title,
-			url: '/manga/' + id
+			url: '/anime/' + id
 		}
 	];
 
@@ -68,41 +69,59 @@
 </script>
 
 <svelte:head>
-	<title>{data.title}</title>
-	<meta name="description" content={data.description} />
-	<meta name="keywords" content={data.author + ',' + data.title + ',' + descriptionArray} />
-	<meta property="og:title" content={data.title} />
-	<meta property="og:description" content={data.description} />
-	<meta property="og:image" content={$page.url.origin + '/api' + data.img} />
-	<meta property="og:url" content={$page.url.origin + '/manga/' + $page.params.id} />
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:site" content="@animevariant" />
-	<meta name="twitter:title" content={data.title} />
-	<meta name="twitter:description" content={data.description} />
-	<meta name="twitter:image" content={$page.url.origin + '/api' + data.img} />
-	<meta name="twitter:url" content={$page.url.origin + '/manga/' + $page.params.id} />
-	<meta name="twitter:domain" content={$page.url.origin + '/manga/' + $page.params.id} />
-	<meta name="twitter:creator" content="@animevariant" />
-	<meta name="twitter:image:alt" content={data.title} />
-	<meta name="twitter:label5" content="Total Chapters" />
-	<meta name="twitter:data5" content={data.chapters?.length} />
+  <title>{data.title}</title>
+  <meta name="description" content={data.summary} />
+  <meta property="og:title" content={data.title} />
+  <meta property="og:description" content={data.summary} />
+  <meta property="og:image" content={data.image} />
+  <meta property="og:url" content={$page.url.origin + `/anime/${data.id}`} />
 </svelte:head>
 
-<main class="">
-	<Breadcrumbs {crumbs} />
-	<h1 class="text-3xl font-bold mb-6 text-center">{data.title}</h1>
-	<div class="grid grid-cols-1 gap-4 p-3 w-full h-full justify-center">
-		<MangaDetails />
-		<ResponsiveBannerAd />
-		<Chapters />
-		<Pagination />
-		<ResponsiveBannerAd />
-		<Chat />
-		<SimilarManga />
-		<ResponsiveBannerAd />
-		<ReadingProgress />
-		<ResponsiveBannerAd />
-	</div>
+<main class="container mx-auto px-4">
+  <Breadcrumbs {crumbs} />
 
+  <div class="flex flex-col md:flex-row">
+    <div class="md:w-1/3">
+      <img src={data.image} alt={data.title} class="w-full h-auto" />
+    </div>
+    <div class="md:w-2/3 mt-8 md:mt-0 md:ml-8">
+      <h1 class="text-3xl font-bold mb-4">{data.title}</h1>
+      <div class="mb-4">
+        <span class="font-bold">Type:</span> {data.type}
+      </div>
+      <div class="mb-4">
+        <span class="font-bold">Released:</span> {data.released}
+      </div>
+      <div class="mb-4">
+        <span class="font-bold">Genres:</span>
+        {#each data.genres.split(',') as genre}
+          <a href={`/genre/${genre.trim()}`} class="ml-2 underline">{genre.trim()}</a>
+        {/each}
+      </div>
+      <div class="mb-4">
+        <span class="font-bold">Status:</span> {data.status}
+      </div>
+      <div class="mb-4">
+        <span class="font-bold">Other Name:</span> {data.other_name}
+      </div>
+      <div class="mb-4">
+        <span class="font-bold">Summary:</span> {data.summary || "No summary available."}
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-8">
+    <h2 class="text-2xl font-bold mb-4">Episodes</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      {#each Array(Number(data.total_episode)).fill(0) as _, i}
+		<a href={`/anime/${$page.params.id}/episode-${i + 1}`}>
+			<div class="episode-card">
+			<img src={data.image} alt="Episode {i + 1}" class="w-full h-auto" />
+			<p>Episode {i + 1}</p>
+			</div>
+		</a>
+      {/each}
+    </div>
+  </div>
 </main>
 <Feedback />

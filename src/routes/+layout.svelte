@@ -115,7 +115,6 @@ onMount(async () => {
   getInstalledApps();
 });
 
-console.log($page)
 </script>
 <Toaster />
 <Nav />
