@@ -6,10 +6,20 @@
 <div
 	class="relative top-0 left-0 w-16 h-auto bg-base-300 m-0 flex flex-col text-base-content shadow "
 >
+	<a href="/"
+			><SideBarIcon tooltip="Home" icon="simple-line-icons:home" /></a
+	>
 	<a href="/dashboard/profile"> <SideBarIcon tooltip="Profile" icon="iconoir:profile-circle" /></a>
+	<a href="/manga"
+		><SideBarIcon tooltip="Manga" icon="arcticons:comicscreen" /></a
+	>
+	<a href="/anime"
+		><SideBarIcon tooltip="Anime" icon="arcticons:aniyomi" /></a
+	>
 	<a href="/dashboard/reading-progress"
 		><SideBarIcon tooltip="reading progress" icon="fluent-mdl2:reading-mode" /></a
 	>
+	
 	<a href="/dashboard/settings"><SideBarIcon tooltip="Settings" icon="bx:bx-cog" /></a>
 	{#if $page.data.user?.role.includes('admin')}
 		<a href="/dashboard/admin"><SideBarIcon tooltip="Admin" icon="bx:bx-shield" /></a>
