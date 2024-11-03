@@ -28,14 +28,17 @@
 				});
 				const { mangas } = response.data;
 				searchResults = mangas;
-				console.log("ma", mangas)
 			} else if (searchType === 'anime') {
 				response = await axios.get(`${VITE_PUBLIC_API}/api/search/${searchTerm}/1`, {
 					headers: { 'Access-Control-Allow-Origin': '*' }
 				});
 				const { results } = response.data;
-				searchResults = results
-				console.log("re", results)
+				searchResults = results.map(result => ({
+					...result,
+					src: result.id,      // Assign `id` to `src`
+					img: result.image    // Assign `image` to `img`
+				}));
+				console.log("re", searchResults)
 			}
 		} catch (error) {
 			console.error(error);
