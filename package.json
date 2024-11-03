@@ -42,8 +42,8 @@
 		"node-schedule": "^2.1.1",
 		"pocketbase": "^0.21.2",
 		"postcss": "^8.4.27",
-		"prettier": "^2.8.0",
-		"prettier-plugin-svelte": "^3.0.3",
+		"prettier": "^3.3.3",
+		"prettier-plugin-svelte": "^3.2.6",
 		"svelte": "^4.0.0",
 		"svelte-check": "^3.4.3",
 		"svelte-french-toast": "^1.2.0",
@@ -53,5 +53,8 @@
 		"typescript": "^5.2.2",
 		"vite": "^4.3.6"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@sveltejs/adapter-static": "^1.0.6"
+	}
 }

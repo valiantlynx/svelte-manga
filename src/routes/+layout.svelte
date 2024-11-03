@@ -114,11 +114,15 @@ onMount(async () => {
   detectServiceWorkerUpdate();
   getInstalledApps();
 });
+
+console.log($page)
 </script>
 <Toaster />
 <Nav />
 <div class="flex">
+	{#if $page.route.id !== "/manga/[id]/[chapterid]" & $page.route.id !== "/manga/[id]"}
 	<SideBar />
+	{/if}
 	<slot />
 </div>
 <Footer />
