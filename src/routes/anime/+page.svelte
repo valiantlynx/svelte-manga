@@ -1,29 +1,46 @@
-<script>
+<script lang="ts">
 	import { Breadcrumbs } from '@valiantlynx/svelte-ui';
 	import { page } from '$app/stores';
 	import { ContentCardImage } from '@valiantlynx/svelte-ui';
 	import AnimevariantGridAds from '$lib/components/AnimevariantGridAds.svelte';
+	import toast from 'svelte-french-toast';
+	import { enhance } from '$app/forms';
 	import { onMount } from 'svelte';
   
 	let pageNO = $page.data.pageNo;
 	let animeList = $page.data.popularAnimeList;
-	
+	let server = '';
+  
 	const crumbs = [
 	  { name: 'Home', url: '/' },
 	  { name: 'Anime', url: '/anime' }
 	];
   
-	let server;
-  
+	// Update server preference on mount
 	onMount(() => {
 	  server = localStorage.getItem('selectedServer') || '';
 	});
-  
-	// Update page number and reload data
-	function changePage(newPage) {
-	  pageNO = newPage;
-	  window.location.href = `?page=${newPage}`;
-	}
+
+	const submitPageNo = () => {
+        return async ({ result, update }) => {
+            switch (result.type) {
+                case 'success':
+					animeList = result.data.popularAnimeList;
+					pageNO = result.data.pageNo;
+                    await update();
+                    break;
+                case 'invalid':
+                    toast.error('Invalid credentials');
+                    await update();
+                    break;
+                case 'error':
+                    toast.error(result.error.message);
+                    break;
+                default:
+                    await update();
+            };
+        };
+    };
   </script>
   
   <div class="mx-auto px-4">
@@ -53,16 +70,34 @@
 		{/each}
 	  </div>
   
-	  <!-- Custom Pagination -->
-	  <div class="pagination-container flex justify-center mt-4 mb-8">
-		<button on:click={() => changePage(pageNO - 1)} disabled={pageNO <= 1} class="btn btn-primary">
+	  <!-- Custom Pagination Form -->
+	  <form
+		action="?/popular"
+		method="POST"
+		use:enhance={submitPageNo}
+		class="pagination-container flex justify-center mt-4 mb-8 space-x-4"
+	  >
+		<input type="hidden" name="page" value={pageNO} />
+  
+		<button
+		  type="submit"
+		  on:click={() => (pageNO = Math.max(pageNO - 1, 1))}
+		  disabled={pageNO <= 1}
+		  class="btn btn-primary"
+		>
 		  Previous
 		</button>
-		<span class="mx-4">Page {pageNO}</span>
-		<button on:click={() => changePage(pageNO + 1)} class="btn btn-primary">
+  
+		<span>Page {pageNO}</span>
+  
+		<button
+		  type="submit"
+		  on:click={() => (pageNO = pageNO + 1)}
+		  class="btn btn-primary"
+		>
 		  Next
 		</button>
-	  </div>
+	  </form>
   
 	  <AnimevariantGridAds />
 	</main>

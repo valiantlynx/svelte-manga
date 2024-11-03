@@ -1,17 +1,9 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import Pagination from '$lib/components/Pagination.svelte';
-	import Chapters from '$lib/components/Chapters.svelte';
-	import MangaDetails from '$lib/components/MangaDetails.svelte';
 	import {Breadcrumbs} from '@valiantlynx/svelte-ui';
-	import ReadingProgress from '$lib/components/ReadingProgress.svelte';
-	import Chat from '$lib/components/Chat.svelte';
-	import ResponsiveBannerAd from '$lib/components/ResponsiveBannerAd.svelte';
 	import Feedback from '$lib/components/feedback/Feedback.svelte';
-	import SimilarManga from '$lib/components/chapterPage/SimilarManga.svelte';
 
 	let data = $page.data.anime;
-	console.log($page.data)
 
 	let { id } = $page.params;
 
@@ -91,12 +83,6 @@
       </div>
       <div class="mb-4">
         <span class="font-bold">Released:</span> {data.released}
-      </div>
-      <div class="mb-4">
-        <span class="font-bold">Genres:</span>
-        {#each data.genres.split(',') as genre}
-          <a href={`/genre/${genre.trim()}`} class="ml-2 underline">{genre.trim()}</a>
-        {/each}
       </div>
       <div class="mb-4">
         <span class="font-bold">Status:</span> {data.status}

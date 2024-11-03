@@ -18,7 +18,7 @@
 						aria-label={'Go to ' + result.title + ' manga page'}
 					>
 						<h3 class="text-lg font-semibold">{result.title}</h3>
-						<img src={VITE_PUBLIC_API + '/api' + result.img} alt={result.title} class="w-full rounded-lg mt-2" />
+						<img src={result.img.startsWith('http') ? result.img : VITE_PUBLIC_API + '/api' + result.img} alt={result.title} class="w-full rounded-lg mt-2" />
 						<p class="text-sm mt-2">Authors: {result.author}</p>
 					</button>
 				</li>
