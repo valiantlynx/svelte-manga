@@ -10,6 +10,7 @@
 </script>
 
 <Feedback />
+
 <div class="flex flex-wrap">
 	<div class="left-content  w-full lg:w-3/4 order-2 md:order-1">
 		<div class="container flex flex-wrap">
@@ -40,15 +41,15 @@
 		</CardWithCustomColor>
 	</div>
 
-   
+	<Share
+	title="{$page.data.siteName}"
+	url="{$page.url.origin}"
+	text="Check out this manga website. it tracks your reading progress!"
+	hashtags="manga, anime, reading"
+	/>
+	
 </div>
 
-<Share
-title="{$page.data.siteName}"
-url="{$page.url.origin}"
-text="Check out this manga website. it tracks your reading progress!"
-hashtags="manga, anime, reading"
-/>
 
 <svelte:head>
 	<title>{$page.data.siteName} manga page</title>

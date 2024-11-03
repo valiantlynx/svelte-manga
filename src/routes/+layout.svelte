@@ -5,6 +5,7 @@
 	import '../app.css';
 	import { page } from '$app/stores';
 	import { onMount } from "svelte";
+	import SideBar from '$lib/components/SideBar.svelte';
 
 async function detectServiceWorkerUpdate() {
   const registration = await navigator.serviceWorker.ready;
@@ -114,10 +115,12 @@ onMount(async () => {
   getInstalledApps();
 });
 </script>
-
 <Toaster />
 <Nav />
-<slot />
+<div class="flex">
+	<SideBar />
+	<slot />
+</div>
 <Footer />
 
 <svelte:head>
