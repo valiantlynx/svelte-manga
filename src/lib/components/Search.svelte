@@ -84,7 +84,6 @@
 		<select class="select select-bordered select-primary join-item w-1/3">
 			<option disabled selected>Manga</option>
 			<option disabled class="disabled:btn-error">Anime -soon</option>
-			<option disabled class="disabled:btn-error">Chapters -soon</option>
 			<option disabled class="disabled:btn-error">News -soon</option>
 		</select>
 

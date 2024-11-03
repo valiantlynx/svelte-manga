@@ -10,8 +10,8 @@
   
 	const crumbs = [
 	  { name: 'Home', url: '/' },
-	  { name: details.title, url: `/anime/${details.id}` },
-	  { name: `Episode ${episodeData.episode}`, url: `/anime/${details.id}/episode/${episodeData.episode}` }
+	  { name: details.title, url: `/anime/${$page.params.id}` },
+	  { name: `Episode ${episodeData.episode}`, url: `/anime/${$page.params.id}/episode/${episodeData.episode}` }
 	];
   </script>
   
@@ -62,7 +62,7 @@
 	  <h2 class="text-3xl font-bold mt-8 mb-4">Other Episodes</h2>
 	  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
 		{#each Array(parseInt(details.total_episode)) as _, i}
-		  <a href={`/details/${details.id}/episode/${i + 1}`} class="group">
+		  <a href={`/anime/${$page.params.id}/episode-${i + 1}`} class="group">
 			<div class="relative cursor-pointer">
 			  <div class="absolute inset-0 bg-black bg-opacity-50 group-hover:bg-opacity-70 flex justify-center items-center text-xl font-bold">
 				Episode {i + 1}
