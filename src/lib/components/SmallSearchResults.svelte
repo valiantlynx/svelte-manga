@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { searchQuery } from '$lib/utils/stores';
 	export let searchResults: any = [];
+	
 	export let handleClick: any;
 	let { VITE_PUBLIC_API } = import.meta.env;
 </script>

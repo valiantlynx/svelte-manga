@@ -26,12 +26,16 @@
 				response = await axios.get(`${VITE_PUBLIC_API}/api/search`, {
 					params: { word: searchTerm, page: 1 }
 				});
-				searchResults = response.data.mangas; // Assuming response for manga has 'mangas' key
+				const { mangas } = response.data;
+				searchResults = mangas;
+				console.log("ma", mangas)
 			} else if (searchType === 'anime') {
 				response = await axios.get(`${VITE_PUBLIC_API}/api/search/${searchTerm}/1`, {
 					headers: { 'Access-Control-Allow-Origin': '*' }
 				});
-				searchResults = response.data.results; // Assuming response for anime has 'results' key
+				const { results } = response.data;
+				searchResults = results
+				console.log("re", results)
 			}
 		} catch (error) {
 			console.error(error);
@@ -53,10 +57,14 @@
 
 	function handleSearch(event: any) {
 		searchTerm = event.target.value;
+		console.log(searchTerm)
 		searchQuery.set(searchTerm);
 	}
 
-	function handleClick(url: any) {
+	// Updated handleClick function to use goto for internal navigation based on searchType
+	function handleClick(id) {
+		console.log(searchResults, id)
+		const url = searchType === 'manga' ? id : `/anime/${id}`;
 		window.location = url;
 		searchTerm = '';
 	}
@@ -70,6 +78,7 @@
 		if (searchResults.length > 0) {
 			const keywords = searchResults.map((result: any) => result.title).join(', ');
 			metaKeywords.set(keywords);
+			console.log(searchResults)
 		}
 	}
 </script>
