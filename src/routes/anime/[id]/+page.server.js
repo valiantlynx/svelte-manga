@@ -1,21 +1,19 @@
 import { error } from '@sveltejs/kit';
-import { serializeNonPOJOs } from '$lib/utils/api';
 let {VITE_PUBLIC_API} = import.meta.env
 
 export const load = async (event) => {
 	const { id } = event.params;
-	const response = await fetch(VITE_PUBLIC_API + `/api/manga/${id}/${event.url.search}`);
-	const manga = await response.json();
+	const anime = await getDetails(event, id)
 
-	const pageNumbers = generatePageNumbers(manga);
-	const chaptersToShow = updateChaptersToShow(1, manga);
-	const similarManga = await getSimilarManga(event);
+	const pageNumbers = generatePageNumbers(anime);
+	const chaptersToShow = updateChaptersToShow(1, anime.total_episode);
+	const similarAnime = await getDetails(event);
 
 	return {
-		manga,
+		anime,
 		chaptersToShow,
 		pageNumbers,
-		similarManga
+		similarAnime
 	};
 };
 
@@ -29,8 +27,7 @@ export const actions = {
         }
         try {
             const { id } = event.params;
-            const response = await fetch(`${VITE_PUBLIC_API}/api/manga/${id}`);
-            const manga = await response.json();
+            const manga = await getDetails(event, id);
 
 			if (!manga || !Array.isArray(manga.chapters)) {
 				throw error(404, "Manga not found or chapters are unavailable.");
@@ -47,10 +44,15 @@ export const actions = {
 
 
 let chaptersPerPage = 12;
-function updateChaptersToShow(currentPage, manga) {
+function updateChaptersToShow(currentPage, totalEpisodes) {
 	const startIndex = (currentPage - 1) * chaptersPerPage;
-	const endIndex = startIndex + chaptersPerPage;
-	const chaptersToShow = manga.chapters?.slice(startIndex, endIndex);
+	const endIndex = Math.min(startIndex + chaptersPerPage, totalEpisodes);
+
+	// Generate chapter objects based on the index
+	const chaptersToShow = Array.from({ length: endIndex - startIndex }, (_, i) => ({
+		chapterId: startIndex + i + 1, // chapterId is based on the episode number
+		title: `Episode ${startIndex + i + 1}`
+	}));
 	return chaptersToShow;
 }
 // Generate an array of page numbers for pagination buttons
@@ -61,13 +63,18 @@ function generatePageNumbers(manga) {
 	return pageNumbers;
 }
 
-async function getSimilarManga(event) {
-	const { locals } = event;
-	// get similar manga, depending on the genre of the manga
+async function getDetails(event, id) {
+	const url = VITE_PUBLIC_API + `/api/anime/${id}`;
+    try {
+        const response = await event.fetch(url,
+            { headers: { 'Access-Control-Allow-Origin': '*' } }
+        );
 
-	const similarMangaList = await serializeNonPOJOs(
-		await locals.pb.collection('mangas').getList(1, 8, {})
-	);
+        const results = await response.json();
 
-	return similarMangaList.items;
+        return results;
+    } catch (error) {
+        console.log(error);
+    }
 }
+
