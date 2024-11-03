@@ -5,13 +5,12 @@
 	import SmallSearchResults from './SmallSearchResults.svelte';
 	import { metaKeywords, searchQuery } from '$lib/utils/stores';
 
-	let {VITE_PUBLIC_API} = import.meta.env
-
+	let { VITE_PUBLIC_API } = import.meta.env;
 	export let type: 'small' | 'big' = 'small';
 
 	let searchResults: any = [];
-
 	let searchTerm = '';
+	let searchType = 'manga'; // Default to 'manga', can also be 'anime'
 
 	async function search() {
 		if (searchTerm.trim() === '') {
@@ -20,12 +19,20 @@
 		}
 
 		try {
-			const response = await axios.get(`${VITE_PUBLIC_API}/api/search`, {
-				params: { word: searchTerm, page: 1 }
-			});
+			let response;
 
-			const { mangas } = response.data;
-			searchResults = mangas;
+			// Choose API endpoint based on search type
+			if (searchType === 'manga') {
+				response = await axios.get(`${VITE_PUBLIC_API}/api/search`, {
+					params: { word: searchTerm, page: 1 }
+				});
+				searchResults = response.data.mangas; // Assuming response for manga has 'mangas' key
+			} else if (searchType === 'anime') {
+				response = await axios.get(`${VITE_PUBLIC_API}/api/search/${searchTerm}/1`, {
+					headers: { 'Access-Control-Allow-Origin': '*' }
+				});
+				searchResults = response.data.results; // Assuming response for anime has 'results' key
+			}
 		} catch (error) {
 			console.error(error);
 		}
@@ -39,7 +46,6 @@
 			if (debouncedSearch) {
 				clearTimeout(debouncedSearch);
 			}
-
 			debouncedSearch = setTimeout(search, 300);
 			lastSearchTerm = searchTerm;
 		}
@@ -51,15 +57,15 @@
 	}
 
 	function handleClick(url: any) {
-		window.location = url
+		window.location = url;
 		searchTerm = '';
 	}
+
 	if ($searchQuery) {
 		searchTerm = $searchQuery;
 	}
 
-	// get an array of search results i can use on my meta keywords tag to improve SEO. that way, when someone searches for something, the keywords will be added to the meta keywords tag. but has a default value if there are no search results
-
+	// Update meta keywords based on search results
 	$: {
 		if (searchResults.length > 0) {
 			const keywords = searchResults.map((result: any) => result.title).join(', ');
@@ -69,7 +75,6 @@
 </script>
 
 <div class="max-w-screen mx-auto">
-	<!-- Container added here -->
 	<div class="join">
 		<div>
 			<div>
@@ -81,13 +86,14 @@
 				/>
 			</div>
 		</div>
-		<select class="select select-bordered select-primary join-item w-1/3">
-			<option disabled selected>Manga</option>
-			<option disabled class="disabled:btn-error">Anime -soon</option>
-			<option disabled class="disabled:btn-error">News -soon</option>
+
+		<!-- Dropdown to select between Manga and Anime -->
+		<select class="select select-bordered select-primary join-item w-1/3" bind:value={searchType}>
+			<option value="manga">Manga</option>
+			<option value="anime">Anime</option>
 		</select>
 
-		<a href="/manga/search" class="btn btn-primary join-item w-1/5">Search</a>
+		<a href="/search" class="btn btn-primary join-item w-1/5">Search</a>
 	</div>
 
 	{#if type === 'small'}
