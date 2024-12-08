@@ -36,7 +36,7 @@
 	  <div class="text-lg mb-4">{details.genres}</div>
   
 	  <div class="flex flex-col md:flex-row justify-between items-start space-y-12 md:space-y-0 md:space-x-8">
-		<div class="aspect-w-16 aspect-h-9 w-full md:w-2/3">
+		<div class="aspect-w-16 aspect-h-9 w-full md:w-2/3 mb-3">
 		  <iframe
 			src={episodeData.link}
 			title={`${details.title} Episode ${$page.params.episodeid}`}
@@ -92,11 +92,25 @@
   </main>
   
 
-  
-<style>
+  <style>
 	.video {
-	  height: 100vh;
-	  width: 100%;
+		height: 64vh; /* Default height for large screens */
+		width: 100%;
+		margin-bottom: 10%;
+	}
+
+	/* Adjust height for smaller screens */
+	@media (max-width: 768px) {
+		.video {
+			height: 20vh; /* Taller height for medium screens (tablets) */
+		}
+	}
+
+	@media (max-width: 480px) {
+		.video {
+			height: 30vh; /* Even taller height for small screens (phones) */
+		}
 	}
 </style>
+
   
