@@ -7,24 +7,26 @@
 	let data = $page.data;
 	let episodeData = data.episodeData;
 	let details = data.details;
+
+	console.log($page,episodeData);
   
 	const crumbs = [
 	  { name: 'Home', url: '/' },
 	  { name: details.title, url: `/anime/${$page.params.id}` },
-	  { name: `Episode ${episodeData.episode}`, url: `/anime/${$page.params.id}/episode/${episodeData.episode}` }
+	  { name: `${$page.params.episodeid}`, url: `/anime/${$page.params.id}/episode/${$page.params.episodeid}` }
 	];
   </script>
   
   <svelte:head>
-	<title>{details.title} - Episode {episodeData.episode} - {$page.url.hostname}</title>
-	<meta name="description" content={`Watch ${details.title} Episode ${episodeData.episode} online`} />
-	<meta property="og:title" content={`${details.title} - Episode ${episodeData.episode}`} />
-	<meta property="og:description" content={`Watch ${details.title} Episode ${episodeData.episode} online`} />
+	<title>{details.title} - Episode {$page.params.episodeid} - {$page.url.hostname}</title>
+	<meta name="description" content={`Watch ${details.title} Episode ${$page.params.episodeid} online`} />
+	<meta property="og:title" content={`${details.title} - Episode ${$page.params.episodeid}`} />
+	<meta property="og:description" content={`Watch ${details.title} Episode ${$page.params.episodeid} online`} />
 	<meta property="og:image" content={details.image} />
 	<meta property="og:url" content={$page.url.href} />
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={`${details.title} - Episode ${episodeData.episode}`} />
-	<meta name="twitter:description" content={`Watch ${details.title} Episode ${episodeData.episode} online`} />
+	<meta name="twitter:title" content={`${details.title} - Episode ${$page.params.episodeid}`} />
+	<meta name="twitter:description" content={`Watch ${details.title} Episode ${$page.params.episodeid} online`} />
 	<meta name="twitter:image" content={details.image} />
   </svelte:head>
   
@@ -39,7 +41,7 @@
 		<div class="aspect-w-16 aspect-h-9 w-full md:w-2/3">
 		  <iframe
 			src={episodeData.link}
-			title={`${details.title} Episode ${episodeData.episode}`}
+			title={`${details.title} Episode ${$page.params.episodeid}`}
 			frameborder="0"
 			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 			allowfullscreen
@@ -80,10 +82,10 @@
 
 	  <div class="mt-8">
 		<Share
-		  title={`${details.title} Episode ${episodeData.episode} - ${$page.url.hostname}`}
+		  title={`${details.title} Episode ${$page.params.episodeid} - ${$page.url.hostname}`}
 		  url={$page.url.href}
 		  image={details.image}
-		  text={`Watch ${details.title} Episode ${episodeData.episode} online`}
+		  text={`Watch ${details.title} Episode ${$page.params.episodeid} online`}
 		  hashtags="anime, streaming, episodes"
 		/>
 		<Chat />
