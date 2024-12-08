@@ -28,7 +28,7 @@
 	<meta name="twitter:image" content={details.image} />
   </svelte:head>
   
-  <main class="w-full">
+  <main class="w-full overflow-hidden text-ellipsis">
 	<Breadcrumbs {crumbs} />
   
 	<div class="mx-auto px-4 py-8">
