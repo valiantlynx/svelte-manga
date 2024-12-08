@@ -69,7 +69,7 @@
   <meta property="og:url" content={$page.url.origin + `/anime/${data.id}`} />
 </svelte:head>
 
-<main class="container mx-auto px-4">
+<main class="container mx-auto px-4 overflow-hidden text-ellipsis">
   <Breadcrumbs {crumbs} />
 
   <div class="flex flex-col md:flex-row">

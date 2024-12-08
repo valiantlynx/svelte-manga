@@ -11,24 +11,24 @@
 	const crumbs = [
 	  { name: 'Home', url: '/' },
 	  { name: details.title, url: `/anime/${$page.params.id}` },
-	  { name: `Episode ${episodeData.episode}`, url: `/anime/${$page.params.id}/episode/${episodeData.episode}` }
+	  { name: `${$page.params.episodeid}`, url: `/anime/${$page.params.id}/episode/${$page.params.episodeid}` }
 	];
   </script>
   
   <svelte:head>
-	<title>{details.title} - Episode {episodeData.episode} - {$page.url.hostname}</title>
-	<meta name="description" content={`Watch ${details.title} Episode ${episodeData.episode} online`} />
-	<meta property="og:title" content={`${details.title} - Episode ${episodeData.episode}`} />
-	<meta property="og:description" content={`Watch ${details.title} Episode ${episodeData.episode} online`} />
+	<title>{details.title} - Episode {$page.params.episodeid} - {$page.url.hostname}</title>
+	<meta name="description" content={`Watch ${details.title} Episode ${$page.params.episodeid} online`} />
+	<meta property="og:title" content={`${details.title} - Episode ${$page.params.episodeid}`} />
+	<meta property="og:description" content={`Watch ${details.title} Episode ${$page.params.episodeid} online`} />
 	<meta property="og:image" content={details.image} />
 	<meta property="og:url" content={$page.url.href} />
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={`${details.title} - Episode ${episodeData.episode}`} />
-	<meta name="twitter:description" content={`Watch ${details.title} Episode ${episodeData.episode} online`} />
+	<meta name="twitter:title" content={`${details.title} - Episode ${$page.params.episodeid}`} />
+	<meta name="twitter:description" content={`Watch ${details.title} Episode ${$page.params.episodeid} online`} />
 	<meta name="twitter:image" content={details.image} />
   </svelte:head>
   
-  <main class="w-full">
+  <main class="w-full overflow-hidden text-ellipsis">
 	<Breadcrumbs {crumbs} />
   
 	<div class="mx-auto px-4 py-8">
@@ -36,10 +36,10 @@
 	  <div class="text-lg mb-4">{details.genres}</div>
   
 	  <div class="flex flex-col md:flex-row justify-between items-start space-y-12 md:space-y-0 md:space-x-8">
-		<div class="aspect-w-16 aspect-h-9 w-full md:w-2/3">
+		<div class="aspect-w-16 aspect-h-9 w-full md:w-2/3 mb-3">
 		  <iframe
 			src={episodeData.link}
-			title={`${details.title} Episode ${episodeData.episode}`}
+			title={`${details.title} Episode ${$page.params.episodeid}`}
 			frameborder="0"
 			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 			allowfullscreen
@@ -80,10 +80,10 @@
 
 	  <div class="mt-8">
 		<Share
-		  title={`${details.title} Episode ${episodeData.episode} - ${$page.url.hostname}`}
+		  title={`${details.title} Episode ${$page.params.episodeid} - ${$page.url.hostname}`}
 		  url={$page.url.href}
 		  image={details.image}
-		  text={`Watch ${details.title} Episode ${episodeData.episode} online`}
+		  text={`Watch ${details.title} Episode ${$page.params.episodeid} online`}
 		  hashtags="anime, streaming, episodes"
 		/>
 		<Chat />
@@ -92,11 +92,25 @@
   </main>
   
 
-  
-<style>
+  <style>
 	.video {
-	  height: 100vh;
-	  width: 100%;
+		height: 64vh; /* Default height for large screens */
+		width: 100%;
+		margin-bottom: 10%;
+	}
+
+	/* Adjust height for smaller screens */
+	@media (max-width: 768px) {
+		.video {
+			height: 20vh; /* Taller height for medium screens (tablets) */
+		}
+	}
+
+	@media (max-width: 480px) {
+		.video {
+			height: 30vh; /* Even taller height for small screens (phones) */
+		}
 	}
 </style>
+
   
