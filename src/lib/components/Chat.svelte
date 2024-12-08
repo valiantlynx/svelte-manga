@@ -4,7 +4,6 @@
 	import { page } from '$app/stores';
 	import { pb } from '$lib/utils/api';
 
-	const company = $page.data.companyData;
 	let newMessage = '';
 	/**
 	 * @type {any[]}
@@ -113,9 +112,9 @@
 		</main>
 
 		<div class="border-t border-primary pt-4">
-			<form on:submit|preventDefault={sendMessage} class="space-x-2 flex items-center">
+			<form on:submit|preventDefault={sendMessage} class="space-x-2 flex-col items-center">
 				{#if !$page.data.user}
-					<a href="/login" type="submit" class="btn btn-primary">login</a>
+					<a href="/login" type="submit" class="btn btn-accent">login</a>
 				{/if}
 				<input
 					type="text"
@@ -124,7 +123,7 @@
 					bind:value={newMessage}
 					class="input input-bordered input-primary flex-grow"
 				/>
-				<button type="submit" class="btn btn-primary">send</button>
+				<button type="submit" class="btn btn-primary m-2">send</button>
 			</form>
 		</div>
 	</div>

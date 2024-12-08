@@ -90,7 +90,7 @@
 	<meta name="twitter:data5" content={data.manga.chapters?.length} />
 </svelte:head>
 
-<main class="bg-base-100">
+<main class="bg-base-100 overflow-hidden text-ellipsis">
 	<Breadcrumbs {crumbs} />
 	<h1 class="text-3xl font-bold mb-6 text-center">{data.title} {$page.params.chapterid}</h1>
 
