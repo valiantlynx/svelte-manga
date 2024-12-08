@@ -7,8 +7,6 @@
 	let data = $page.data;
 	let episodeData = data.episodeData;
 	let details = data.details;
-
-	console.log($page,episodeData);
   
 	const crumbs = [
 	  { name: 'Home', url: '/' },
