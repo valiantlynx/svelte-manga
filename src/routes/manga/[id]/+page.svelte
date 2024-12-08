@@ -88,7 +88,7 @@
 	<meta name="twitter:data5" content={data.chapters?.length} />
 </svelte:head>
 
-<main class="">
+<main class="overflow-hidden text-ellipsis">
 	<Breadcrumbs {crumbs} />
 	<h1 class="text-3xl font-bold mb-6 text-center">{data.title}</h1>
 	<div class="grid grid-cols-1 gap-4 p-3 w-full h-full justify-center">
