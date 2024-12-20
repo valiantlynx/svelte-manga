@@ -543,10 +543,12 @@
   resolved "https://registry.npmjs.org/@valiantlynx/general-config/-/general-config-0.0.14.tgz"
   integrity sha512-N1+t+nQnO2JEkdjZjyooUrsG15GL/dHxYyDBYiezskDsN6znFa1cozbf7bBFadQBPBTRanBzb//sv7xBqj5pHw==
 
-"@valiantlynx/general-config@^0.0.23":
-  version "0.0.23"
-  resolved "https://registry.yarnpkg.com/@valiantlynx/general-config/-/general-config-0.0.23.tgz#c61c5d7dd01ab49c6d97b3f4bf01868a7dc48045"
-  integrity sha512-3+Uv0wXc98sfkQ7mVYwej3SIbr5vqzg6WU7eBjMFtuLU7Q8RuJcf5wI5/Wm5Tr8DK3OEOMHqda1Ncomt9osTBQ==
+"@valiantlynx/general-config@^0.0.28":
+  version "0.0.28"
+  resolved "https://registry.yarnpkg.com/@valiantlynx/general-config/-/general-config-0.0.28.tgz#e773b1d6acb926ac9eddff1c8728ac9631c80b05"
+  integrity sha512-4bSLGjTK4rXArKbFPJkn6ITPGnNrWv1NfIyn9UK83FJnJF7icgxlC62wwJS/GdQ8GccdL5xqbkmwcUsmuedZDw==
+  dependencies:
+    "@valiantlynx/tsconfig" "0.0.4"
 
 "@valiantlynx/image@^0.0.2":
   version "0.0.2"
@@ -568,6 +570,11 @@
     "@valiantlynx/general-config" "^0.0.14"
     daisyui "^3.6.1"
     tailwindcss "^3.2.4"
+
+"@valiantlynx/tsconfig@0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@valiantlynx/tsconfig/-/tsconfig-0.0.4.tgz#3430b28f8ceb21d85c99a3bf528cf4a43f6705ec"
+  integrity sha512-uAmxRHzxpW73jS+TI9+MgAMDEz8rXcFwOUmg183gGXxst+njKgxWte5KmZoprRBXWCFk13RtuQQDBnWaaQLbQg==
 
 "@valiantlynx/tsconfig@^0.0.25":
   version "0.0.25"
