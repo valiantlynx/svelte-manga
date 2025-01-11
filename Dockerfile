@@ -84,7 +84,7 @@ COPY --from=builder-solo /app/package.json .
 COPY --from=builder-solo /app/.env .
 COPY --from=builder-solo /app/build /app/build
 EXPOSE 3000
-ENV PUBLIC_IMAGE_URL="https://ww6.manganelo.tv"
+ENV PUBLIC_IMAGE_URL="https://www.manganelo.cc"
 ENV PUBLIC_GH_P="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"
 ENV PUBLIC_GH_URL="https://api.github.com/repos/valiantlynx/valiantlynx-turborepo/issues"
 CMD [ "node", "build" ]
