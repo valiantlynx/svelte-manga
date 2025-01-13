@@ -1,5 +1,5 @@
 # Base image for all stages
-FROM node:18-alpine AS base
+FROM node:23-alpine AS base
 
 # Common dependencies for all stages
 RUN apk add --no-cache libc6-compat && apk update
