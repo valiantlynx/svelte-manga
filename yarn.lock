@@ -1880,10 +1880,10 @@ pirates@^4.0.1:
   resolved "https://registry.npmjs.org/pirates/-/pirates-4.0.6.tgz"
   integrity sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==
 
-pocketbase@^0.21.2:
-  version "0.21.2"
-  resolved "https://registry.npmjs.org/pocketbase/-/pocketbase-0.21.2.tgz"
-  integrity sha512-XZdgU9dEv3TPjexDRHy5feYrZrJhWqxTki8ClFGpsnC51G3Qkwoa/U7CVG72jYcLDP3p0HiEhRUUevnlryWkHA==
+pocketbase@^0.25.1:
+  version "0.25.1"
+  resolved "https://registry.yarnpkg.com/pocketbase/-/pocketbase-0.25.1.tgz#e2bb606d2e39a992d9b328d67a24a9879ba7337d"
+  integrity sha512-2IH0KLI/qMNR/E17C7BGWX2FxW7Tead+igLHOWZ45P56v/NyVT18Jnmddeft+3qWWGL1Hog2F8bc4orWV/+Fcg==
 
 postcss-import@^15.1.0:
   version "15.1.0"
