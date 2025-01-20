@@ -40,7 +40,7 @@
 		"gsap": "^3.12.2",
 		"lodash": "^4.17.21",
 		"node-schedule": "^2.1.1",
-		"pocketbase": "^0.21.2",
+		"pocketbase": "^0.25.1",
 		"postcss": "^8.4.27",
 		"prettier": "^3.3.3",
 		"prettier-plugin-svelte": "^3.2.6",
