@@ -42,7 +42,7 @@
 		"node-schedule": "^2.1.1",
 		"pocketbase": "^0.26.0",
 		"postcss": "^8.5.3",
-		"prettier": "^3.6.0",
+		"prettier": "^3.7.3",
 		"prettier-plugin-svelte": "^3.4.0",
 		"svelte": "^4.0.0",
 		"svelte-check": "^4.3.1",
